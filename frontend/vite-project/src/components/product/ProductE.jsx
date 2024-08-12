@@ -1,4 +1,5 @@
 function ProductE({
+  id,
   name,
   price,
   description,
@@ -9,7 +10,7 @@ function ProductE({
 }) {
   return (
     <tbody>
-      <tr>
+      <tr id={id}>
         <td>{active ? "Yes" : "No"}</td>
         <td>{name}</td>
         <td>{price}</td>

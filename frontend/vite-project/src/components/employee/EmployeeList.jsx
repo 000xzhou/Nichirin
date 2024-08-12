@@ -68,6 +68,7 @@ function EmployeeList() {
           <p>First Name: {data.first_name}</p>
           <p>Last Name: {data.last_name}</p>
           <p>Status: {data.status}</p>
+          <p>Role: {data.role}</p>
           <button>Details</button>
         </div>
       ))}

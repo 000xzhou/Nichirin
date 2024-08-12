@@ -48,6 +48,7 @@ function ProductsListE() {
             data.active && (
               <ProductE
                 key={data._id}
+                id={data._id}
                 name={data.name}
                 price={data.price}
                 description={data.description}

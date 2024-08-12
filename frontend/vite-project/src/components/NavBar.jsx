@@ -9,7 +9,7 @@ const EmployeeNavBar = ({ user }) => (
       <Link to={`/employee/logout`}>Logout</Link>
     </div>
     <div>
-      <Link to={`/customers/search`}>Lookup Customer</Link>
+      <Link to={`/customers`}>Lookup Customer</Link>
     </div>
     <div>
       <Link to={`/product/create`}>Add Product</Link>
@@ -18,7 +18,7 @@ const EmployeeNavBar = ({ user }) => (
       <Link to={`/products`}>All Product</Link>
     </div>
 
-    {user.role == "admin" ? (
+    {user.role === "admin" ? (
       <>
         <div>
           <Link to={`/employee/create`}>Create Employee</Link>
