@@ -1,0 +1,5 @@
+documentation: include details on API, how to deploy, features, tech stack used etc
+
+you want a user to have a rough idea of what the app is all about even without interacting with it
+
+You can also do some screenshots and document them on a word file. but also ensure you have a readme.md file

@@ -1,0 +1,2 @@
+I was planing to store payment methods in the customer schema.
+It's too unsafe even with encryption so will just use the add-in payment processor instead of making it myself. 

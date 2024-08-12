@@ -1,0 +1,7 @@
+I think it's better to keep the employee scheme only 
+and let another company / app that's build to take over the shifts, wages, breaks, payment, etc.
+
+The employee part should only let you make an employee and change things in the site.
+- add/edit/delete products
+- add/edit/delete employee (Maybe not delete employee maybe just inactive it? should the higher ups be allow to delete people from the system? I don't trust them. So I will just code it and leave it unused for safety reasons.)
+- check user/customers invoice (customer support)
