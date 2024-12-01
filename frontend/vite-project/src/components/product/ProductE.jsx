@@ -23,7 +23,9 @@ function ProductE({
           <button>List icon</button>
         </td>
         <td>
-          <button>Edit icon</button>
+          <button>
+            <span class="material-symbols-outlined">edit</span>
+          </button>
         </td>
       </tr>
     </tbody>

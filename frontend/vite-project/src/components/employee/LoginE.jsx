@@ -1,13 +1,20 @@
 import { useState } from "react";
-import ApiService from "../api/api";
+import ApiService from "../../api/api";
+import { useNavigate } from "react-router-dom";
+// import { useEmployeeAuth } from "../../routes/EmployeeAuthProvider";
 
-function Login() {
+function LoginE() {
+  // const { setIsAuthenticated } = useEmployeeAuth();
+
   const initialState = {
     email: "",
     password: "",
   };
 
   const [formData, setFormData] = useState(initialState);
+  const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData((data) => ({
@@ -18,7 +25,6 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const data = Object.fromEntries(formData.entries());
 
     try {
       // api
@@ -26,8 +32,16 @@ function Login() {
 
       api
         .post("/employee/login", formData)
-        .then((data) => console.log(data))
-        .catch((err) => console.error(err));
+        .then((data) => {
+          console.log("Login successful");
+          // Redirect based on user type
+          // setIsAuthenticated(true);
+          navigate("/employee/dashboard");
+        })
+        .catch((err) => {
+          console.error("Error logging in:", err);
+          setError("Invalid credentials, please try again.");
+        });
     } catch (error) {
       console.log(error);
     }
@@ -35,9 +49,10 @@ function Login() {
 
   return (
     <div>
-      <h2>Welcome Back!</h2>
+      <h1>Employee Login</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email:</label>
+        {error && <p>{error}</p>}
         <input
           type="text"
           id="email"
@@ -53,10 +68,10 @@ function Login() {
           value={formData.password}
           onChange={handleChange}
         />
-        <button type="submit">Submit</button>
+        <button type="submit">Login</button>
       </form>
     </div>
   );
 }
 
-export default Login;
+export default LoginE;

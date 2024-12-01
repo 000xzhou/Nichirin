@@ -38,6 +38,15 @@ router.post("/login", async (req, res) => {
 
     const token = createToken(customer, "customer");
 
+    // Set the token as an HttpOnly cookie
+    res.cookie("token", token, {
+      httpOnly: true, // Secure the cookie against XSS
+      secure: true, // Ensure the cookie is only sent over HTTPS (use only in production)
+      sameSite: "strict", // Mitigate CSRF attacks
+      maxAge: 3600000, // Align with the JWT's expiration time (1 hour)
+      path: "/", // Make cookie available site-wide
+    });
+
     res.status(200).json({ token, customer: customer });
   } catch (err) {
     console.error("Error during customer login:", err);
@@ -59,6 +68,14 @@ router.post("/register", async (req, res) => {
     const newCustomer = new Customer(req.body);
     await newCustomer.save();
     const token = createToken(newCustomer, "customer");
+
+    res.cookie("token", token, {
+      httpOnly: true, // Secure the cookie against XSS
+      secure: true, // Ensure the cookie is only sent over HTTPS (use only in production)
+      sameSite: "strict", // Mitigate CSRF attacks
+      maxAge: 3600000, // Align with the JWT's expiration time (1 hour)
+      path: "/", // Make cookie available site-wide
+    });
 
     res.status(201).send({ token, customer: newCustomer });
   } catch (err) {
@@ -106,7 +123,6 @@ router.get("/search", ensureStaff, async (req, res) => {
   try {
     // Extract query parameters
     const { email, phone, fname, lname } = req.query;
-
     // Build a query object to hold the search criteria
     let query = {};
     if (email) {

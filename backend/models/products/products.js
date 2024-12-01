@@ -2,6 +2,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const variationSchema = require("./variation");
+const descriptionSchema = require("./description");
 
 // Define the product schema
 const productSchema = new Schema(
@@ -38,7 +39,7 @@ const productSchema = new Schema(
       },
     },
     description: {
-      type: String,
+      type: [descriptionSchema],
       required: function () {
         return this.isNew;
       },

@@ -1,28 +1,11 @@
-import { useState, useEffect } from "react";
-import ApiService from "../../api/api";
 import ProductE from "./ProductE";
+import useGet from "../hooks/useGet";
 
 function ProductsListE() {
-  const [apiData, setApiData] = useState(null);
-  // const [filter, setFilter] = useState(null);
-  const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
-  // const [refetch, setRefetch] = useState(false);
-
-  const api = new ApiService("http://localhost:3000");
-
-  //   fetching data from api
-  useEffect(() => {
-    api
-      .get("/products")
-      .then((data) => {
-        setApiData(data.products);
-        setLoading(false);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+  const [apiData, loading, error] = useGet(`/products`);
 
   if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <>
@@ -43,7 +26,7 @@ function ProductsListE() {
             <th>Details</th>
           </tr>
         </thead>
-        {apiData.map(
+        {apiData.products.map(
           (data) =>
             data.active && (
               <ProductE
@@ -51,7 +34,7 @@ function ProductsListE() {
                 id={data._id}
                 name={data.name}
                 price={data.price}
-                description={data.description}
+                // description={data.description}
                 active={data.active}
                 stock={data.stock}
                 images={data.images}

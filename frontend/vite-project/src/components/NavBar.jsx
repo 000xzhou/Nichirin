@@ -1,61 +1,100 @@
-import { Link } from "react-router-dom";
-const EmployeeNavBar = ({ user }) => (
-  <nav>
-    {/* for all  */}
-    <div>
-      <Link to={`/employee/login`}>Login</Link>
-    </div>
-    <div>
-      <Link to={`/employee/logout`}>Logout</Link>
-    </div>
-    <div>
-      <Link to={`/customers`}>Lookup Customer</Link>
-    </div>
-    <div>
-      <Link to={`/product/create`}>Add Product</Link>
-    </div>
-    <div>
-      <Link to={`/products`}>All Product</Link>
-    </div>
+import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import "./NavBar.css";
+import ApiService from "../api/api";
+// import { useCustomerAuth } from "../routes/CustomerAuthProvider";
 
-    {user.role === "admin" ? (
-      <>
-        <div>
-          <Link to={`/employee/create`}>Create Employee</Link>
-        </div>
-        <div>
-          <Link to={`/employee/search`}>Search Employee</Link>
-        </div>
-        <div>
-          <Link to={`/employee`}>All Employee</Link>
-        </div>
-      </>
-    ) : (
-      ""
-    )}
-  </nav>
-);
+const Navbar = ({ isUser, setIsUser }) => {
+  const location = useLocation();
+  // const { isUser, setIsUser } = useCustomerAuth();
+  // const [loading, setLoading] = useState(null);
 
-const CustomerNavBar = () => (
-  <nav>
-    <div>
-      <Link to={`/`}>Home</Link>
-      <Link to={`/products`}>Product</Link>
-      <div>Cart Icon</div>
-    </div>
-  </nav>
-);
+  // const [isUser, setIsUser] = useState(null);
 
-const NavBar = ({ userRole, user }) => {
+  // useEffect(() => {
+  //   console.log("inside");
+  //   const checkAuth = async () => {
+  //     const response = await fetch("http://localhost:3000/check-auth", {
+  //       credentials: "include", // Ensure cookies are sent
+  //     });
+  //     const data = await response.json();
+  //     console.log("isuer data", data);
+  //     setIsUser(data.user || null);
+  //   };
+
+  //   checkAuth();
+  // }, [isUser, setIsUser]);
+
+  // const checkAuth = async () => {
+  //   console.log("checking auth");
+  //   try {
+  //     const response = await fetch("http://localhost:3000/check-auth", {
+  //       credentials: "include", // Ensure cookies are sent
+  //     });
+  //     const data = await response.json();
+  //     if (data.user) {
+  //       setIsUser(data.user);
+  //     }
+  //   } catch (error) {
+  //     setIsUser(null);
+  //   } finally {
+  //     // setLoading(false);
+  //   }
+  // };
+  // console.log("Current isUser state Navbar:", isUser);
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    try {
+      // api
+      const api = new ApiService("http://localhost:3000");
+
+      api
+        .get("/logout")
+        .then(() => {
+          setIsUser(false);
+        })
+        .catch((err) => console.error(err));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // console.log("isUser", isUser);
   return (
-    <>
-      {userRole === "employee" ? (
-        <EmployeeNavBar user={user} />
-      ) : (
-        <CustomerNavBar />
-      )}
-    </>
+    <nav>
+      <Link to="/">Logo</Link>
+      <div className="navIcon">
+        {/* <div onClick={checkAuth}> */}
+        {/* <Link to="/cart">Cart</Link> */}
+        {isUser ? (
+          <Link
+            to={`/customers/${isUser._id}`}
+            className="material-symbols-outlined"
+          >
+            person
+            {isUser._id}
+          </Link>
+        ) : (
+          <Link
+            to="/login"
+            state={{ from: location }}
+            className="material-symbols-outlined"
+          >
+            person
+          </Link>
+        )}
+        {/* </div> */}
+
+        <button className="material-symbols-outlined" onClick={handleLogout}>
+          logout
+        </button>
+        <Link className="material-symbols-outlined">shopping_cart</Link>
+        {/* <Link to="/customers/register" state={{ from: location }}>
+          Register
+        </Link> */}
+      </div>
+    </nav>
   );
 };
 
-export default NavBar;
+export default Navbar;

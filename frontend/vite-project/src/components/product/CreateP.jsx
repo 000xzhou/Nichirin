@@ -1,4 +1,5 @@
 function CreateP() {
+  // create product
   return <div>hi</div>;
 }
 

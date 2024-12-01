@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import ApiService from "../../api/api";
+import { Link } from "react-router-dom";
 
 function EmployeeList() {
   const [apiData, setApiData] = useState(null);
@@ -65,11 +66,12 @@ function EmployeeList() {
       {apiData.map((data) => (
         <div key={data._id}>
           <p>Email: {data.email}</p>
-          <p>First Name: {data.first_name}</p>
-          <p>Last Name: {data.last_name}</p>
+          <p>
+            Name: {data.first_name} {data.last_name}
+          </p>
           <p>Status: {data.status}</p>
           <p>Role: {data.role}</p>
-          <button>Details</button>
+          <Link to={`/employee/${data._id}`}>Details</Link>
         </div>
       ))}
     </>

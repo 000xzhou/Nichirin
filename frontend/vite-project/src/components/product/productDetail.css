@@ -1,0 +1,105 @@
+.productDetail {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  justify-content: center;
+  /* height: 50vh; */
+  gap: 20px;
+}
+@media (max-width: 768px) {
+  .productDetail {
+    grid-template-columns: 1fr;
+  }
+  .detailBox {
+    position: relative;
+  }
+}
+
+@media (min-width: 768px) {
+  .detailBox {
+    position: sticky;
+    top: 0;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+.imageBox {
+  border: 1px solid red;
+  width: 100%;
+}
+
+.product_button {
+  width: 100%;
+  /* padding-block: 1rem; */
+  height: rem;
+}
+
+.detailPrice {
+  font-weight: 700;
+  font-size: 32px;
+}
+
+/* reviews ? */
+.reviewBox {
+  border: 1px solid blue;
+  gap: 2rem;
+}
+.reviewDetailBox {
+  border: 1px solid saddlebrown;
+  width: 100%;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  float: right;
+  text-align: end;
+}
+
+/* ============================================ other people also view ================================  */
+
+.scroll-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.alsoView {
+  display: flex;
+  /* gap: 2rem; */
+  overflow-x: hidden; /* Horizontal scroll */
+  scroll-behavior: smooth; /* Smooth scroll */
+  width: 1850px; /* Set width to show 4 boxes (adjust based on box width and gap) */
+  max-width: 1850px; /* Ensure it doesn't grow beyond this */
+}
+
+.box {
+  flex: 0 0 300px; /* Each box has a fixed width of 200px */
+  height: 300px;
+  background-color: lightgray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
+button.prev,
+button.next {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+button.prev {
+  position: absolute;
+  left: 0;
+}
+
+button.next {
+  position: absolute;
+  right: 0;
+}

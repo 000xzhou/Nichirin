@@ -41,6 +41,10 @@ const customerSchema = new Schema(
       type: addressSchema,
       required: false,
     },
+    shipping: {
+      type: addressSchema,
+      required: false,
+    },
     birthday: {
       type: String,
       required: false,

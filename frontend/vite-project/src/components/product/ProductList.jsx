@@ -1,43 +1,32 @@
-import { useState, useEffect } from "react";
-import ApiService from "../../api/api";
 import Product from "./Product";
+import "./product.css";
+import useGet from "../hooks/useGet";
 
 function ProductsList() {
-  const [apiData, setApiData] = useState(null);
-  // const [filter, setFilter] = useState(null);
-  const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
-  // const [refetch, setRefetch] = useState(false);
-
-  const api = new ApiService("http://localhost:3000");
-
-  //   fetching data from api
-  useEffect(() => {
-    api
-      .get("/products")
-      .then((data) => {
-        setApiData(data.products);
-        setLoading(false);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+  const [apiData, loading, error] = useGet(`/products`);
 
   if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <>
-      {apiData.map(
+    <div className="productList">
+      {apiData.products.map(
         (data) =>
           data.active && (
+            // data.stock > 0 &&
             <Product
               key={data._id}
+              id={data._id}
               name={data.name}
               price={data.price}
-              description={data.description}
+              stock={data.stock}
+              // rating={data.rating}
+              rating={4.5}
+              images={data.images}
             />
           )
       )}
-    </>
+    </div>
   );
 }
 

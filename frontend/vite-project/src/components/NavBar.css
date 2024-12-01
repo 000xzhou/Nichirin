@@ -1,0 +1,26 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+/* @media (max-width: 768px) {
+  .displayLarge {
+    display: none;
+  }
+  .displaySmall {
+    display: block;
+  }
+}
+@media (min-width: 768px) {
+  .displayLarge {
+    display: block;
+  }
+  .displaySmall {
+    display: none;
+  }
+} */

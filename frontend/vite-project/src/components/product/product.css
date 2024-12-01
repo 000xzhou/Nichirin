@@ -1,0 +1,37 @@
+.productTitleLink,
+.productTitleLink:hover {
+  color: white;
+}
+
+.productList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.productBox button {
+  /* border: 1px solid rgba(0, 255, 128, 0.418); */
+  width: 100%;
+}
+
+.productBoxImage {
+  border: 1px solid aliceblue;
+  width: 100%;
+  /* height: 100px; */
+  padding-bottom: 100%; /* This ensures a perfect square */
+  position: relative;
+}
+.product-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

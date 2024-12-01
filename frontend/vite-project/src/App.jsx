@@ -1,28 +1,26 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import NavBar from "./components/NavBar";
-import Footing from "./components/Footing";
-import Landing from "./components/Landing";
+// import Footing from "./components/Footing";
+// import Landing from "./components/Landing";
 import NotFound from "./components/NotFound";
-import EmployeeRoutes from "./EmployeeRoutes";
-import CustomerRoutes from "./CustomerRoutes";
-import ProductRoutes from "./ProductRoutes";
+import EmployeeRoutes from "./routes/EmployeeRoutes";
+import CustomerRoutes from "./routes/CustomerRoutes";
+// import ProductRoutes from "./routes/ProductRoutes";
+// import Cart from "./components/product/Cart";
+// import LoginC from "../components/customers/LoginC";
+// import Register from "../components/customers/Register";
+// import LoginE from "../components/employee/LoginE";
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <NavBar userRole="employee" user={{ role: "admin" }} />
-        <main>
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/employee/*" element={<EmployeeRoutes />} />
-            <Route path="/customers/*" element={<CustomerRoutes />} />
-            <Route path="/products/*" element={<ProductRoutes />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
-        <Footing />
+        <Routes>
+          <Route path="/employee/*" element={<EmployeeRoutes />} />
+          <Route path="/*" element={<CustomerRoutes />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </BrowserRouter>
     </div>
   );

@@ -1,5 +1,4 @@
-import { useState } from "react";
-import ApiService from "../../api/api";
+import usePost from "../hooks/usePost";
 
 function Register() {
   const initialState = {
@@ -9,29 +8,12 @@ function Register() {
     last_name: "",
   };
 
-  const [formData, setFormData] = useState(initialState);
+  const [formData, handleChange, handleSubmit, error] = usePost(
+    initialState,
+    "/customers/register"
+  );
 
-  const handleChange = (e) => {
-    setFormData((data) => ({
-      ...data,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      // api
-      const api = new ApiService("http://localhost:3000");
-
-      api
-        .post("/employee/create", formData)
-        .then((data) => console.log(data))
-        .catch((err) => console.error(err));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div>
@@ -40,6 +22,7 @@ function Register() {
         <input
           type="text"
           id="email"
+          name="email"
           value={formData.email}
           onChange={handleChange}
         />
@@ -47,6 +30,7 @@ function Register() {
         <input
           type="text"
           id="first_name"
+          name="first_name"
           value={formData.first_name}
           onChange={handleChange}
         />
@@ -54,6 +38,7 @@ function Register() {
         <input
           type="text"
           id="last_name"
+          name="last_name"
           value={formData.last_name}
           onChange={handleChange}
         />
@@ -61,7 +46,8 @@ function Register() {
         <input
           type="text"
           id="password"
-          value={formData.email}
+          name="password"
+          value={formData.password}
           onChange={handleChange}
         />
         <button type="submit">Submit</button>

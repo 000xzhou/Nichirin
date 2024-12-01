@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import useCart from "../hooks/useCart";
 
-function Cart() {
+function Checkout() {
   const [
     cart,
     handleAddtoCart,
@@ -23,17 +23,6 @@ function Cart() {
           : item
       )
     );
-  };
-
-  const handleCheckout = async () => {
-    const res = await axios.post("/api/create-checkout-session", {
-      email: "email",
-      productName: "Gautham's Stripe Ebook",
-      priceId: "priceID",
-      productId: "productId",
-      stripeCustomerId: "stripeCustomerId",
-    });
-    // redirect
   };
 
   return (
@@ -66,11 +55,11 @@ function Cart() {
       </section>
       <section>
         <div>subtotal: ${total.toFixed(2)}</div>
-        <button onClick={handleCheckout}>Go to checkout</button>
-        {/* <Link to="/checkout">Go to checkout</Link> */}
+        {/* <button>Go to checkout</button> */}
+        <Link to="/checkout">checkout</Link>
       </section>
     </div>
   );
 }
 
-export default Cart;
+export default Checkout;
