@@ -2,11 +2,11 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./NavBar.css";
 import ApiService from "../api/api";
-// import { useCustomerAuth } from "../routes/CustomerAuthProvider";
+import { useCustomerAuth } from "../routes/CustomerAuthProvider";
 
-const Navbar = ({ isUser, setIsUser }) => {
+const Navbar = () => {
   const location = useLocation();
-  // const { isUser, setIsUser } = useCustomerAuth();
+  const { isUser, setIsUser } = useCustomerAuth();
   // const [loading, setLoading] = useState(null);
 
   // const [isUser, setIsUser] = useState(null);

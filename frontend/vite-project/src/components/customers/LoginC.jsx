@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 // import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
 
-function LoginC({ setIsUser }) {
+function LoginC() {
   // const { setIsUser } = useCustomerAuth();
 
   const navigate = useNavigate();
@@ -23,8 +23,8 @@ function LoginC({ setIsUser }) {
 
   console.log("api", apiData);
   if (apiData) {
-    // console.log("apiData", apiData);
-    setIsUser(apiData);
+    // was testing to see if I can get the navbar to auto update without editing usePost (have a usePostLogin to test out other stuff if this don't work.)
+    // setIsUser(apiData);
     const from = location.state?.from?.pathname || "/";
     navigate(from);
   }

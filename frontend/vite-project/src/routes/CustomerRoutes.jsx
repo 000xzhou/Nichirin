@@ -10,24 +10,25 @@ import CustomerProtectRoute from "./CustomerProtectRoute";
 import Checkout from "../components/product/Checkout";
 // import CustomerAuthProvider from "./CustomerAuthProvider";
 // import { useCustomerAuth } from "./CustomerAuthProvider";
-import { useState } from "react";
 
 function CustomerRoutes() {
-  const [isUser, setIsUser] = useState(null);
-  console.log("Current isUser state:", isUser);
-  const handleSetIsUser = (value) => {
-    setIsUser(value);
-  };
+  // const [isUser, setIsUser] = useState(null);
+  // console.log("Current isUser state:", isUser);
+  // const handleSetIsUser = (value) => {
+  //   setIsUser(value);
+  // };
 
   return (
     <>
-      <NavBar isUser={isUser} setIsUser={setIsUser} />
+      <CustomerAuthProvider>
+        <NavBar />
+      </CustomerAuthProvider>
       <main>
         <Routes>
           <Route path="/" element={<Landing />} />
           {/* login and register  */}
-          <Route path="login" element={<LoginC setIsUser={setIsUser} />} />
-          <Route path="register" element={<Register setIsUser={setIsUser} />} />
+          <Route path="login" element={<LoginC />} />
+          <Route path="register" element={<Register />} />
           {/* customers details */}
           <Route path="customers/*" element={<CustomerProtectRoute />} />
 
