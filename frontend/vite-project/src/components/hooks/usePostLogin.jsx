@@ -16,13 +16,15 @@ const usePostLogin = (initialState, endpoint) => {
     const { name, value } = e.target;
     setFormData((data) => ({
       ...data,
-      [name]: value,
+      [name]: name === "phone" ? Number(value) : value,
+      // [name]: value,
     }));
   };
 
   //   fetching data from api
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       // api
       const api = new ApiService("http://localhost:3000");

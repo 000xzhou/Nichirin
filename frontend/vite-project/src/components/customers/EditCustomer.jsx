@@ -1,7 +1,7 @@
 import usePost from "../hooks/usePost";
 import { Link } from "react-router-dom";
 
-function EditC() {
+function EditCustomer() {
   // get after customer press edit in their page
   let id = 13456;
 
@@ -51,4 +51,4 @@ function EditC() {
   );
 }
 
-export default EditC;
+export default EditCustomer;

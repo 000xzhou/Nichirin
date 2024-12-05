@@ -6,6 +6,7 @@ function Register() {
     password: "",
     first_name: "",
     last_name: "",
+    phone: "",
   };
 
   const [formData, handleChange, handleSubmit, error] = usePostLogin(
@@ -40,6 +41,15 @@ function Register() {
           id="last_name"
           name="last_name"
           value={formData.last_name}
+          onChange={handleChange}
+        />
+        <label htmlFor="phone">Phone:</label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
+          value={formData.phone}
           onChange={handleChange}
         />
         <label htmlFor="password">Password:</label>

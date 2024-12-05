@@ -4,21 +4,27 @@ import { useState, useEffect } from "react";
 
 function Footing() {
   const { isUser } = useCustomerAuth();
-  const [user, setUser] = useState("");
+  // const [user, setUser] = useState("");
 
-  // if (isUser) {
-  //   setUser(isUser._id);
-  // } else {
-  //   setUser("");
-  // }
+  // useEffect(() => {
+  //   if (isUser) {
+  //     setUser(isUser._id);
+  //   } else {
+  //     setUser("");
+  //   }
+  // }, [isUser]);
 
   return (
     <div>
       <section>
         <article>
           <div>
-            <p>Help</p>
-            <Link to={`/customers/${user}`}>My Account</Link>
+            <h3>Help</h3>
+            {isUser ? (
+              <Link to={`/customers/${isUser._id}`}>My Account</Link>
+            ) : (
+              <Link to={`/`}>My Account</Link>
+            )}
             <span> | </span>
             <Link to="/about-us">Exchanges & Returns</Link>
             <span> | </span>
@@ -26,7 +32,7 @@ function Footing() {
           </div>
         </article>
         <article>
-          <p>About</p>
+          <h3>About</h3>
           <Link to="/about-us">About Us</Link>
           <span> | </span>
           <Link to="/about-us">Careers</Link>
