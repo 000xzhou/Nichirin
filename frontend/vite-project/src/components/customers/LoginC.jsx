@@ -1,33 +1,32 @@
 import usePostLogin from "../hooks/usePostLogin";
 import { Link } from "react-router-dom";
-import { useNavigate, useLocation } from "react-router-dom";
+// import { useNavigate, useLocation } from "react-router-dom";
 // import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
 
 function LoginC() {
-  // const { setIsUser } = useCustomerAuth();
+  // const { handleLogin } = useCustomerAuth();
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  // const navigate = useNavigate();
+  // const location = useLocation();
 
   const initialState = {
     email: "",
     password: "",
   };
 
-  const [formData, handleChange, handleSubmit, error, apiData] = usePostLogin(
+  const [formData, handleChange, handleSubmit, error] = usePostLogin(
     initialState,
     "/customers/login"
   );
 
   if (error) return <div>Error: {error.message}</div>;
 
-  console.log("api", apiData);
-  if (apiData) {
-    // was testing to see if I can get the navbar to auto update without editing usePost (have a usePostLogin to test out other stuff if this don't work.)
-    // setIsUser(apiData);
-    const from = location.state?.from?.pathname || "/";
-    navigate(from);
-  }
+  // if (apiData) {
+  //   // was testing to see if I can get the navbar to auto update without editing usePost (have a usePostLogin to test out other stuff if this don't work.)
+  //   // setIsUser(apiData);
+  //   const from = location.state?.from?.pathname || "/";
+  //   navigate(from);
+  // }
 
   return (
     <div>

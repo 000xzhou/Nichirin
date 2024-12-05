@@ -1,12 +1,24 @@
 import { Link } from "react-router-dom";
+import { useCustomerAuth } from "../routes/CustomerAuthProvider";
+import { useState, useEffect } from "react";
+
 function Footing() {
+  const { isUser } = useCustomerAuth();
+  const [user, setUser] = useState("");
+
+  // if (isUser) {
+  //   setUser(isUser._id);
+  // } else {
+  //   setUser("");
+  // }
+
   return (
     <div>
       <section>
         <article>
           <div>
             <p>Help</p>
-            <Link to="/customers/66c64187549e58cbe00a3ae4">My Account</Link>
+            <Link to={`/customers/${user}`}>My Account</Link>
             <span> | </span>
             <Link to="/about-us">Exchanges & Returns</Link>
             <span> | </span>

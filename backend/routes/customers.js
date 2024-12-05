@@ -11,6 +11,34 @@ const {
   ensureCorrectUserOrStaff,
 } = require("../middleware/auth");
 const { BadRequestError } = require("../expressError");
+const jwt = require("jsonwebtoken");
+
+/** GET /
+ *
+ * Authorization required: none
+ **/
+router.get("/user-auth", async (req, res) => {
+  const token = req.cookies.token; // Get the token from the httpOnly cookie
+  // console.log(token);
+  if (!token) {
+    return res.json({ error: "no token" });
+  }
+  try {
+    // Verify the token (assuming JWT is used)
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Fetch user details from the database
+    const user = await Customer.findById(verified.id);
+
+    if (!user) {
+      return res.json({ error: "user not found" });
+    }
+
+    return res.json({ user: user });
+  } catch (err) {
+    return res.json({ error: err });
+  }
+});
 
 /** POST / { customer }  => { customer, token }
  *

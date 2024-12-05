@@ -34,6 +34,7 @@ function LoginE() {
         .post("/employee/login", formData)
         .then((data) => {
           console.log("Login successful");
+          console.log(data);
           // Redirect based on user type
           // setIsAuthenticated(true);
           navigate("/employee/dashboard");

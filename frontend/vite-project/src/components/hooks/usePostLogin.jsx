@@ -1,16 +1,16 @@
 import { useState } from "react";
 import ApiService from "../../api/api";
 import { useNavigate, useLocation } from "react-router-dom";
-// import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
+import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
 
 const usePostLogin = (initialState, endpoint) => {
   const [formData, setFormData] = useState(initialState);
-  const [apiData, setApiData] = useState(null);
+  // const [apiData, setApiData] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  // const { isUser, setIsUser } = useCustomerAuth();
+  const { setIsUser } = useCustomerAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,10 +30,14 @@ const usePostLogin = (initialState, endpoint) => {
       api
         .post(endpoint, formData)
         .then((data) => {
-          setApiData(data);
-          // send them back to the page they were at.
-          // console.log("Here at right before nav from", from);
-          // navigate(from);
+          // setApiData(data);
+          setIsUser(data.customer);
+          if (from) {
+            // send them back to the page they were at.
+            navigate(from);
+          } else {
+            navigate("/");
+          }
         })
         .catch((err) => setError(err));
     } catch (error) {
@@ -42,6 +46,6 @@ const usePostLogin = (initialState, endpoint) => {
     }
   };
 
-  return [formData, handleChange, handleSubmit, error, apiData];
+  return [formData, handleChange, handleSubmit, error];
 };
 export default usePostLogin;

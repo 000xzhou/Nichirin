@@ -8,6 +8,7 @@ const customerRouter = require("./routes/customers");
 const productRouter = require("./routes/products");
 const employeeRouter = require("./routes/employee");
 const reviewRouter = require("./routes/reviews");
+const Customer = require("./models/customers/customers");
 
 const jwt = require("jsonwebtoken");
 
@@ -46,23 +47,6 @@ app.use("/customers", customerRouter);
 app.use("/products", productRouter);
 app.use("/employee", employeeRouter);
 app.use("/reviews", reviewRouter);
-
-// auth login
-app.get("/check-auth", (req, res) => {
-  const token = req.cookies.token; // Get the token from the httpOnly cookie
-  // console.log(token);
-  if (!token) {
-    return res.json({ isAuthenticated: false });
-  }
-
-  try {
-    // Verify the token (assuming JWT is used)
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
-    return res.json({ isAuthenticated: true, user: verified });
-  } catch (err) {
-    return res.json({ isAuthenticated: false });
-  }
-});
 
 // logout for all
 app.get("/logout", (req, res) => {

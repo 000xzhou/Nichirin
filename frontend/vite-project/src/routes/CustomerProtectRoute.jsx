@@ -7,12 +7,12 @@ import CustomerAuthProvider from "./CustomerAuthProvider";
 
 function CustomerProtectRoute() {
   return (
-    <CustomerAuthProvider>
-      <Routes>
-        {/* <Route path="test" element={<Test />} /> */}
-        <Route path=":id" element={<CustomerDetail />} />
-      </Routes>
-    </CustomerAuthProvider>
+    // <CustomerAuthProvider>
+    <Routes>
+      {/* <Route path="test" element={<Test />} /> */}
+      <Route path=":id" element={<CustomerDetail />} />
+    </Routes>
+    // </CustomerAuthProvider>
   );
 }
 

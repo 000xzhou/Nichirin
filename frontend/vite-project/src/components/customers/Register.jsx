@@ -1,4 +1,4 @@
-import usePost from "../hooks/usePost";
+import usePostLogin from "../hooks/usePostLogin";
 
 function Register() {
   const initialState = {
@@ -8,7 +8,7 @@ function Register() {
     last_name: "",
   };
 
-  const [formData, handleChange, handleSubmit, error] = usePost(
+  const [formData, handleChange, handleSubmit, error] = usePostLogin(
     initialState,
     "/customers/register"
   );

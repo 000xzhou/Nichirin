@@ -8,27 +8,31 @@ const EmployeeAuthContext = React.createContext();
 export const useEmployeeAuth = () => {
   return useContext(EmployeeAuthContext);
 };
-
 // Auth provider to manage authentication state
 const EmployeeAuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null); // Initial state: not checked
   const [isUser, setIsUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  console.log("isAuthenticated", isAuthenticated);
 
   // Function to check if the user is authenticated
   const checkAuth = async () => {
     try {
-      const response = await fetch("http://localhost:3000/check-auth", {
-        credentials: "include", // Ensure cookies are sent
-      });
+      const response = await fetch(
+        "http://localhost:3000/employee/employee-auth",
+        {
+          credentials: "include", // Ensure cookies are sent
+        }
+      );
       const data = await response.json();
+      console.log("in check", data);
       if (data.isAuthenticated) {
         setIsAuthenticated(true);
       } else {
         setIsAuthenticated(false);
       }
       if (data.isUser) {
-        setIsUser(data.isUser);
+        setIsUser(data.user);
       }
     } catch (error) {
       setIsAuthenticated(false);

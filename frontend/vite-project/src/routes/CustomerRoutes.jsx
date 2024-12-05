@@ -8,7 +8,9 @@ import ProductDetail from "../components/product/ProductDetail";
 import Landing from "../components/Landing";
 import CustomerProtectRoute from "./CustomerProtectRoute";
 import Checkout from "../components/product/Checkout";
-// import CustomerAuthProvider from "./CustomerAuthProvider";
+import CustomerAuthProvider from "./CustomerAuthProvider";
+import Cart from "../components/product/Cart";
+
 // import { useCustomerAuth } from "./CustomerAuthProvider";
 
 function CustomerRoutes() {
@@ -22,23 +24,24 @@ function CustomerRoutes() {
     <>
       <CustomerAuthProvider>
         <NavBar />
-      </CustomerAuthProvider>
-      <main>
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          {/* login and register  */}
-          <Route path="login" element={<LoginC />} />
-          <Route path="register" element={<Register />} />
-          {/* customers details */}
-          <Route path="customers/*" element={<CustomerProtectRoute />} />
+        <main>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            {/* login and register  */}
+            <Route path="login" element={<LoginC />} />
+            <Route path="register" element={<Register />} />
+            {/* customers details */}
+            <Route path="customers/*" element={<CustomerProtectRoute />} />
 
-          {/* products */}
-          <Route path="products" element={<ProductsList />} />
-          <Route path="products/:id" element={<ProductDetail />} />
-          <Route path="checkout" element={<Checkout />} />
-        </Routes>
-      </main>
-      <Footing />
+            {/* products */}
+            <Route path="products" element={<ProductsList />} />
+            <Route path="products/:id" element={<ProductDetail />} />
+            <Route path=":/cart" element={<Cart />} />
+            <Route path="checkout" element={<Checkout />} />
+          </Routes>
+        </main>
+        <Footing />
+      </CustomerAuthProvider>
     </>
   );
 }

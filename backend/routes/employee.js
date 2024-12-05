@@ -5,6 +5,32 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const { createToken } = require("../middleware/tokens");
 const { ensureAdmin, ensureCorrectStaff } = require("../middleware/auth");
+const jwt = require("jsonwebtoken");
+
+// auth login employee
+router.get("/employee-auth", async (req, res) => {
+  const token = req.cookies.token; // Get the token from the httpOnly cookie
+  // console.log(token);
+  if (!token) {
+    return res.json({ isAuthenticated: false });
+  }
+
+  try {
+    // Verify the token (assuming JWT is used)
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Fetch user details from the database
+    const user = await Employee.findById(verified.id);
+
+    if (!user) {
+      return res.json({ isAuthenticated: false });
+    }
+
+    return res.json({ isAuthenticated: true, user: user });
+  } catch (err) {
+    return res.json({ isAuthenticated: false });
+  }
+});
 
 /** GET / => { employee: [ { _id, email, first_name, last_name, ... }, ... ] }
  *
