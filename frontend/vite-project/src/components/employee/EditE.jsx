@@ -9,7 +9,7 @@ function EditE() {
         <label htmlFor="lname">Last Name:</label>
         <input type="text" id="lname" name="lname" />
         <label htmlFor="password">Password:</label>
-        <input type="text" id="password" name="password" />
+        <input type="password" id="password" name="password" />
         <label htmlFor="phone">Phone:</label>
         <input type="text" id="phone" name="phone" />
         <label htmlFor="status">Status:</label>

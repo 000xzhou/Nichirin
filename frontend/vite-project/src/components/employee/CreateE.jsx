@@ -63,14 +63,16 @@ function CreateE() {
           onChange={handleChange}
           value={formData.last_name}
         />
+        {/*
+        Should send a default or random password and have them reset it
         <label htmlFor="password">Password:</label>
         <input
-          type="text"
+          type="password"
           id="password"
           name="password"
           onChange={handleChange}
           value={formData.password}
-        />
+        /> */}
         <label htmlFor="phone">Phone:</label>
         <input
           type="text"

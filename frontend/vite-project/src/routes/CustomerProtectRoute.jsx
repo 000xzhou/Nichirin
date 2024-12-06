@@ -1,18 +1,17 @@
 import { Routes, Route } from "react-router-dom";
 import CustomerDetail from "../components/customers/CustomerDetail";
-import CustomerAuthProvider from "./CustomerAuthProvider";
-// import LoginC from "../components/customers/LoginC";
-// import Register from "../components/customers/Register";
-// import Test from "./Test";
+import EditCustomer from "../components/customers/EditCustomer";
+import EditAddress from "../components/customers/EditAddress";
 
 function CustomerProtectRoute() {
   return (
-    // <CustomerAuthProvider>
     <Routes>
-      {/* <Route path="test" element={<Test />} /> */}
       <Route path=":id" element={<CustomerDetail />} />
+      <Route path="edit-info" element={<EditCustomer />} />
+      {/* do I really need 2 seperate ones? we will see later */}
+      <Route path="edit-address" element={<EditAddress />} />
+      <Route path="edit-shipping  " element={<EditAddress />} />
     </Routes>
-    // </CustomerAuthProvider>
   );
 }
 
