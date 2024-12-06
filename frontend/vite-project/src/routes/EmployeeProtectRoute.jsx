@@ -3,10 +3,10 @@ import CreateE from "../components/employee/CreateE";
 import EmployeeList from "../components/employee/EmployeeList";
 import EmployeeDetail from "../components/employee/EmployeeDetail";
 import EmployeeAuthProvider from "./EmployeeAuthProvider";
-import ProductsListE from "../components/product/ProductListE";
-import CreateP from "../components/product/CreateP";
-import CustomerSearch from "../components/customers/CustomerSearch";
-import CustomerDetail from "../components/customers/CustomerDetail";
+import ProductsListE from "../components/employee/ProductListE";
+import CreateP from "../components/employee/CreateP";
+import CustomerSearch from "../components/employee/CustomerSearch";
+// import CustomerDetail from "../components/customers/CustomerDetail";
 import EmployeeNavBar from "../components/EmployeeNavBar";
 import EmployeeDashboard from "../components/employee/EmployeeDashboard";
 
@@ -25,7 +25,7 @@ function EmployeeProtectRoute() {
 
         {/* customers */}
         <Route path="customers" element={<CustomerSearch />} />
-        <Route path="customers/:id" element={<CustomerDetail />} />
+        {/* <Route path="customers/:id" element={<CustomerDetail />} /> */}
 
         {/* products */}
         <Route path="products/create" element={<CreateP />} />
