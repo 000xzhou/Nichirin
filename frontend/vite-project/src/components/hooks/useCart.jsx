@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 
 const useCart = (initialState = null) => {
   const [cart, setCart] = useState(initialState);
+  const [cartNum, setCartNum] = useState(0);
   const [loading, setLoading] = useState(true);
+
+  const calculateTotalQuantity = (cart) =>
+    cart.reduce((sum, cartItem) => sum + (cartItem.quantity || 0), 0);
 
   // Add to cart (save to localStorage)
   const handleAddtoCart = (item) => {
@@ -20,15 +24,22 @@ const useCart = (initialState = null) => {
       // If the item does not exist, add it with a quantity of 1
       currentCart.push({ ...item, quantity: 1 });
     }
-
     localStorage.setItem("cart", JSON.stringify(currentCart));
     setCart(currentCart); // Update state to reflect the new cart
+
+    const totalQuantity = calculateTotalQuantity(currentCart);
+    setCartNum(totalQuantity);
+
+    // setCartNum(currentCart.length);
   };
 
   // Get from cart (retrieve from localStorage)
   const handleGetFromCart = () => {
     const cartFromStorage = JSON.parse(localStorage.getItem("cart")) || [];
     setCart(cartFromStorage); // Set the cart state with the current localStorage cart
+    // setCartNum(cartFromStorage.length);
+    const totalQuantity = calculateTotalQuantity(cartFromStorage);
+    setCartNum(totalQuantity);
 
     return cartFromStorage;
   };
@@ -53,6 +64,9 @@ const useCart = (initialState = null) => {
     // Update localStorage and state
     localStorage.setItem("cart", JSON.stringify(updatedCart));
     setCart(updatedCart);
+    // setCartNum(updatedCart.length);
+    const totalQuantity = calculateTotalQuantity(updatedCart);
+    setCartNum(totalQuantity);
   };
 
   // const handleChangeQty = (id, newQty) => {
@@ -99,12 +113,16 @@ const useCart = (initialState = null) => {
     // Update localStorage and state
     localStorage.setItem("cart", JSON.stringify(updatedCart));
     setCart(updatedCart); // Update the cart state
+    // setCartNum(updatedCart.length);
+    const totalQuantity = calculateTotalQuantity(updatedCart);
+    setCartNum(totalQuantity);
   };
 
   // Clear the entire cart
   const handleClearCart = () => {
     localStorage.removeItem("cart"); // Remove the cart from localStorage
     setCart([]); // Set the cart state to an empty array
+    setCartNum(0);
   };
 
   useEffect(() => {
@@ -120,6 +138,8 @@ const useCart = (initialState = null) => {
     setCart,
     loading,
     handleClearCart,
+    cartNum,
+    handleGetFromCart,
   ];
 };
 

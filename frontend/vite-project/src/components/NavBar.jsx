@@ -1,30 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
-// import { useEffect, useState } from "react";
 import "./NavBar.css";
-import ApiService from "../api/api";
+import useCart from "./hooks/useCart";
 import { useCustomerAuth } from "../routes/CustomerAuthProvider";
-// import Cart from "./product/Cart";
 
 const Navbar = () => {
   const location = useLocation();
   const { isUser, handleLogout } = useCustomerAuth();
+  const [, , , , , , , cartNum] = useCart();
 
-  // const handleLogout = (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     // api
-  //     const api = new ApiService("http://localhost:3000");
-
-  //     api
-  //       .get("/logout")
-  //       .then(() => {
-  //         setIsUser(false);
-  //       })
-  //       .catch((err) => console.error(err));
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  console.log(cartNum);
   return (
     <nav>
       <Link to="/">Logo</Link>
@@ -46,8 +30,8 @@ const Navbar = () => {
           logout
         </button>
         {/* gets num from local storage (there should be one that just store number) */}
-        <Link to="/customers/cart" className="material-symbols-outlined">
-          <span>#</span>shopping_cart
+        <Link to="/cart" className="material-symbols-outlined">
+          shopping_cart<span>{cartNum}</span>
         </Link>
       </div>
     </nav>
