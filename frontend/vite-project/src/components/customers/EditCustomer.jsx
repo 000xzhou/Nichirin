@@ -1,5 +1,5 @@
 import usePost from "../hooks/usePost";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
 
 function EditCustomer() {
@@ -48,15 +48,11 @@ function EditCustomer() {
           placeholder={formData.lname}
           onChange={handleChange}
         />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value={formData.password}
-          placeholder={formData.password}
-          onChange={handleChange}
-        />
+        {/* <label htmlFor="password">Password:</label>
+        <div>******</div>
+        <button>
+          <Link to="edit-password">edit</Link>
+        </button> */}
         <label htmlFor="phone">Phone:</label>
         <input
           type="text"

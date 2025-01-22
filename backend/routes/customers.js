@@ -271,24 +271,30 @@ router.patch("/:id", ensureCorrectUserOrStaff, async (req, res) => {
 
 /** PATCH /[customers] => { customers }
  *
- * Data can include: address
+ * Data: address, shipping
  *
  * Returns { _id, email, first_name, last_name, password, phone, ... }
  *
  * Authorization required: staff or same user-as-:id
  **/
-router.patch("/:id/address", ensureCorrectUserOrStaff, async (req, res) => {
+router.patch("/:id/:type", ensureCorrectUserOrStaff, async (req, res) => {
   try {
-    const id = req.params.id;
+    // const id = req.params.id;
+    const { id, type } = req.params;
 
     // Check if the ID is a valid MongoDB ObjectId
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Invalid ID format" });
     }
 
+    // Ensure the type is valid
+    if (!["address", "shipping"].includes(type)) {
+      return res.status(400).json({ message: "Invalid type parameter" });
+    }
+
     // Update only the address field
     const updatedcustomer = await Customer.findByIdAndUpdate(id, {
-      $set: { address: req.body.address },
+      $set: { [type]: req.body.address },
     });
     if (!updatedcustomer) {
       return res.status(404).json({ message: `Customer id ${id} not found` });

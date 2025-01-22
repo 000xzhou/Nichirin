@@ -1,7 +1,10 @@
-function EditAddress() {
+function EditAddress({ type }) {
   // USA shipping only. country should auto fill as usa
   return (
     <div>
+      <h1>
+        Edit {type === "billing" ? "Billing" : "Shipping"} : Use for post method
+      </h1>
       <form action="" method="post">
         <label htmlFor="line1">Line1:</label>
         <input type="text" id="line1" />
