@@ -2,19 +2,19 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
-import EditCustomerForm from "./editCustomerForm";
+// import EditCustomerForm from "./EditCustomerForm";
 
-function EditCustomer() {
+function EditCustomer2() {
   const { isUser } = useCustomerAuth();
-  const [isEditing, setIsEditing] = useState(false);
+  // const [isEditing, setIsEditing] = useState(false);
 
-  const handleEditDisplay = () => {
-    setIsEditing(true);
-  };
+  // const handleEditDisplay = () => {
+  //   setIsEditing(true);
+  // };
 
-  const handleFormSubmit = () => {
-    setIsEditing(false);
-  };
+  // const handleFormSubmit = () => {
+  //   setIsEditing(false);
+  // };
   // const initialState = {
   //   email: isUser.email,
   //   password: isUser.password,
@@ -30,16 +30,18 @@ function EditCustomer() {
 
   return (
     <div>
+      <h2>Login & Security</h2>
       <ul>
         <li>
-          {!isEditing && (
-            <section>
-              <div>
-                Name: <span>{isUser.email}</span>
-              </div>
-              <div onClick={handleEditDisplay}>edit</div>
-            </section>
-          )}
+          <section>
+            <div>
+              <span className="bold">Email: </span>
+              {isUser.email}
+            </div>
+            <Link to="email">Edit</Link>
+          </section>
+          {/*
+          Not a fan of how it looks editing on the same page esp when pressing many edit button at the same time without saving so taking it out
           {isEditing && (
             <section>
               <EditCustomerForm
@@ -49,19 +51,34 @@ function EditCustomer() {
                 onFormSubmit={handleFormSubmit}
               />
             </section>
-          )}
+          )} */}
         </li>
         <li>
-          <div>First Name: {isUser.first_name}</div>
-          <div>edit</div>
+          <div>
+            {" "}
+            <span className="bold">First Name: </span>
+            {isUser.first_name}
+          </div>
+          <Link to="fname">Edit</Link>
         </li>
         <li>
-          <div>Last Name: {isUser.last_name}</div>
-          <div>edit</div>
+          <div>
+            <span className="bold">Last Name: </span>
+            {isUser.last_name}
+          </div>
+          <Link to="lname">Edit</Link>
         </li>
         <li>
-          <div>Password: {isUser.password}</div>
-          <div>edit</div>
+          <div>
+            <span className="bold">Password: </span>
+            {/* 
+            It give the salted password currently... So it would always be 10
+            I don't think it matters if I unsalt it or not here. Just need to check when they change password.
+            I should have just put 10 stars instead of getting it and cutting it and replacing it.
+            {isUser.password} */}
+            {"*".repeat(Math.min(isUser.password.length, 10))}
+          </div>
+          <Link to="password">Edit</Link>
         </li>
       </ul>
       {/* <form action="" method="post" onSubmit={handleSubmit}>
@@ -125,4 +142,4 @@ function EditCustomer() {
   );
 }
 
-export default EditCustomer;
+export default EditCustomer2;
