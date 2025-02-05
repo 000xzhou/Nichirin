@@ -386,10 +386,9 @@ router.patch(
   "/:id/edit-address/:addressId",
   ensureCorrectUserOrStaff,
   async (req, res) => {
+    // const id = req.params.id;
+    const { id, addressId } = req.params;
     try {
-      // const id = req.params.id;
-      const { id, addressId } = req.params;
-
       // Update only the address field
       const updatedcustomer = await Customer.findOneAndUpdate(
         { _id: id, "addresses._id": addressId },
@@ -429,9 +428,8 @@ router.delete(
   "/:id/remove-address/:addressId",
   ensureCorrectUserOrStaff,
   async (req, res) => {
+    const { id, addressId } = req.params;
     try {
-      const { id, addressId } = req.params;
-
       // remove address
       const updatedCustomer = await Customer.findByIdAndUpdate(
         id,
@@ -455,6 +453,45 @@ router.delete(
       res
         .status(200)
         .json({ message: "Address deleted successfully", updatedCustomer });
+    } catch (err) {
+      console.error("Error occurred:", {
+        name: err.name, // Type of the error
+        message: err.message, // General message about the error
+        code: err.code, // MongoDB error code if available
+        path: err.path, // Path to the field that caused the error
+        value: err.value, // The value that caused the error
+      });
+      res.status(500).json({ error: err.message });
+    }
+  }
+);
+
+/** PATCH /[customers] => { customers }
+ *
+ * Update default address
+ *
+ * Returns { _id, email, first_name, last_name, password, phone, ...  }
+ *
+ * Authorization required: staff or same user-as-:id
+ **/
+router.patch(
+  "/:id/default-address/:addressId",
+  ensureCorrectUserOrStaff,
+  async (req, res) => {
+    const { id, addressId } = req.params;
+
+    try {
+      const updatedCustomer = await Customer.findByIdAndUpdate(
+        id,
+        { default_address_id: addressId },
+        { new: true }
+      );
+
+      if (!updatedCustomer) {
+        return res.status(404).json({ message: `Customer not found` });
+      }
+
+      res.status(200).json({ updatedCustomer });
     } catch (err) {
       console.error("Error occurred:", {
         name: err.name, // Type of the error

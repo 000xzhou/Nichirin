@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
-import useDeleteAddress from "../hooks/useDeleteAddress";
+import useAddresses from "../hooks/useAddresses";
 
 function AddressList() {
   const { isUser } = useCustomerAuth();
 
-  const [handleDelete, error] = useDeleteAddress(isUser._id);
+  const [handleDelete, setDefaultAdress] = useAddresses(isUser._id);
 
   return (
     <div>
@@ -43,7 +43,14 @@ function AddressList() {
                 ""
               ) : (
                 <>
-                  {" | "} <Link>Set as Default</Link>
+                  {" | "}{" "}
+                  <Link
+                    onClick={() => {
+                      setDefaultAdress(address._id);
+                    }}
+                  >
+                    Set as Default
+                  </Link>
                 </>
               )}
             </div>
