@@ -21,64 +21,30 @@ function EditCustomerForm() {
     labelType = "";
   }
 
-  // const initialState = { [type]: data };
-  // need to add onformsubmit in handlesubmit.. should I make a new usePost?
-  // { type, userid, data, onFormSubmit }
+  // todo: I feel I should create seperate usePost instead of using all the same because a lot need checking. and different redirecting
+  // todo: right now it redirect to where it come from. Maybe I should add a new param
+  // todo: maybe I should write everything out first before using hooks and making new hooks. Then I will just organized and create as needed.
+
   const [formData, handleChange, handleSubmit, error] = usePost(
-    { [type]: type === "password" ? "" : isUser[type] },
+    { [type]: isUser[type] },
     `/customers/${isUser._id}`
   );
 
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <>
-      {type === "password" ? (
-        <form method="post" onSubmit={handleSubmit}>
-          <label htmlFor={type}>Current password:</label>
-          <input
-            type="text"
-            id={type}
-            name={type}
-            value={formData[type]}
-            // placeholder={formData[type]}
-            onChange={handleChange}
-          />
-          <label htmlFor={type}>New password:</label>
-          <input
-            type="text"
-            id={type}
-            name={type}
-            value={formData[type]}
-            // placeholder={formData[type]}
-            onChange={handleChange}
-          />
-          <label htmlFor={type}>Reenter new password:</label>
-          <input
-            type="text"
-            id={type}
-            name={type}
-            value={formData[type]}
-            // placeholder={formData[type]}
-            onChange={handleChange}
-          />
-          <button type="submit">Save changes</button>
-        </form>
-      ) : (
-        <form method="post" onSubmit={handleSubmit}>
-          <label htmlFor={type}>{labelType}</label>
-          <input
-            type="text"
-            id={type}
-            name={type}
-            value={formData[type]}
-            placeholder={formData[type]}
-            onChange={handleChange}
-          />
-          <button type="submit">Save changes</button>
-        </form>
-      )}
-    </>
+    <form method="post" onSubmit={handleSubmit}>
+      <label htmlFor={type}>{labelType}</label>
+      <input
+        type="text"
+        id={type}
+        name={type}
+        value={formData[type]}
+        placeholder={formData[type]}
+        onChange={handleChange}
+      />
+      <button type="submit">Save changes</button>
+    </form>
   );
 }
 

@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import CustomerDetail from "../components/customers/CustomerDetail";
 import EditCustomerForm from "../components/customers/EditCustomerForm";
 import EditCustomer2 from "../components/customers/EditCustomer2";
+import EditCustomerPasswordForm from "../components/customers/EditCustomerPasswordForm";
 import EditAddress from "../components/customers/EditAddress";
 import AddressList from "../components/customers/AddressList";
 
@@ -14,7 +15,7 @@ function CustomerProtectRoute() {
         <Route path="email" element={<EditCustomerForm />} />
         <Route path="fname" element={<EditCustomerForm />} />
         <Route path="lname" element={<EditCustomerForm />} />
-        <Route path="password" element={<EditCustomerForm />} />
+        <Route path="password" element={<EditCustomerPasswordForm />} />
       </Route>
       {/* do I really need 2 seperate ones? we will see later */}
       {/* <Route path="edit-address" element={<EditAddress />} /> */}
