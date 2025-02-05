@@ -1,6 +1,6 @@
 // import usePost from "../hooks/usePost";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+// import { useState } from "react";
 import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
 // import EditCustomerForm from "./EditCustomerForm";
 
@@ -55,7 +55,6 @@ function EditCustomer2() {
         </li>
         <li>
           <div>
-            {" "}
             <span className="bold">First Name: </span>
             {isUser.first_name}
           </div>

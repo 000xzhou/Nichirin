@@ -9,7 +9,7 @@ const usePost = (initialState, endpoint) => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-
+  // console.log(formData);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((data) => ({
