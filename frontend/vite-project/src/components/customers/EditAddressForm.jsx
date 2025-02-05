@@ -1,11 +1,14 @@
-function EditAddress({ type }) {
+import usePatch from "../hooks/usePatch";
+
+function EditAddressForm() {
   // USA shipping only. country should auto fill as usa
+
   return (
     <div>
-      <h1>
+      {/* <h1>
         Edit {type === "billing" ? "Billing" : "Shipping"} : Use for post method
-      </h1>
-      <form action="" method="post">
+      </h1> */}
+      <form method="patch">
         <label htmlFor="line1">Line1:</label>
         <input type="text" id="line1" />
         <label htmlFor="line2">Line2:</label>
@@ -22,4 +25,4 @@ function EditAddress({ type }) {
   );
 }
 
-export default EditAddress;
+export default EditAddressForm;

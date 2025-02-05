@@ -39,7 +39,7 @@ const usePatchPassword = (initialState, endpoint) => {
           ...updatedUser,
         }));
 
-        navigate("/customers/edit-info");
+        navigate("/customers/login-security");
       } catch (error) {
         console.log(error);
         setError(error);

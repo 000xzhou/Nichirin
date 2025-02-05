@@ -21,6 +21,7 @@ const usePatch = (initialState, endpoint) => {
   };
 
   const handleSubmit = async (e) => {
+    console.log(formData);
     e.preventDefault();
     try {
       // api
@@ -35,8 +36,12 @@ const usePatch = (initialState, endpoint) => {
         ...updatedUser,
       }));
 
-      // send them back to the
-      navigate("/customers/edit-info");
+      // send them back
+      if (endpoint.split("/").pop() === "add-address") {
+        navigate("/customers/addresses");
+      } else {
+        navigate("/customers/login-security");
+      }
     } catch (error) {
       console.log(error);
       setError(error);

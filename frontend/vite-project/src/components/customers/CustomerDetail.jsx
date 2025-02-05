@@ -1,6 +1,6 @@
 import useGet from "../hooks/useGet";
 import { useParams, Link } from "react-router-dom";
-import EditAddress from "./EditAddress";
+import EditAddress from "./EditAddressForm";
 import EditCustomer from "./EditCustomer";
 
 function CustomerDetail() {
@@ -23,7 +23,7 @@ function CustomerDetail() {
             <p>Track, return, cancel an order</p>
           </div>
         </Link>
-        <Link to="/customers/edit-info">
+        <Link to="/customers/login-security">
           <span className="material-symbols-outlined">
             admin_panel_settings
           </span>
@@ -32,20 +32,20 @@ function CustomerDetail() {
             <p>Edit login, name, and phone number</p>
           </div>
         </Link>
-        <Link to="/customers/edit-address">
+        <Link to="/customers/addresses">
           <span className="material-symbols-outlined">home</span>
           <div>
             <h3>Your Address</h3>
             <p>Edit your address</p>
           </div>
         </Link>
-        <Link to="/customers/edit-address">
+        {/* <Link to="/customers/edit-address">
           <span className="material-symbols-outlined">local_shipping</span>
           <div>
             <h3>Your Shipping Address</h3>
             <p>Edit your Shipping address</p>
           </div>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

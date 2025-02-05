@@ -315,6 +315,63 @@ router.patch("/:id/password", ensureCorrectUserOrStaff, async (req, res) => {
 
 /** PATCH /[customers] => { customers }
  *
+ * Data: address
+ *
+ * Returns { _id, email, first_name, last_name, password, phone, ...  }
+ *
+ * Authorization required: staff or same user-as-:id
+ **/
+router.patch("/:id/add-address", ensureCorrectUserOrStaff, async (req, res) => {
+  try {
+    // const id = req.params.id;
+    const { id } = req.params;
+
+    // Update only the address field
+    const updatedcustomer = await Customer.findByIdAndUpdate(
+      id,
+      {
+        $push: { addresses: req.body },
+      },
+      { new: true }
+    );
+
+    if (!updatedcustomer) {
+      return res.status(404).json({ message: `Customer id ${id} not found` });
+    }
+
+    // Check if there a default address
+    const customer = await Customer.findById(id);
+
+    if (customer.default_address_id === null) {
+      // Get the last added address (_id is now generated)
+      const newlyAddedAddress =
+        updatedcustomer.addresses[updatedcustomer.addresses.length - 1];
+      // Update default_address_id
+      const finalCustomer = await Customer.findByIdAndUpdate(
+        id,
+        { default_address_id: newlyAddedAddress._id },
+        { new: true }
+      );
+
+      //sent back
+      return res.status(200).json(finalCustomer);
+    }
+
+    res.status(200).send(updatedcustomer);
+  } catch (err) {
+    console.error("Error occurred:", {
+      name: err.name, // Type of the error
+      message: err.message, // General message about the error
+      code: err.code, // MongoDB error code if available
+      path: err.path, // Path to the field that caused the error
+      value: err.value, // The value that caused the error
+    });
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/** PATCH /[customers] => { customers }
+ *
  * Data: address, shipping
  *
  * Returns { _id, email, first_name, last_name, password, phone, ... }

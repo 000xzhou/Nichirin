@@ -10,10 +10,10 @@ function AddressList() {
       </p>
       <ul>
         <li>
-          <Link>Add Address</Link>
+          <Link to="add">Add Address</Link>
         </li>
         <li>
-          <div>
+          <div id="the address id to send over for editing">
             <div>Name</div>
             <div>line1</div>
             <div>line2 (if there is)</div>
