@@ -19,7 +19,6 @@ const usePatch = (initialState, endpoint) => {
   };
 
   const handleSubmit = async (e) => {
-    console.log(formData);
     e.preventDefault();
     try {
       // api

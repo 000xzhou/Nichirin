@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
+import useDeleteAddress from "../hooks/useDeleteAddress";
 
 function AddressList() {
   const { isUser } = useCustomerAuth();
+
+  const [handleDelete, error] = useDeleteAddress(isUser._id);
 
   return (
     <div>
@@ -28,7 +31,14 @@ function AddressList() {
               <p>{address.country}</p>
             </div>
             <div>
-              <Link to={`edit/${address._id}`}>Edit</Link> | <Link>Remove</Link>
+              <Link to={`edit/${address._id}`}>Edit</Link> |{" "}
+              <Link
+                onClick={() => {
+                  handleDelete(address._id);
+                }}
+              >
+                Remove
+              </Link>
               {isUser.default_address_id === address._id ? (
                 ""
               ) : (

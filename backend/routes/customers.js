@@ -417,6 +417,57 @@ router.patch(
   }
 );
 
+/** DELETE /[customers] => { customers }
+ *
+ * Delete/remove address from addresses
+ *
+ * Returns { _id, email, first_name, last_name, password, phone, ...  }
+ *
+ * Authorization required: staff or same user-as-:id
+ **/
+router.delete(
+  "/:id/remove-address/:addressId",
+  ensureCorrectUserOrStaff,
+  async (req, res) => {
+    try {
+      const { id, addressId } = req.params;
+
+      // remove address
+      const updatedCustomer = await Customer.findByIdAndUpdate(
+        id,
+        { $pull: { addresses: { _id: addressId } } }, // Remove the address
+        { new: true }
+      );
+
+      if (!updatedCustomer) {
+        return res.status(404).json({ message: `Customer not found` });
+      }
+
+      // Check if the deleted address was set as default
+      if (updatedCustomer.default_address_id?.toString() === addressId) {
+        await Customer.findByIdAndUpdate(
+          id,
+          { default_address_id: null },
+          { new: true }
+        );
+      }
+
+      res
+        .status(200)
+        .json({ message: "Address deleted successfully", updatedCustomer });
+    } catch (err) {
+      console.error("Error occurred:", {
+        name: err.name, // Type of the error
+        message: err.message, // General message about the error
+        code: err.code, // MongoDB error code if available
+        path: err.path, // Path to the field that caused the error
+        value: err.value, // The value that caused the error
+      });
+      res.status(500).json({ error: err.message });
+    }
+  }
+);
+
 /** PATCH /[customers] => { customers }
  *
  * Data: address, shipping
