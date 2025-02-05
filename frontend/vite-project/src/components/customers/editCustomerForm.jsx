@@ -6,7 +6,7 @@ function EditCustomerForm() {
   const { isUser } = useCustomerAuth();
   const section = useParams();
   let type = section["*"]?.split("/")[1];
-  console.log(isUser);
+
   // edit anything wording that needs editing to match db
   let labelType = "";
   if (type === "email") {

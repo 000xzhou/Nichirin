@@ -77,7 +77,9 @@ class ApiService {
   async handleResponse(response) {
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || "Something went wrong");
+      throw new Error(
+        errorData.message || errorData.error || "Something went wrong"
+      );
     }
     return response.json();
   }

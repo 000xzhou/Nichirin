@@ -281,8 +281,6 @@ router.patch("/:id/password", ensureCorrectUserOrStaff, async (req, res) => {
   try {
     const id = req.params.id;
     const { oldPassword, newPassword } = req.body;
-    // how to get the old pw unsalted here again?
-    const pw = "";
 
     // Check if the ID is a valid MongoDB ObjectId
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -295,12 +293,10 @@ router.patch("/:id/password", ensureCorrectUserOrStaff, async (req, res) => {
     // Compare old password with hashed password
     const isMatch = await bcrypt.compare(oldPassword, user.password);
     if (!isMatch)
-      return res.status(400).json({ error: "Old password is incorrect" });
+      return res.status(400).json({ error: "Current password is incorrect" });
 
     // change to new pw
-    // note: I check and it was 8. So going to leave it at 8, even though 8 isn't safe but I'm not planing to make this real. If I was I would have use the server that's avaiable already instead of creating everything expect the payment myself.
-    const hashedPassword = await bcrypt.hash(newPassword, 8);
-    user.password = hashedPassword;
+    user.password = newPassword;
     await user.save();
 
     // res.status(200).send(updatedcustomer);

@@ -36,7 +36,7 @@ const usePatch = (initialState, endpoint) => {
       }));
 
       // send them back to the
-      navigate("/");
+      navigate("/customers/edit-info");
     } catch (error) {
       console.log(error);
       setError(error);
