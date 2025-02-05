@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
+import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
+
 function AddressList() {
+  const { isUser } = useCustomerAuth();
+
   return (
     <div>
       <h3>Your Addresses</h3>
@@ -12,40 +16,29 @@ function AddressList() {
         <li>
           <Link to="add">Add Address</Link>
         </li>
-        <li>
-          <div id="the address id to send over for editing">
-            <div>Name</div>
-            <div>line1</div>
-            <div>line2 (if there is)</div>
-            <div>City State zip</div>
-          </div>
-          <div>
-            <Link to="/customers/add-address">Edit |</Link>
-            <Link>
-              Remove
-              {/* remove from db and delete li */}
-            </Link>
-          </div>
-        </li>
-        <li>
-          <div>
-            <div>Name</div>
-            <div>line1</div>
-            <div>line2 (if there is)</div>
-            <div>City State zip</div>
-          </div>
-          <div>
-            <Link>Edit |</Link>
-            <Link>Remove</Link>
-            <Link>
-              | Set as Default
-              {/* ??? Not sure how that will work base on how my db is atm. 
-              Maybe set it as shipping? and have address as a list?
-              Since I don't really care about their address as long as it's ship to the right place and the card matches
-              */}
-            </Link>
-          </div>
-        </li>
+        {isUser.addresses.map((address) => (
+          <li id={address._id} key={address._id}>
+            <div>
+              <p>{address.line1}</p>
+              <p>{address.line2 ? address.line2 : ""}</p>
+              <p>
+                {address.city}
+                {address.state}
+              </p>
+              <p>{address.country}</p>
+            </div>
+            <div>
+              <Link>Edit</Link> | <Link>Remove</Link>
+              {isUser.default_address_id === address._id ? (
+                ""
+              ) : (
+                <>
+                  {" | "} <Link>Set as Default</Link>
+                </>
+              )}
+            </div>
+          </li>
+        ))}
       </ul>
     </div>
   );

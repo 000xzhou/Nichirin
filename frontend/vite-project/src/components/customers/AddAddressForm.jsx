@@ -10,7 +10,8 @@ function AddAddressForm() {
     line2: "",
     city: "",
     state: "",
-    code: "",
+    postal_code: "",
+    country: "United States",
   };
 
   const [formData, handleChange, handleSubmit, error] = usePatch(
@@ -19,6 +20,7 @@ function AddAddressForm() {
   );
   return (
     <div>
+      <h2>Add a new address</h2>
       <div>{error ? error.message : ""}</div>
       <form onSubmit={handleSubmit}>
         <label htmlFor="line1">Country:</label>
@@ -59,12 +61,12 @@ function AddAddressForm() {
           onChange={handleChange}
         />
 
-        <label htmlFor="code">Postal Code:</label>
+        <label htmlFor="postal_code">Postal Code:</label>
         <input
           type="text"
-          id="code"
-          value={formData.code}
-          name="code"
+          id="postal_code"
+          value={formData.postal_code}
+          name="postal_code"
           onChange={handleChange}
         />
 
