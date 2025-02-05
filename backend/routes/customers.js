@@ -317,6 +317,8 @@ router.patch("/:id/password", ensureCorrectUserOrStaff, async (req, res) => {
  *
  * Data: address
  *
+ * Add new address
+ *
  * Returns { _id, email, first_name, last_name, password, phone, ...  }
  *
  * Authorization required: staff or same user-as-:id
@@ -332,7 +334,7 @@ router.patch("/:id/add-address", ensureCorrectUserOrStaff, async (req, res) => {
       {
         $push: { addresses: req.body },
       },
-      { new: true }
+      { new: true, runValidators: true }
     );
 
     if (!updatedcustomer) {
@@ -369,6 +371,51 @@ router.patch("/:id/add-address", ensureCorrectUserOrStaff, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+/** PATCH /[customers] => { customers }
+ *
+ * Data: address
+ *
+ * Edit address
+ *
+ * Returns { _id, email, first_name, last_name, password, phone, ...  }
+ *
+ * Authorization required: staff or same user-as-:id
+ **/
+router.patch(
+  "/:id/edit-address/:addressId",
+  ensureCorrectUserOrStaff,
+  async (req, res) => {
+    try {
+      // const id = req.params.id;
+      const { id, addressId } = req.params;
+
+      // Update only the address field
+      const updatedcustomer = await Customer.findOneAndUpdate(
+        { _id: id, "addresses._id": addressId },
+        { $set: { "addresses.$": req.body } },
+        { new: true, runValidators: true }
+      );
+
+      if (!updatedcustomer) {
+        return res
+          .status(404)
+          .json({ message: `Customer or Address not found` });
+      }
+
+      res.status(200).send(updatedcustomer);
+    } catch (err) {
+      console.error("Error occurred:", {
+        name: err.name, // Type of the error
+        message: err.message, // General message about the error
+        code: err.code, // MongoDB error code if available
+        path: err.path, // Path to the field that caused the error
+        value: err.value, // The value that caused the error
+      });
+      res.status(500).json({ error: err.message });
+    }
+  }
+);
 
 /** PATCH /[customers] => { customers }
  *

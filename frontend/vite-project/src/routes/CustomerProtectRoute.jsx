@@ -24,7 +24,7 @@ function CustomerProtectRoute() {
       <Route path="addresses">
         <Route index element={<AddressList />} />
         <Route path="add" element={<AddAddressForm />} />
-        <Route path="edit" element={<EditAddressForm />} />
+        <Route path="edit/:addressId" element={<EditAddressForm />} />
       </Route>
       {/* <Route path="/add-shipping" element={<EditAddress type="shipping" />} /> */}
     </Routes>

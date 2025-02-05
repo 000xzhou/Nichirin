@@ -5,8 +5,6 @@ import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
 
 const usePatch = (initialState, endpoint) => {
   const [formData, setFormData] = useState(initialState);
-  // const [apiData, setApiData] = useState(null);
-  // const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { setIsUser } = useCustomerAuth();
 
@@ -37,7 +35,7 @@ const usePatch = (initialState, endpoint) => {
       }));
 
       // send them back
-      if (endpoint.split("/").pop() === "add-address") {
+      if (endpoint.includes("address")) {
         navigate("/customers/addresses");
       } else {
         navigate("/customers/login-security");
@@ -48,22 +46,6 @@ const usePatch = (initialState, endpoint) => {
     }
   };
 
-  //   fetching data from api
-  // useEffect(() => {
-  //   const api = new ApiService("http://localhost:3000");
-
-  //   try {
-  //     api.patch(endpoint, formdata).then((data) => {
-  //       setApiData(data);
-  //     });
-  //   } catch (err) {
-  //     setError(err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }, [endpoint, formdata]);
-
-  // return [apiData, loading, error, handleSubmit];
   return [formData, handleChange, handleSubmit, error];
 };
 export default usePatch;

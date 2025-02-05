@@ -28,7 +28,7 @@ function AddressList() {
               <p>{address.country}</p>
             </div>
             <div>
-              <Link>Edit</Link> | <Link>Remove</Link>
+              <Link to={`edit/${address._id}`}>Edit</Link> | <Link>Remove</Link>
               {isUser.default_address_id === address._id ? (
                 ""
               ) : (
