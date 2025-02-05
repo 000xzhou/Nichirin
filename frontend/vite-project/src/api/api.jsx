@@ -52,6 +52,17 @@ class ApiService {
     return this.handleResponse(response);
   }
 
+  // Generic Patch method
+  async patch(endpoint, data) {
+    const response = await fetch(`${this.baseURL}${endpoint}`, {
+      method: "PATCH",
+      headers: this.getHeaders(),
+      credentials: "include",
+      body: JSON.stringify(data),
+    });
+    return this.handleResponse(response);
+  }
+
   // Generic DELETE method
   async delete(endpoint) {
     const response = await fetch(`${this.baseURL}${endpoint}`, {

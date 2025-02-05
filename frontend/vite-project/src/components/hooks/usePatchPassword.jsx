@@ -2,7 +2,7 @@ import { useState } from "react";
 import ApiService from "../../api/api";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const usePostPassword = (initialState, endpoint) => {
+const usePatchPassword = (initialState, endpoint) => {
   const [formData, setFormData] = useState(initialState);
   // const [apiData, setApiData] = useState(null);
   const [error, setError] = useState(null);
@@ -24,7 +24,7 @@ const usePostPassword = (initialState, endpoint) => {
       const api = new ApiService("http://localhost:3000");
 
       api
-        .post(endpoint, formData)
+        .patch(endpoint, formData)
         .then((data) => {
           console.log(data);
           // send them back Login & Security page. (i'm just copying from amazon since I got no design ideas)
@@ -39,4 +39,4 @@ const usePostPassword = (initialState, endpoint) => {
 
   return [formData, handleChange, handleSubmit, error];
 };
-export default usePostPassword;
+export default usePatchPassword;

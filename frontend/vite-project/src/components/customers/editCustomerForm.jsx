@@ -1,4 +1,4 @@
-import usePost from "../hooks/usePost";
+import usePatch from "../hooks/usePatch";
 import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
 import { useParams } from "react-router-dom";
 
@@ -6,7 +6,7 @@ function EditCustomerForm() {
   const { isUser } = useCustomerAuth();
   const section = useParams();
   let type = section["*"]?.split("/")[1];
-
+  console.log(isUser);
   // edit anything wording that needs editing to match db
   let labelType = "";
   if (type === "email") {
@@ -21,11 +21,7 @@ function EditCustomerForm() {
     labelType = "";
   }
 
-  // todo: I feel I should create seperate usePost instead of using all the same because a lot need checking. and different redirecting
-  // todo: right now it redirect to where it come from. Maybe I should add a new param
-  // todo: maybe I should write everything out first before using hooks and making new hooks. Then I will just organized and create as needed.
-
-  const [formData, handleChange, handleSubmit, error] = usePost(
+  const [formData, handleChange, handleSubmit, error] = usePatch(
     { [type]: isUser[type] },
     `/customers/${isUser._id}`
   );

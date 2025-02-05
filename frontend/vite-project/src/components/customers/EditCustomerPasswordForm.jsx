@@ -1,4 +1,4 @@
-import usePostPassword from "../hooks/usePostPassword";
+import usePatchPassword from "../hooks/usePatchPassword";
 import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
 
 function EditCustomerPasswordForm() {
@@ -6,8 +6,8 @@ function EditCustomerPasswordForm() {
 
   // password only
   // todo: Create a change password route in server side for validation
-  const [formData, handleChange, handleSubmit, error] = usePostPassword(
-    { password: "", new: "", renew: "" },
+  const [formData, handleChange, handleSubmit, error] = usePatchPassword(
+    { oldPassword: "", newPassword: "", reenterNewPassword: "" },
     `/customers/${isUser._id}/password`
   );
 
@@ -15,11 +15,11 @@ function EditCustomerPasswordForm() {
 
   return (
     <form method="post" onSubmit={handleSubmit}>
-      <label htmlFor="password">Current password:</label>
+      <label htmlFor="oldPassword">Current password:</label>
       <input
         type="password"
-        id="password"
-        name="password"
+        id="oldPassword"
+        name="oldPassword"
         value={formData}
         onChange={handleChange}
       />

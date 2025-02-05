@@ -269,6 +269,54 @@ router.patch("/:id", ensureCorrectUserOrStaff, async (req, res) => {
   }
 });
 
+/** PATCH /[customers]
+ *
+ * Data can include: anything besides _id
+ *
+ * Returns { message: Password been updated}
+ *
+ * Authorization required: staff or same user-as-:id
+ **/
+router.patch("/:id/password", ensureCorrectUserOrStaff, async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { oldPassword, newPassword } = req.body;
+    // how to get the old pw unsalted here again?
+    const pw = "";
+
+    // Check if the ID is a valid MongoDB ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid ID format" });
+    }
+
+    const user = await Customer.findById(id);
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    // Compare old password with hashed password
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch)
+      return res.status(400).json({ error: "Old password is incorrect" });
+
+    // change to new pw
+    // note: I check and it was 8. So going to leave it at 8, even though 8 isn't safe but I'm not planing to make this real. If I was I would have use the server that's avaiable already instead of creating everything expect the payment myself.
+    const hashedPassword = await bcrypt.hash(newPassword, 8);
+    user.password = hashedPassword;
+    await user.save();
+
+    // res.status(200).send(updatedcustomer);
+    res.status(200).send({ message: "Password been updated" });
+  } catch (err) {
+    console.error("Error occurred:", {
+      name: err.name, // Type of the error
+      message: err.message, // General message about the error
+      code: err.code, // MongoDB error code if available
+      path: err.path, // Path to the field that caused the error
+      value: err.value, // The value that caused the error
+    });
+    res.status(500).json({ error: err.message });
+  }
+});
+
 /** PATCH /[customers] => { customers }
  *
  * Data: address, shipping
