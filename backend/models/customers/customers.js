@@ -45,6 +45,8 @@ const customerSchema = new Schema(
       type: addressSchema,
       required: false,
     },
+    addresses: { type: [addressSchema], default: [] },
+    default_address_id: { type: mongoose.Schema.Types.ObjectId, default: null },
     birthday: {
       type: String,
       required: false,
