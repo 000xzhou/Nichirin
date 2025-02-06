@@ -45,7 +45,7 @@ const usePatchPassword = (initialState, endpoint) => {
         setError(error);
       }
     } else {
-      setError("Password doesn't match!");
+      setError({ message: "Password doesn't match!" });
     }
   };
 

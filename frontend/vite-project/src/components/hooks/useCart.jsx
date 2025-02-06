@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 
-const useCart = (initialState = null) => {
+const useCart = (initialState = []) => {
   const [cart, setCart] = useState(initialState);
   const [cartNum, setCartNum] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  const calculateTotalQuantity = (cart) =>
-    cart.reduce((sum, cartItem) => sum + (cartItem.quantity || 0), 0);
+  const calculateTotalQuantity = (cart) => {
+    if (!cart) return 0;
+    return cart.reduce((sum, cartItem) => sum + (cartItem.quantity || 0), 0);
+  };
 
   // Add to cart (save to localStorage)
   const handleAddtoCart = (item) => {
@@ -25,12 +27,12 @@ const useCart = (initialState = null) => {
       currentCart.push({ ...item, quantity: 1 });
     }
     localStorage.setItem("cart", JSON.stringify(currentCart));
-    setCart(currentCart); // Update state to reflect the new cart
+    // setCart(currentCart); // Update state to reflect the new cart
+    setCart([...currentCart]);
 
-    const totalQuantity = calculateTotalQuantity(currentCart);
-    setCartNum(totalQuantity);
-
-    // setCartNum(currentCart.length);
+    // const totalQuantity = calculateTotalQuantity(currentCart);
+    // setCartNum(totalQuantity);
+    // console.log(totalQuantity);
   };
 
   // Get from cart (retrieve from localStorage)
@@ -126,21 +128,32 @@ const useCart = (initialState = null) => {
   };
 
   useEffect(() => {
-    handleGetFromCart(); // Load the cart when the component mounts
+    // handleGetFromCart(); // Load the cart when the component mounts
+    const cartFromStorage = JSON.parse(localStorage.getItem("cart")) || [];
+    setCart(cartFromStorage); // Set the cart state with the current localStorage cart
+
     setLoading(false);
   }, []);
 
-  return [
+  useEffect(() => {
+    const totalQuantity = calculateTotalQuantity(cart);
+    // console.log("totalQuantity", totalQuantity);
+    setCartNum(totalQuantity);
+  }, [cart]);
+
+  // console.log("cartNum", cartNum);
+  return {
     cart,
+    cartNum,
+    loading,
     handleAddtoCart,
     handleRemoveFromCart,
     handleChangeQty,
-    setCart,
-    loading,
     handleClearCart,
-    cartNum,
     handleGetFromCart,
-  ];
+    setCart,
+    setCartNum,
+  };
 };
 
 export default useCart;

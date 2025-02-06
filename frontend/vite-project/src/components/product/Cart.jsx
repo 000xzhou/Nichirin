@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import useCart from "../hooks/useCart";
 
 function Cart() {
-  const [
+  const {
     cart,
     handleAddtoCart,
     handleRemoveFromCart,
@@ -10,7 +10,7 @@ function Cart() {
     setCart,
     loading,
     handleClearCart,
-  ] = useCart();
+  } = useCart();
 
   if (loading) return <div>Loading...</div>;
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);

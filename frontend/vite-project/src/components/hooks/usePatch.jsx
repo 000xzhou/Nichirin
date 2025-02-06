@@ -25,7 +25,8 @@ const usePatch = (initialState, endpoint) => {
       const api = new ApiService("http://localhost:3000");
 
       const updatedUser = await api.patch(endpoint, formData);
-      console.log("PATCH success:", updatedUser);
+      console.log("PATCH success:");
+      // console.log("PATCH success:", updatedUser);
 
       // update user
       setIsUser((prevUser) => ({

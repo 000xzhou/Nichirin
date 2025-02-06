@@ -1,14 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
 import "./NavBar.css";
-import useCart from "./hooks/useCart";
+// import useCart from "./hooks/useCart";
 import { useCustomerAuth } from "../routes/CustomerAuthProvider";
+import { useCart } from "../routes/CartProvider";
 
 const Navbar = () => {
   const location = useLocation();
   const { isUser, handleLogout } = useCustomerAuth();
-  const [, , , , , , , cartNum] = useCart();
+  const { cartNum } = useCart();
 
-  console.log(cartNum);
   return (
     <nav>
       <Link to="/">Logo</Link>

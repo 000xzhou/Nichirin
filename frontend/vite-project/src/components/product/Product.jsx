@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
-import useCart from "../hooks/useCart";
+// import useCart from "../hooks/useCart";
+import { useCart } from "../../routes/CartProvider";
 import StarRating from "./reviews/StarRating";
 
 function Product({ id, name, price, stock, rating, images }) {
-  const [, handleAddtoCart] = useCart();
+  // const [, handleAddtoCart] = useCart();
+  const { handleAddtoCart } = useCart();
   // Add a product to the cart
   const addToCart = () => {
     handleAddtoCart({
