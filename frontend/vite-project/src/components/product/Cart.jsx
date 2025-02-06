@@ -1,29 +1,18 @@
 import { Link } from "react-router-dom";
-import useCart from "../hooks/useCart";
+// import useCart from "../hooks/useCart";
+import { useCart } from "../../routes/CartProvider";
 
 function Cart() {
   const {
     cart,
     handleAddtoCart,
     handleRemoveFromCart,
-    handleChangeQty,
-    setCart,
     loading,
     handleClearCart,
   } = useCart();
 
   if (loading) return <div>Loading...</div>;
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
-  const handleInputChange = (id, value) => {
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.id === id
-          ? { ...item, quantity: value } // Update the quantity in the state
-          : item
-      )
-    );
-  };
 
   const handleCheckout = async () => {
     const res = await axios.post("/api/create-checkout-session", {
@@ -33,6 +22,8 @@ function Cart() {
       productId: "productId",
       stripeCustomerId: "stripeCustomerId",
     });
+
+    console.log(res);
     // redirect
   };
 
@@ -53,8 +44,9 @@ function Cart() {
                   min="1"
                   max="10"
                   value={item.quantity}
-                  onChange={(e) => handleInputChange(item.id, e.target.value)}
-                  onBlur={(e) => handleChangeQty(item.id, e.target.value)}
+                  // onChange={(e) => handleInputChange(item.id, e.target.value)}
+                  // onBlur={(e) => handleChangeQty(item.id, e.target.value)}
+                  readOnly
                 />
                 <button onClick={() => handleAddtoCart({ id: item.id })}>
                   +

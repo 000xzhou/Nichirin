@@ -20,7 +20,8 @@ export const CartProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  // Update localStorage & cartNum whenever cart changes. But it empty out on hard refresh. Can't be used
+  // Update localStorage & cartNum whenever cart changes.
+  // But it empty out on hard refresh. Can't be used
   // useEffect(() => {
   //   localStorage.setItem("cart", JSON.stringify(cart));
   //   setCartNum(calculateTotalQuantity(cart));
@@ -31,24 +32,22 @@ export const CartProvider = ({ children }) => {
    * Adds item to cart
    */
   const handleAddtoCart = (item) => {
-    // Check if the item already exists in the cart
-    const existingItemIndex = cart.findIndex(
-      (cartItem) => cartItem.id === item.id
+    // update cart item #
+    const updatedCart = cart.map((cartItem) =>
+      cartItem.id === item.id
+        ? { ...cartItem, quantity: cartItem.quantity + 1 }
+        : cartItem
     );
 
-    // Does the item exists
-    if (existingItemIndex !== -1) {
-      //update the quantity
-      cart[existingItemIndex].quantity += 1;
-    } else {
-      //add it with a quantity of 1
-      cart.push({ ...item, quantity: 1 });
+    // if item not in cart. push into cart array
+    if (!cart.find((cartItem) => cartItem.id === item.id)) {
+      updatedCart.push({ ...item, quantity: 1 });
     }
 
-    //update values in state | local |
-    setCart([...cart]);
-    localStorage.setItem("cart", JSON.stringify(cart));
-    setCartNum(calculateTotalQuantity(cart));
+    // update cart
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    setCartNum(calculateTotalQuantity(updatedCart));
   };
 
   /**
@@ -60,6 +59,27 @@ export const CartProvider = ({ children }) => {
     setCartNum(0);
   };
 
+  /**
+   * @param {String} id
+   */
+  const handleRemoveFromCart = (id) => {
+    const updatedCart = cart.reduce((acc, item) => {
+      if (item.id === id) {
+        if (item.quantity > 1) {
+          acc.push({ ...item, quantity: item.quantity - 1 });
+        }
+        // If quantity is 1, don't add the item (effectively removing it)
+      } else {
+        acc.push(item);
+      }
+      return acc;
+    }, []);
+
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    setCartNum(calculateTotalQuantity(updatedCart));
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -68,6 +88,7 @@ export const CartProvider = ({ children }) => {
         loading,
         handleAddtoCart,
         handleClearCart,
+        handleRemoveFromCart,
       }}
     >
       {children}

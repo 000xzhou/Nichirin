@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import useCart from "../hooks/useCart";
+// import useCart from "../hooks/useCart";
+import { useCart } from "../../routes/CartProvider";
 
 function Checkout() {
   const [
