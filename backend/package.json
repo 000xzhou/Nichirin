@@ -4,7 +4,8 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.19.2",
-    "node": "^18.20.4"
+    "node": "^18.20.4",
+    "stripe": "^17.6.0"
   },
   "name": "backend",
   "version": "1.0.0",

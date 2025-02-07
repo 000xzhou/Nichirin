@@ -55,6 +55,22 @@ const customerSchema = new Schema(
       type: preferencesSchema,
       required: false,
     },
+    stripeCustomerId: String,
+    orders: [
+      {
+        sessionId: String,
+        items: [
+          {
+            name: String,
+            price: Number,
+            quantity: Number,
+          },
+        ],
+        totalAmount: Number,
+        status: { type: String, default: "pending" }, // pending, completed, failed
+        createdAt: { type: Date, default: Date.now },
+      },
+    ],
   },
   {
     strict: true,

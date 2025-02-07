@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
 // import useCart from "../hooks/useCart";
 import { useCart } from "../../routes/CartProvider";
+import ApiService from "../../api/api";
+import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
+// import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
 
 function Cart() {
+  const { isUser } = useCustomerAuth();
+
   const {
     cart,
     handleAddtoCart,
@@ -15,14 +20,14 @@ function Cart() {
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const handleCheckout = async () => {
-    const res = await axios.post("/api/create-checkout-session", {
-      email: "email",
-      productName: "Gautham's Stripe Ebook",
-      priceId: "priceID",
-      productId: "productId",
-      stripeCustomerId: "stripeCustomerId",
-    });
+    const api = new ApiService("http://localhost:3000");
 
+    const res = await api.post(
+      `/checkout/${isUser._id}/create-checkout-session`,
+      {
+        cart,
+      }
+    );
     console.log(res);
     // redirect
   };

@@ -8,6 +8,7 @@ const customerRouter = require("./routes/customers");
 const productRouter = require("./routes/products");
 const employeeRouter = require("./routes/employee");
 const reviewRouter = require("./routes/reviews");
+const checkoutRouter = require("./routes/checkout");
 const Customer = require("./models/customers/customers");
 
 const jwt = require("jsonwebtoken");
@@ -47,6 +48,7 @@ app.use("/customers", customerRouter);
 app.use("/products", productRouter);
 app.use("/employee", employeeRouter);
 app.use("/reviews", reviewRouter);
+app.use("/checkout", checkoutRouter);
 
 // logout for all
 app.get("/logout", (req, res) => {
