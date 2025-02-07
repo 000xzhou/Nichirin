@@ -1,12 +1,11 @@
-import { Link } from "react-router-dom";
-// import useCart from "../hooks/useCart";
 import { useCart } from "../../routes/CartProvider";
 import ApiService from "../../api/api";
 import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
-// import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
   const { isUser } = useCustomerAuth();
+  const navigate = useNavigate();
 
   const {
     cart,
@@ -20,16 +19,20 @@ function Cart() {
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const handleCheckout = async () => {
-    const api = new ApiService("http://localhost:3000");
+    if (!isUser) {
+      navigate("/login");
+    } else {
+      const api = new ApiService("http://localhost:3000");
 
-    const res = await api.post(
-      `/checkout/${isUser._id}/create-checkout-session`,
-      {
-        cart,
-      }
-    );
-    console.log(res);
-    // redirect
+      const res = await api.post(
+        `/checkout/${isUser._id}/create-checkout-session`,
+        {
+          cart,
+        }
+      );
+      // Send to stripe checkout
+      window.location.replace(res.url);
+    }
   };
 
   return (
@@ -39,7 +42,12 @@ function Cart() {
         <ul>
           {cart.map((item) => (
             <li key={item.id}>
-              <p>{item.image}</p>
+              <img
+                src={item.image}
+                alt={`Image of ${item.name}`}
+                width="50"
+                height="50"
+              />
               <p>{item.name}</p>
               <p>${item.price}</p>
               <div>
@@ -64,7 +72,6 @@ function Cart() {
       <section>
         <div>subtotal: ${total.toFixed(2)}</div>
         <button onClick={handleCheckout}>Go to checkout</button>
-        {/* <Link to="/checkout">Go to checkout</Link> */}
       </section>
     </div>
   );

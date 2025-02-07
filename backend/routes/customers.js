@@ -581,5 +581,37 @@ router.delete("/:id", ensureAdmin, async (req, res) => {
   }
 });
 
+router.get(
+  "/:id/order/:sessionId",
+  ensureCorrectUserOrStaff,
+  async (req, res) => {
+    try {
+      const { id, sessionId } = req.params;
+
+      const customer = await Customer.findOne({
+        _id: id,
+        "orders.sessionId": sessionId,
+      });
+
+      if (!customer) {
+        return res.status(404).json({ error: "Customer or Order not found" });
+      }
+
+      const order = customer.orders.find((ord) => ord.sessionId === sessionId);
+
+      res.json(order);
+    } catch (err) {
+      console.error("Error occurred:", {
+        name: err.name, // Type of the error
+        message: err.message, // General message about the error
+        code: err.code, // MongoDB error code if available
+        path: err.path, // Path to the field that caused the error
+        value: err.value, // The value that caused the error
+      });
+      res.status(500).json({ error: err.message });
+    }
+  }
+);
+
 // Export the router
 module.exports = router;

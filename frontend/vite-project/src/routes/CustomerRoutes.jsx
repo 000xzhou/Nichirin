@@ -11,6 +11,7 @@ import Checkout from "../components/product/Checkout";
 import CustomerAuthProvider from "./CustomerAuthProvider";
 import { CartProvider } from "./CartProvider";
 import Cart from "../components/product/Cart";
+import OrderConfirmation from "../components/product/OrderConfirmation";
 
 // import { useCustomerAuth } from "./CustomerAuthProvider";
 
@@ -40,6 +41,10 @@ function CustomerRoutes() {
               <Route path="products/:id" element={<ProductDetail />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="checkout" element={<Checkout />} />
+              <Route
+                path="order-confirmation"
+                element={<OrderConfirmation />}
+              />
             </Routes>
           </main>
           <Footing />

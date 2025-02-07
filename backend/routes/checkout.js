@@ -52,8 +52,9 @@ router.post("/:id/create-checkout-session", async (req, res) => {
       mode: "payment",
       line_items: lineItems,
       // customer_email: customer.email,
-      success_url: "http://localhost:5173/success",
-      cancel_url: "http://localhost:5173/cancel",
+      success_url:
+        "http://localhost:5173/order-confirmation?session_id={CHECKOUT_SESSION_ID}",
+      cancel_url: "http://localhost:5173/cart",
     });
 
     //save to user db
@@ -68,8 +69,9 @@ router.post("/:id/create-checkout-session", async (req, res) => {
     });
     await customer.save();
 
-    // send back id
-    res.json({ id: session.id });
+    // send back
+    // res.json({ id: session.id });
+    res.json({ url: session.url });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to create checkout session" });
