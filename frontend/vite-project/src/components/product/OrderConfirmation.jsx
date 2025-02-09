@@ -12,9 +12,13 @@ function OrderConfirmation() {
   const sessionId = searchParams.get("session_id");
   const { handleClearCart } = useCart();
 
-  const [apiData, loading, error] = useGet(
-    `/customers/${isUser._id}/order/${sessionId}`
+  const [orderData, loading, error] = useGet(
+    `/order/${isUser._id}/find/${sessionId}`
   );
+
+  // const [confirmationData] = useGet(
+  //   `/order/order-confirmation/${isUser._id}/find/${sessionId}`
+  // );
 
   // clear cart on load if successful
   useEffect(() => {
@@ -28,17 +32,17 @@ function OrderConfirmation() {
   return (
     <div>
       <h2>Thank you for your order!</h2>
-      <p>Order ID: {apiData._id}</p>
+      <p>Order ID: {orderData._id}</p>
       <h3>Items Purchased: </h3>
       <ul>
-        {apiData.items.map((item) => (
+        {orderData.items.map((item) => (
           <li key={item._id}>
             {item.name} - ${item.price} x {item.quantity}
           </li>
         ))}
       </ul>
       <p>
-        <b>Total:</b> ${apiData.totalAmount}
+        <b>Total:</b> ${orderData.totalAmount}
       </p>
       <p>
         A confirmation email has been sent to <b>{isUser.email}</b>.

@@ -18,7 +18,6 @@ router.post("/:id/create-checkout-session", async (req, res) => {
   if (!customer) {
     return res.status(404).json({ error: "Customer not found" });
   }
-
   // check if they got stripe id, if not create one
   if (!customer.stripeCustomerId) {
     const stripeCustomer = await stripe.customers.create({
@@ -58,14 +57,22 @@ router.post("/:id/create-checkout-session", async (req, res) => {
     });
 
     //save to user db
+    const formattedCart = cart.map((item) => ({
+      itemId: item.id,
+      name: item.name,
+      price: item.price,
+      quantity: item.quantity,
+    }));
+
+    // ! new mongoose.Types.ObjectId() does not work even though the log says it fits but it don't. Had to switch to string till I figure it out
     customer.orders.push({
       sessionId: session.id,
-      items: cart,
+      items: formattedCart,
       totalAmount: cart.reduce(
         (acc, item) => acc + item.price * item.quantity,
         0
       ),
-      status: "pending", // You can update it later when payment is confirmed
+      status: "pending",
     });
     await customer.save();
 

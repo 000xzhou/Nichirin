@@ -61,6 +61,12 @@ const customerSchema = new Schema(
         sessionId: String,
         items: [
           {
+            // itemId: {
+            //   type: mongoose.Schema.Types.ObjectId,
+            //   required: true,
+            //   ref: "Product",
+            // },
+            itemId: String,
             name: String,
             price: Number,
             quantity: Number,
@@ -68,6 +74,7 @@ const customerSchema = new Schema(
         ],
         totalAmount: Number,
         status: { type: String, default: "pending" }, // pending, completed, failed
+        emailSent: { type: Boolean, default: false },
         createdAt: { type: Date, default: Date.now },
       },
     ],
