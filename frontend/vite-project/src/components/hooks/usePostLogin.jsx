@@ -29,22 +29,17 @@ const usePostLogin = (initialState, endpoint) => {
       // api
       const api = new ApiService("http://localhost:3000");
 
-      api
-        .post(endpoint, formData)
-        .then((data) => {
-          // setApiData(data);
-          setIsUser(data.customer);
-          if (from) {
-            // send them back to the page they were at.
-            navigate(from);
-          } else {
-            navigate("/");
-          }
-        })
-        .catch((err) => setError(err));
+      const data = await api.post(endpoint, formData);
+      setIsUser(data.customer);
+
+      if (from) {
+        navigate(from);
+      } else {
+        navigate("/");
+      }
     } catch (error) {
-      console.log(error);
-      setError(error);
+      // console.log(error);
+      setError(error.message);
     }
   };
 

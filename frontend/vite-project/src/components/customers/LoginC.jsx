@@ -19,7 +19,7 @@ function LoginC() {
     "/customers/login"
   );
 
-  if (error) return <div>Error: {error.message}</div>;
+  // if (error) return <div>Error: {error.message}</div>;
 
   // if (apiData) {
   //   // was testing to see if I can get the navbar to auto update without editing usePost (have a usePostLogin to test out other stuff if this don't work.)
@@ -27,13 +27,12 @@ function LoginC() {
   //   const from = location.state?.from?.pathname || "/";
   //   navigate(from);
   // }
-
   return (
     <div>
       <h2>Welcome Back!</h2>
+      {error && <div>{error}</div>}
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email:</label>
-        {error && <p>{error}</p>}
         <input
           type="text"
           id="email"

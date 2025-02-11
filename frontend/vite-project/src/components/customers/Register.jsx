@@ -14,10 +14,12 @@ function Register() {
     "/customers/register"
   );
 
-  if (error) return <div>Error: {error.message}</div>;
+  // if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div>
+      {error && <div>{error}</div>}
+
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email:</label>
         <input
