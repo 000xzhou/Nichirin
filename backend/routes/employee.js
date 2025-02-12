@@ -110,6 +110,10 @@ router.post("/login", async (req, res) => {
  **/
 router.post("/create", ensureAdmin, async (req, res) => {
   try {
+    // default password that should be in env and change every month.
+    // the employee have to login and change it themselve after account creation. Email will be send for reminder
+    // todo: add sending email to remind them to change pw
+    req.body.password = "password123";
     const newEmployee = new Employee(req.body);
     await newEmployee.save();
     const token = createToken(newEmployee, "employee");

@@ -1,17 +1,27 @@
 import { useState, useEffect } from "react";
 import ApiService from "../../api/api";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useEmployeeAuth } from "../../routes//EmployeeAuthProvider";
 
 function EmployeeList() {
+  const { isUser } = useEmployeeAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isUser && isUser.role !== "admin" && isUser.status === "active") {
+      navigate("/employee/dashboard");
+    }
+  }, [isUser, navigate]);
+
   const [apiData, setApiData] = useState(null);
   // const [filter, setFilter] = useState(null);
   const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
+  const [error, setError] = useState(null);
   // const [refetch, setRefetch] = useState(false);
   const [search, setSearch] = useState("");
 
   const api = new ApiService("http://localhost:3000");
-
   //   fetching data from api
   useEffect(() => {
     api
@@ -20,9 +30,10 @@ function EmployeeList() {
         setApiData(data.employees);
         setLoading(false);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => setError(err.message));
   }, []);
 
+  if (error) return <div>{error}</div>;
   if (loading) return <div>Loading...</div>;
 
   const handleChange = (e) => {

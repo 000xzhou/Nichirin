@@ -1,7 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ApiService from "../../api/api";
+import { useEmployeeAuth } from "../../routes//EmployeeAuthProvider";
+import { useNavigate } from "react-router-dom";
 
 function CreateE() {
+  const { isUser } = useEmployeeAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isUser && isUser.role !== "admin" && isUser.status === "active") {
+      navigate("/employee/dashboard");
+    }
+  }, [isUser, navigate]);
+
   const initialState = {
     email: "",
     password: "",
@@ -13,6 +24,7 @@ function CreateE() {
   };
 
   const [formData, setFormData] = useState(initialState);
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     setFormData((data) => ({
@@ -24,20 +36,22 @@ function CreateE() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log(formData);
       // api
       const api = new ApiService("http://localhost:3000");
-
-      api
-        .post("/employee/create", formData)
-        .then((data) => console.log(data))
-        .catch((err) => console.error(err));
+      const data = await api.post("/employee/create", formData);
+      // set new employee in isUser
+      console.log(data);
+      // navigate to dashboard
+      navigate("/employee/dashboard");
     } catch (error) {
-      console.log(error);
+      setError(error.message);
     }
   };
 
   return (
     <div>
+      {error && <div>{error}</div>}
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email:</label>
         <input
@@ -75,7 +89,7 @@ function CreateE() {
         /> */}
         <label htmlFor="phone">Phone:</label>
         <input
-          type="text"
+          type="tele"
           id="phone"
           name="phone"
           onChange={handleChange}

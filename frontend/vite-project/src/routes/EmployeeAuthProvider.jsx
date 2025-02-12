@@ -13,7 +13,7 @@ const EmployeeAuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null); // Initial state: not checked
   const [isUser, setIsUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  console.log("isAuthenticated", isAuthenticated);
+  // console.log("isAuthenticated", isAuthenticated);
 
   // Function to check if the user is authenticated
   const checkAuth = async () => {
@@ -25,13 +25,13 @@ const EmployeeAuthProvider = ({ children }) => {
         }
       );
       const data = await response.json();
-      console.log("in check", data);
+      // console.log("in check", data);
       if (data.isAuthenticated) {
         setIsAuthenticated(true);
       } else {
         setIsAuthenticated(false);
       }
-      if (data.isUser) {
+      if (data.user) {
         setIsUser(data.user);
       }
     } catch (error) {
