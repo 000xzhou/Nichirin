@@ -4,7 +4,7 @@ import { useEmployeeAuth } from "../routes/EmployeeAuthProvider";
 import ApiService from "../api/api";
 
 const EmployeeNavBar = () => {
-  const { setIsAuthenticated } = useEmployeeAuth();
+  const { setIsAuthenticated, isUser, setIsUser } = useEmployeeAuth();
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -16,6 +16,7 @@ const EmployeeNavBar = () => {
         .get("/logout")
         .then(() => {
           setIsAuthenticated(false);
+          setIsUser(null);
         })
         .catch((err) => console.error(err));
     } catch (error) {
@@ -26,6 +27,9 @@ const EmployeeNavBar = () => {
   return (
     <nav>
       {/* For all employees */}
+      <div>
+        <Link to="/employee/profile">Welcome {isUser.first_name}!</Link>
+      </div>
       <div>
         <Link to={`/employee/dashboard`}>Dashboard</Link>
       </div>
@@ -38,24 +42,22 @@ const EmployeeNavBar = () => {
       <div>
         <Link to={`/employee/products`}>All Products</Link>
       </div>
+
+      {/* Only for admin */}
+      {isUser.role === "admin" && (
+        <>
+          <div>
+            <Link to={`/employee/create`}>Create Employee</Link>
+          </div>
+          <div>
+            <Link to={`/employee/all`}>All Employees</Link>
+          </div>
+        </>
+      )}
+
       <div>
         <button onClick={handleLogout}>Logout</button>
       </div>
-
-      {/* Only for admin */}
-      {/* {isEmployeeAuthenticated === "admin" && ( */}
-      <>
-        <div>
-          <Link to={`/employee/create`}>Create Employee</Link>
-        </div>
-        {/* <div>
-          <Link to={`/employee/search`}>Search Employee</Link>
-        </div> */}
-        <div>
-          <Link to={`/employee/all`}>All Employees</Link>
-        </div>
-      </>
-      {/* )} */}
     </nav>
   );
 };

@@ -4,7 +4,7 @@ import { useEmployeeAuth } from "../../routes//EmployeeAuthProvider";
 import { useNavigate } from "react-router-dom";
 
 function CreateE() {
-  const { isUser } = useEmployeeAuth();
+  const { isUser, setIsUser } = useEmployeeAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,6 +42,7 @@ function CreateE() {
       const data = await api.post("/employee/create", formData);
       // set new employee in isUser
       console.log(data);
+      setIsUser(data.employee);
       // navigate to dashboard
       navigate("/employee/dashboard");
     } catch (error) {

@@ -24,7 +24,7 @@ function ProductE({
         </td>
         <td>
           <button>
-            <span class="material-symbols-outlined">edit</span>
+            <span className="material-symbols-outlined">edit</span>
           </button>
         </td>
       </tr>

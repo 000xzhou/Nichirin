@@ -56,7 +56,7 @@ const EmployeeAuthProvider = ({ children }) => {
 
   return (
     <EmployeeAuthContext.Provider
-      value={{ isAuthenticated, setIsAuthenticated, isUser }}
+      value={{ isAuthenticated, setIsAuthenticated, isUser, setIsUser }}
     >
       {children}
     </EmployeeAuthContext.Provider>
