@@ -129,6 +129,7 @@ router.get("/inactive", ensureStaff, async (req, res) => {
 // Create new product
 router.post("/create", ensureStaff, async (req, res) => {
   try {
+    req.body.currency = "usd";
     const newProduct = new Product(req.body);
     await newProduct.save();
     res.status(201).send(newProduct);

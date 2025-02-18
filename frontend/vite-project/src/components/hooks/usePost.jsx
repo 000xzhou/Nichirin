@@ -21,6 +21,7 @@ const usePost = (initialState, endpoint) => {
   //   fetching data from api
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
     try {
       // api
       const api = new ApiService("http://localhost:3000");
