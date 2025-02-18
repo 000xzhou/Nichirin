@@ -7,7 +7,7 @@ function CreateP() {
     name: "",
     price: 0,
     stock: 0,
-    description: { basic: "", details: "" },
+    description: { basic: "", details: "", measurements: [], features: [] },
     active: false,
     images: [],
     // currency: "USA",
@@ -22,6 +22,14 @@ function CreateP() {
     handleImageChange,
     handleRemoveImageInput,
     imageInputs,
+    handlefeaturesChange,
+    handleAddfeaturesInput,
+    handleRemovefeaturesInput,
+    featuresInputs,
+    handlemeasurementsChange,
+    handleAddmeasurementsInput,
+    handleRemovemeasurementsInput,
+    measurementInputs,
   } = usePostProduct(initialState, endpoint);
 
   return (
@@ -34,6 +42,14 @@ function CreateP() {
           id="name"
           name="name"
           value={formData.name}
+          onChange={handleChange}
+        />
+        <label htmlFor="">active: </label>
+        <input
+          type="checkbox"
+          id="active"
+          name="active"
+          value={formData.active}
           onChange={handleChange}
         />
         <label htmlFor="price">price: </label>
@@ -52,42 +68,6 @@ function CreateP() {
           value={formData.stock}
           onChange={handleChange}
         />
-        <fieldset>
-          <legend>description</legend>
-          <label htmlFor="description-basic">basic: </label>
-          <input
-            type="text"
-            id="description-basic"
-            name="basic"
-            value={formData.description.basic}
-            onChange={handleChange}
-          />
-          <label htmlFor="description">details: </label>
-          <input
-            type="text"
-            id="description-details"
-            name="details"
-            value={formData.description.details}
-            onChange={handleChange}
-          />
-          <label htmlFor="description-basic">features: </label>
-          <input
-            type="text"
-            id="description-features"
-            name="features"
-            value={formData.description.features}
-            onChange={handleChange}
-          />
-          <label htmlFor="description-basic">mesaurements: </label>
-          <input
-            type="text"
-            id="description-mesaurements"
-            name="mesaurements"
-            value={formData.description.mesaurements}
-            onChange={handleChange}
-          />
-        </fieldset>
-
         <label htmlFor="images">Images: </label>
         {imageInputs.map((image, index) => (
           <div key={index}>
@@ -105,14 +85,96 @@ function CreateP() {
         <button type="button" onClick={handleAddImageInput}>
           Add Image URL
         </button>
-        <label htmlFor="">active: </label>
-        <input
-          type="checkbox"
-          id="active"
-          name="active"
-          value={formData.active}
-          onChange={handleChange}
-        />
+
+        <fieldset>
+          <legend>description</legend>
+          <div>
+            <label htmlFor="description-basic">basic: </label>
+            <input
+              type="textarea"
+              id="description-basic"
+              name="basic"
+              value={formData.description.basic}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="description">details: </label>
+            <input
+              type="textarea"
+              id="description-details"
+              name="details"
+              value={formData.description.details}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            {/* <label htmlFor="description-basic">features: </label>
+          <input
+            type="text"
+            id="description-features"
+            name="features"
+            value={formData.description.features}
+            onChange={handleChange}
+          /> */}
+
+            <label htmlFor="features">features: </label>
+            {featuresInputs.map((features, index) => (
+              <div key={index}>
+                <input
+                  type="text"
+                  value={features}
+                  onChange={(e) => handlefeaturesChange(index, e.target.value)}
+                  placeholder={`features ${index + 1}`}
+                />
+                <button
+                  type="button"
+                  onClick={() => handleRemovefeaturesInput(index)}
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+            <button type="button" onClick={handleAddfeaturesInput}>
+              Add features text
+            </button>
+          </div>
+
+          <div>
+            {/* <label htmlFor="description-basic">mesaurements: </label>
+          <input
+            type="text"
+            id="description-mesaurements"
+            name="mesaurements"
+            value={formData.description.mesaurements}
+            onChange={handleChange}
+          /> */}
+
+            <label htmlFor="images">mesaurements: </label>
+            {measurementInputs.map((mesaurements, index) => (
+              <div key={index}>
+                <input
+                  type="text"
+                  value={mesaurements}
+                  onChange={(e) =>
+                    handlemeasurementsChange(index, e.target.value)
+                  }
+                  placeholder={`mesaurements ${index + 1}`}
+                />
+                <button
+                  type="button"
+                  onClick={() => handleRemovemeasurementsInput(index)}
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+            <button type="button" onClick={handleAddmeasurementsInput}>
+              Add measurements text
+            </button>
+          </div>
+        </fieldset>
+
         <button type="submit">Create new product</button>
       </form>
     </div>

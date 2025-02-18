@@ -5,6 +5,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 const usePostProduct = (initialState, endpoint) => {
   const [formData, setFormData] = useState(initialState);
   const [imageInputs, setImageInputs] = useState([formData.images]);
+  const [featuresInputs, setFeaturesInputs] = useState([
+    formData.description.features,
+  ]);
+  const [measurementInputs, setMeasurementInputs] = useState([
+    formData.description.measurements,
+  ]);
   // const [apiData, setApiData] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -14,8 +20,16 @@ const usePostProduct = (initialState, endpoint) => {
 
   // to edit form data
   useEffect(() => {
-    handleChange({ target: { name: "images", value: imageInputs } });
-  }, [imageInputs]);
+    setFormData((prevData) => ({
+      ...prevData,
+      images: imageInputs,
+      description: {
+        ...prevData.description,
+        features: featuresInputs,
+        measurements: measurementInputs,
+      },
+    }));
+  }, [imageInputs, featuresInputs, measurementInputs]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -40,19 +54,46 @@ const usePostProduct = (initialState, endpoint) => {
     });
   };
 
+  // images
   const handleImageChange = (index, value) => {
     const newImages = [...imageInputs];
     newImages[index] = value;
     setImageInputs(newImages);
   };
-
   const handleAddImageInput = () => {
     setImageInputs([...imageInputs, ""]);
   };
-
   const handleRemoveImageInput = (index) => {
     const newImages = imageInputs.filter((_, i) => i !== index);
     setImageInputs(newImages);
+  };
+
+  // description features
+  const handlefeaturesChange = (index, value) => {
+    const newFeatures = [...featuresInputs];
+    newFeatures[index] = value;
+    setFeaturesInputs(newFeatures);
+  };
+  const handleAddfeaturesInput = () => {
+    setFeaturesInputs([...featuresInputs, ""]);
+  };
+  const handleRemovefeaturesInput = (index) => {
+    const newfeaturess = featuresInputs.filter((_, i) => i !== index);
+    setFeaturesInputs(newfeaturess);
+  };
+
+  // description mesaurements
+  const handlemeasurementsChange = (index, value) => {
+    const newMeasurement = [...measurementInputs];
+    newMeasurement[index] = value;
+    setMeasurementInputs(newMeasurement);
+  };
+  const handleAddmeasurementsInput = () => {
+    setMeasurementInputs([...measurementInputs, ""]);
+  };
+  const handleRemovemeasurementsInput = (index) => {
+    const newMeasurement = measurementInputs.filter((_, i) => i !== index);
+    setMeasurementInputs(newMeasurement);
   };
 
   //   fetching data from api
@@ -87,6 +128,14 @@ const usePostProduct = (initialState, endpoint) => {
     handleImageChange,
     handleRemoveImageInput,
     imageInputs,
+    handlefeaturesChange,
+    handleAddfeaturesInput,
+    handleRemovefeaturesInput,
+    featuresInputs,
+    handlemeasurementsChange,
+    handleAddmeasurementsInput,
+    handleRemovemeasurementsInput,
+    measurementInputs,
   };
 };
 export default usePostProduct;

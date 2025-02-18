@@ -22,7 +22,7 @@ const descriptionSchema = new Schema(
         return this.isNew;
       },
     },
-    mesaurement: {
+    measurements: {
       type: [String],
       required: function () {
         return this.isNew;

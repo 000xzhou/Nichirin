@@ -39,7 +39,7 @@ const productSchema = new Schema(
       },
     },
     description: {
-      type: { descriptionSchema },
+      type: descriptionSchema,
       required: function () {
         return this.isNew;
       },
