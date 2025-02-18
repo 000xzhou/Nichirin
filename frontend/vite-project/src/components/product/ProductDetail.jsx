@@ -3,13 +3,14 @@ import "./productDetail.css";
 import { Link } from "react-router-dom";
 import StarRating from "./reviews/StarRating";
 import useGet from "../hooks/useGet";
-import useCart from "../hooks/useCart";
+// import useCart from "../hooks/useCart";
+import { useCart } from "../../routes/CartProvider";
 
 function ProductDetail() {
   const { id } = useParams();
 
   const [apiData, loading, error] = useGet(`/products/${id}`);
-  const [, handleAddtoCart] = useCart();
+  const { handleAddtoCart } = useCart();
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -32,7 +33,7 @@ function ProductDetail() {
     console.log("move left");
     // arrow to left
   };
-  console.log(apiData);
+  // console.log(apiData);
   return (
     <>
       <section className="productDetail">

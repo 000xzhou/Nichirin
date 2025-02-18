@@ -8,9 +8,10 @@ const EmployeeAuthContext = React.createContext();
 export const useEmployeeAuth = () => {
   return useContext(EmployeeAuthContext);
 };
+
 // Auth provider to manage authentication state
 const EmployeeAuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(null); // Initial state: not checked
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [isUser, setIsUser] = useState(null);
   const [loading, setLoading] = useState(true);
   // console.log("isAuthenticated", isAuthenticated);
