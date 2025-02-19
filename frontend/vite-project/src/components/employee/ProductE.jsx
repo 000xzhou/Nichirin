@@ -24,6 +24,7 @@ function ProductE({
             checked={active}
             onChange={(e) => setActive(e.target.checked)}
           />
+          {active ? "yes" : "no"}
         </td>
         <td>{name}</td>
         <td>{price}</td>
@@ -41,6 +42,9 @@ function ProductE({
               edit
             </Link>
           </button>
+        </td>
+        <td>
+          <button className="material-symbols-outlined">delete</button>
         </td>
       </tr>
     </tbody>

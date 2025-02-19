@@ -50,7 +50,7 @@ const productSchema = new Schema(
     },
     images: {
       type: [String],
-      required: false,
+      default: [],
       validate: {
         validator: function (v) {
           return Array.isArray(v);

@@ -20,29 +20,28 @@ function ProductsListE() {
             <th>Name</th>
             <th>Price</th>
             <th>Stock</th>
-            <th>Description</th>
+            <th>Edit</th>
+            <th>Delete</th>
+            {/* <th>Description</th> */}
             {/* <th>Images</th> */}
             {/* <th>Variations</th> */}
             {/* <th>Details</th> */}
             <th></th>
           </tr>
         </thead>
-        {apiData.products.map(
-          (data) =>
-            data.active && (
-              <ProductE
-                key={data._id}
-                id={data._id}
-                name={data.name}
-                price={data.price}
-                description={data.description}
-                active={data.active}
-                stock={data.stock}
-                images={data.images}
-                variations={data.variations}
-              />
-            )
-        )}
+        {apiData.products.map((data) => (
+          <ProductE
+            key={data._id}
+            id={data._id}
+            name={data.name}
+            price={data.price}
+            description={data.description}
+            active={data.active}
+            stock={data.stock}
+            images={data.images}
+            variations={data.variations}
+          />
+        ))}
       </table>
     </>
   );

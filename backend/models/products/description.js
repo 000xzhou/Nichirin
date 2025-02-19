@@ -18,15 +18,11 @@ const descriptionSchema = new Schema(
     },
     features: {
       type: [String],
-      required: function () {
-        return this.isNew;
-      },
+      default: [],
     },
     measurements: {
       type: [String],
-      required: function () {
-        return this.isNew;
-      },
+      default: [],
     },
   },
   { _id: false }

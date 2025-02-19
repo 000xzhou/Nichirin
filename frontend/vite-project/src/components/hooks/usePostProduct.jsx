@@ -14,8 +14,6 @@ const usePostProduct = (initialState, endpoint) => {
   // const [apiData, setApiData] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
   // console.log(formData);
 
   // to edit form data
@@ -108,9 +106,8 @@ const usePostProduct = (initialState, endpoint) => {
         .post(endpoint, formData)
         .then((data) => {
           console.log(data);
-          // send them back to the page they were at.
-          console.log("Here at right before nav from", from);
-          navigate(from);
+          const nav = `/employee/products/${data._id}`;
+          navigate(nav);
         })
         .catch((err) => setError(err));
     } catch (error) {

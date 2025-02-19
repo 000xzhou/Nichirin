@@ -130,6 +130,21 @@ router.get("/inactive", ensureStaff, async (req, res) => {
 router.post("/create", ensureStaff, async (req, res) => {
   try {
     req.body.currency = "usd";
+
+    req.body.description.features = Array.isArray(req.body.description.features)
+      ? req.body.description.features.flat()
+      : [];
+
+    req.body.description.measurements = Array.isArray(
+      req.body.description.measurements
+    )
+      ? req.body.description.measurements.flat()
+      : [];
+
+    req.body.images = Array.isArray(req.body.images)
+      ? req.body.images.flat()
+      : [];
+
     const newProduct = new Product(req.body);
     await newProduct.save();
     res.status(201).send(newProduct);
