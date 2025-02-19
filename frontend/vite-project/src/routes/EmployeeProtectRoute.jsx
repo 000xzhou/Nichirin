@@ -9,6 +9,7 @@ import CustomerSearch from "../components/employee/CustomerSearch";
 // import CustomerDetail from "../components/customers/CustomerDetail";
 import EmployeeNavBar from "../components/EmployeeNavBar";
 import EmployeeDashboard from "../components/employee/EmployeeDashboard";
+import EmployeeProductDetail from "../components/product/EmployeeProductDetail";
 
 function EmployeeProtectRoute() {
   return (
@@ -30,6 +31,7 @@ function EmployeeProtectRoute() {
         {/* products */}
         <Route path="products/create" element={<CreateP />} />
         <Route path="products" element={<ProductsListE />} />
+        <Route path="products/:id" element={<EmployeeProductDetail />} />
       </Routes>
     </EmployeeAuthProvider>
   );

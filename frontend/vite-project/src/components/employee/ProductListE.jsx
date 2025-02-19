@@ -21,9 +21,10 @@ function ProductsListE() {
             <th>Price</th>
             <th>Stock</th>
             <th>Description</th>
-            <th>Images</th>
-            <th>Variations</th>
-            <th>Details</th>
+            {/* <th>Images</th> */}
+            {/* <th>Variations</th> */}
+            {/* <th>Details</th> */}
+            <th></th>
           </tr>
         </thead>
         {apiData.products.map(
@@ -34,7 +35,7 @@ function ProductsListE() {
                 id={data._id}
                 name={data.name}
                 price={data.price}
-                // description={data.description}
+                description={data.description}
                 active={data.active}
                 stock={data.stock}
                 images={data.images}
