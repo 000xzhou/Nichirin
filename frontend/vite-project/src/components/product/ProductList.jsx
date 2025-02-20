@@ -3,10 +3,10 @@ import "./product.css";
 import useGet from "../hooks/useGet";
 
 function ProductsList() {
-  const [apiData, loading, error] = useGet(`/products`);
+  const [apiData, loading, ListError] = useGet(`/products`);
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  if (ListError) return <div>Error: {ListError.message}</div>;
 
   return (
     <div className="productList">
@@ -19,7 +19,7 @@ function ProductsList() {
               id={data._id}
               name={data.name}
               price={data.price}
-              stock={data.stock}
+              stock={data.active}
               // rating={data.rating}
               rating={4.5}
               images={data.images}

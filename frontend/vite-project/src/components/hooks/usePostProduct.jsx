@@ -97,19 +97,15 @@ const usePostProduct = (initialState, endpoint) => {
   //   fetching data from api
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    // console.log(formData);
     try {
       // api
       const api = new ApiService("http://localhost:3000");
 
-      api
-        .post(endpoint, formData)
-        .then((data) => {
-          console.log(data);
-          const nav = `/employee/products/${data._id}`;
-          navigate(nav);
-        })
-        .catch((err) => setError(err));
+      const data = await api.post(endpoint, formData);
+      // console.log(data);
+      const nav = `/employee/products/${data._id}`;
+      navigate(nav);
     } catch (error) {
       console.log(error);
       setError(error);

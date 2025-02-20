@@ -81,6 +81,9 @@ class ApiService {
         errorData.message || errorData.error || "Something went wrong"
       );
     }
+    if (response.status === 204) {
+      return;
+    }
     return response.json();
   }
 }

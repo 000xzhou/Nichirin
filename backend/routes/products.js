@@ -408,7 +408,7 @@ router.patch("/:id/images", ensureStaff, async (req, res) => {
 }
 
  */
-router.patch("/:id/deleteImage", ensureStaff, async (req, res) => {
+router.delete("/:id/deleteImage", ensureStaff, async (req, res) => {
   try {
     const id = req.params.id;
 
@@ -465,7 +465,7 @@ router.delete("/:id", ensureAdmin, async (req, res) => {
       return res.status(404).json({ message: `Product id ${id} not found` });
     }
 
-    res.status(204).send(); // No content to send back
+    res.status(204).send();
   } catch (err) {
     console.error("Error occurred:", {
       name: err.name, // Type of the error

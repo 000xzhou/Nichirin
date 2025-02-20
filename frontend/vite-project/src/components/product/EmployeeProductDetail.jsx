@@ -12,9 +12,20 @@ function EmployeeProductDetail() {
   if (error) return <div>Error: {error.message}</div>;
   // console.log(apiData);
 
-  const setActive = () => {
-    console.log("here");
-  };
+  // const setActive = () => {
+  //   console.log("here");
+  // };
+
+  // const deleteProduct = async () => {
+  //   try {
+  //     const data = await api.delete(`/products/${id}`);
+  //     alert("Product deleted successfully!");
+  //   } catch (error) {
+  //     console.error("Error deleting product:", error);
+  //     alert("Failed to delete product. Please try again.");
+  //   }
+  // };
+
   return (
     <>
       <div>
