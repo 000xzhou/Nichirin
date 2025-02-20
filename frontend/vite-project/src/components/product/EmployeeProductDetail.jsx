@@ -6,7 +6,7 @@ import useGet from "../hooks/useGet";
 function EmployeeProductDetail() {
   const { id } = useParams();
 
-  const [apiData, loading, error] = useGet(`/products/${id}`);
+  const { apiData, loading, error } = useGet(`/products/${id}`);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;

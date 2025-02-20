@@ -3,7 +3,7 @@ import "./product.css";
 import useGet from "../hooks/useGet";
 
 function ProductsList() {
-  const [apiData, loading, ListError] = useGet(`/products`);
+  const { apiData, loading, ListError } = useGet(`/products`);
 
   if (loading) return <div>Loading...</div>;
   if (ListError) return <div>Error: {ListError.message}</div>;

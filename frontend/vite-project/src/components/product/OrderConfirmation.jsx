@@ -12,7 +12,7 @@ function OrderConfirmation() {
   const sessionId = searchParams.get("session_id");
   const { handleClearCart } = useCart();
 
-  const [orderData, loading, error] = useGet(
+  const { orderData, loading, error } = useGet(
     `/order/${isUser._id}/find/${sessionId}`
   );
 

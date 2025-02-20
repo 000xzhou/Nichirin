@@ -9,7 +9,7 @@ import { useCart } from "../../routes/CartProvider";
 function ProductDetail() {
   const { id } = useParams();
 
-  const [apiData, loading, error] = useGet(`/products/${id}`);
+  const { apiData, loading, error } = useGet(`/products/${id}`);
   const { handleAddtoCart } = useCart();
 
   if (loading) return <div>Loading...</div>;

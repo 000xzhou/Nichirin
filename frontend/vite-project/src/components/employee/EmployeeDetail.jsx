@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 function EmployeeDetail() {
   const { id } = useParams();
 
-  const [apiData, loading, error] = useGet(`/employee/${id}`);
+  const { apiData, loading, error } = useGet(`/employee/${id}`);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
