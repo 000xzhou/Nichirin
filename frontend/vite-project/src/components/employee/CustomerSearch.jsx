@@ -12,58 +12,66 @@ function CustomerSearch() {
   };
 
   if (!loading)
-    return <>apidata here {apiData.customers.map((data) => data.email)}</>;
+    return (
+      <>
+        apidata here in loading... should redirect to another page{" "}
+        {apiData.customers.map((data) => data.email)}
+      </>
+    );
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="email">Email: </label>
-      <input
-        type="search"
-        name="email"
-        id="email"
-        value={formData.email}
-        onChange={handleChange}
-        placeholder="Email"
-      />
-      <button type="submit">Search</button>
-      <button type="button" onClick={toggleAdvanced}>
-        {advanced ? "Hide Advanced" : "Show Advanced"}
-      </button>
+    <>
+      {error && <div>{error.message}</div>}
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="email">Email: </label>
+        <input
+          type="search"
+          name="email"
+          id="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="Email"
+        />
+        <button type="submit">Search</button>
+        <button type="button" onClick={toggleAdvanced}>
+          {advanced ? "Hide Advanced" : "Show Advanced"}
+        </button>
 
-      {advanced && (
-        <div className="advanced-search">
-          <label htmlFor="fname">First Name: </label>
-          <input
-            type="search"
-            name="fname"
-            id="fname"
-            value={formData.fname}
-            onChange={handleChange}
-            placeholder="First Name"
-          />
+        {advanced && (
+          <div className="advanced-search">
+            <label htmlFor="fname">First Name: </label>
+            <input
+              type="search"
+              name="fname"
+              id="fname"
+              value={formData.fname}
+              onChange={handleChange}
+              placeholder="First Name"
+            />
 
-          <label htmlFor="lname">Last Name: </label>
-          <input
-            type="search"
-            name="lname"
-            id="lname"
-            value={formData.lname}
-            onChange={handleChange}
-            placeholder="Last Name"
-          />
+            <label htmlFor="lname">Last Name: </label>
+            <input
+              type="search"
+              name="lname"
+              id="lname"
+              value={formData.lname}
+              onChange={handleChange}
+              placeholder="Last Name"
+            />
 
-          <label htmlFor="phone">Phone: </label>
-          <input
-            type="search"
-            name="phone"
-            id="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            placeholder="Phone"
-          />
-        </div>
-      )}
-    </form>
+            <label htmlFor="phone">Phone: </label>
+            <input
+              type="search"
+              name="phone"
+              id="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="Phone"
+            />
+          </div>
+        )}
+      </form>
+    </>
   );
 }
 

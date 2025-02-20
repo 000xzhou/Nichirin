@@ -4,16 +4,14 @@ import EmployeeProtectRoute from "./EmployeeProtectRoute";
 
 function EmployeeRoutes() {
   return (
-    <>
-      <main>
-        <Routes>
-          {/* Public login route */}
-          <Route path="login" element={<LoginE />} />
-          {/* Protected employee routes */}
-          <Route path="/*" element={<EmployeeProtectRoute />} />
-        </Routes>
-      </main>
-    </>
+    <main>
+      <Routes>
+        {/* Public login route */}
+        <Route path="login" element={<LoginE />} />
+        {/* Protected employee routes */}
+        <Route path="/*" element={<EmployeeProtectRoute />} />
+      </Routes>
+    </main>
   );
 }
 

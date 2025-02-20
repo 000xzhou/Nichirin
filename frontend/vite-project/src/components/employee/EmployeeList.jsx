@@ -42,19 +42,14 @@ function EmployeeList() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const data = Object.fromEntries(formData.entries());
-
     try {
       // api
       const api = new ApiService("http://localhost:3000");
+      // search only work on emails
+      const data = await api.get(`/employee/search?email=${search}`);
 
-      api
-        .get(`/employee/search?email=${search}`)
-        .then((data) => {
-          console.log(data);
-          // redirect to detail page of data if there is
-        })
-        .catch((err) => console.error(err));
+      console.log(data);
+      // redirect to detail page of data if there is
     } catch (error) {
       console.log(error);
     }
@@ -63,6 +58,7 @@ function EmployeeList() {
   return (
     <>
       <div>
+        <label htmlFor="search">Email: </label>
         <input
           type="search"
           name="employee"
@@ -82,7 +78,7 @@ function EmployeeList() {
           </p>
           <p>Status: {data.status}</p>
           <p>Role: {data.role}</p>
-          <Link to={`/employee/${data._id}`}>Details</Link>
+          <Link to={`${data._id}`}>Details</Link>
         </div>
       ))}
     </>

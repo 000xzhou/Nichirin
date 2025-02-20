@@ -23,7 +23,12 @@ function ProductsListE() {
   return (
     <>
       <div>
-        <input type="search" name="search" id="search" />
+        <label htmlFor="name">Name: </label>
+        <input type="search" name="name" id="name" />
+        <label htmlFor="price">Price: </label>
+        <input type="search" name="price" id="price" />
+        <label htmlFor="stock">Stock: </label>
+        <input type="search" name="stock" id="stock" />
         <button type="submit">Search</button>
       </div>
       <table>

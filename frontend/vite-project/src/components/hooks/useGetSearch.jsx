@@ -32,14 +32,10 @@ const useGet = (endpoint, initialState) => {
     const url = `${endpoint}?${queryParams.toString()}`;
     try {
       // api
-      api
-        .get(url)
-        .then((data) => {
-          // send them back to the page they were at.
-          setApiData(data);
-          setLoading(!loading);
-        })
-        .catch((err) => setError(err));
+      const data = await api.get(url);
+
+      setApiData(data);
+      setLoading(!loading);
     } catch (error) {
       console.log(error);
       setError(error);

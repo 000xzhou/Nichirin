@@ -1,8 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ApiService from "../../api/api";
 import { useNavigate } from "react-router-dom";
+// import { useEmployeeAuth } from "../../routes/EmployeeAuthProvider";
 
 function LoginE() {
+  // const { isAuthenticated } = useEmployeeAuth();
+  const navigate = useNavigate();
+
+  // forgot that employee context isn't part of login.... Would have to resrtuctre... maybe later
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     navigate("/dashboard");
+  //   }
+  // }, [isAuthenticated, navigate]);
+
   const initialState = {
     email: "",
     password: "",
@@ -10,8 +21,6 @@ function LoginE() {
 
   const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState(null);
-
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData((data) => ({
