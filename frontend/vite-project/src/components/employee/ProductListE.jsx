@@ -1,9 +1,26 @@
 import ProductE from "./ProductE";
 import useGet from "../hooks/useGet";
 import ApiService from "../../api/api";
+import useGetSearch from "../hooks/useGetSearch";
+import { useState, useEffect } from "react";
 
 function ProductsListE() {
   const { apiData, loading, error, refetch } = useGet(`/products`);
+
+  const [dataInfo, setDataInfo] = useState(apiData);
+
+  const initialState = {
+    name: "",
+    price: 0,
+    stock: 0,
+  };
+  const {
+    apiData: apiSearchData,
+    formData,
+    handleChange,
+    handleSubmit,
+    formError,
+  } = useGetSearch(`/products/search`, initialState);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -13,6 +30,7 @@ function ProductsListE() {
       const api = new ApiService("http://localhost:3000");
       const data = await api.delete(`/products/${id}`);
       if (refetch) refetch();
+      setDataInfo(data);
       alert("Product deleted successfully!");
     } catch (error) {
       console.error("Error deleting product:", error);
@@ -20,17 +38,49 @@ function ProductsListE() {
     }
   };
 
+  const onHandleSubmit = (e) => {
+    e.preventDefault();
+    handleSubmit(e);
+    setDataInfo(apiSearchData);
+  };
+
+  const resetList = () => {
+    refetch();
+    setDataInfo(apiData);
+  };
+
   return (
     <>
-      <div>
+      <button onClick={resetList}>Reset</button>
+      <form onSubmit={onHandleSubmit}>
+        {error && <div>{formError.message}</div>}
+        <div>Fill in one or more to search:</div>
         <label htmlFor="name">Name: </label>
-        <input type="search" name="name" id="name" />
+        <input
+          type="search"
+          name="name"
+          id="name"
+          value={formData.name}
+          onChange={handleChange}
+        />
         <label htmlFor="price">Price: </label>
-        <input type="search" name="price" id="price" />
+        <input
+          type="search"
+          name="price"
+          id="price"
+          value={formData.price}
+          onChange={handleChange}
+        />
         <label htmlFor="stock">Stock: </label>
-        <input type="search" name="stock" id="stock" />
+        <input
+          type="search"
+          name="stock"
+          id="stock"
+          value={formData.stock}
+          onChange={handleChange}
+        />
         <button type="submit">Search</button>
-      </div>
+      </form>
       <table>
         <thead>
           <tr>
@@ -47,7 +97,7 @@ function ProductsListE() {
             <th></th>
           </tr>
         </thead>
-        {apiData.products.map((data) => (
+        {(dataInfo?.products || apiData?.products)?.map((data) => (
           <ProductE
             key={data._id}
             id={data._id}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import ApiService from "../../api/api";
 
-const useGet = (endpoint, initialState) => {
+const useGetSearch = (endpoint, initialState) => {
   const [apiData, setApiData] = useState(null);
   const [formData, setFormData] = useState(initialState);
   const [loading, setLoading] = useState(true);
@@ -18,7 +18,6 @@ const useGet = (endpoint, initialState) => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     // Build the query string dynamically
     const queryParams = new URLSearchParams();
 
@@ -30,10 +29,10 @@ const useGet = (endpoint, initialState) => {
 
     // Full API URL with query parameters
     const url = `${endpoint}?${queryParams.toString()}`;
+
     try {
       // api
       const data = await api.get(url);
-
       setApiData(data);
       setLoading(!loading);
     } catch (error) {
@@ -42,6 +41,6 @@ const useGet = (endpoint, initialState) => {
     }
   };
 
-  return [apiData, loading, error, formData, handleChange, handleSubmit];
+  return { apiData, loading, error, formData, handleChange, handleSubmit };
 };
-export default useGet;
+export default useGetSearch;
