@@ -9,7 +9,7 @@ import CustomerSearch from "../components/employee/CustomerSearch";
 // import CustomerDetail from "../components/customers/CustomerDetail";
 import EmployeeNavBar from "../components/EmployeeNavBar";
 import EmployeeDashboard from "../components/employee/EmployeeDashboard";
-import EmployeeProductDetail from "../components/product/EmployeeProductDetail";
+import EmployeeProductDetail from "../components/employee/EmployeeProductDetail";
 
 function EmployeeProtectRoute() {
   return (

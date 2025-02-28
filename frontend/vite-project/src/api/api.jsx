@@ -64,11 +64,12 @@ class ApiService {
   }
 
   // Generic DELETE method
-  async delete(endpoint) {
+  async delete(endpoint, data) {
     const response = await fetch(`${this.baseURL}${endpoint}`, {
       method: "DELETE",
       headers: this.getHeaders(),
       credentials: "include",
+      body: JSON.stringify(data),
     });
     return this.handleResponse(response);
   }

@@ -50,7 +50,6 @@ const useGet = (endpoint, initialState = null) => {
 
   const refetch = async () => {
     try {
-      console.log("here");
       const response = await api.get(endpoint);
       setApiData(response);
       console.log(" set here");

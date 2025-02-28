@@ -1,30 +1,45 @@
 import { useParams } from "react-router-dom";
-import "./productDetail.css";
+// import "./productDetail.css";
 import { Link } from "react-router-dom";
 import useGet from "../hooks/useGet";
+import ApiService from "../../api/api";
+import { useState } from "react";
 
 function EmployeeProductDetail() {
   const { id } = useParams();
 
-  const { apiData, loading, error } = useGet(`/products/${id}`);
+  const { apiData, loading, error, refetch } = useGet(`/products/${id}`);
+  // console.log("apiData", apiData);
+  // const [dataInfo, setDataInfo] = useState(apiData);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  // console.log(apiData);
+  // console.log(dataInfo);
+  const api = new ApiService("http://localhost:3000");
 
-  // const setActive = () => {
-  //   console.log("here");
-  // };
+  const setActive = async (checked) => {
+    // change checked in db using id
+    const item = { id: id, active: checked };
+    const data = await api.patch(`/products/${id}`, item);
+    refetch();
+    // console.log("Active changed");
+  };
 
-  // const deleteProduct = async () => {
-  //   try {
-  //     const data = await api.delete(`/products/${id}`);
-  //     alert("Product deleted successfully!");
-  //   } catch (error) {
-  //     console.error("Error deleting product:", error);
-  //     alert("Failed to delete product. Please try again.");
-  //   }
-  // };
+  const deleteImage = async (image) => {
+    try {
+      const endpoint = `/products/${id}/deleteImage`;
+
+      const data = await api.delete(endpoint, {
+        image: image,
+      });
+      if (refetch) refetch();
+      // setDataInfo(data);
+      // alert("Product deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      // alert("Failed to delete product. Please try again.");
+    }
+  };
 
   return (
     <>
@@ -100,7 +115,12 @@ function EmployeeProductDetail() {
           {apiData.images.map((image, index) => (
             <div key={index}>
               <img src={image} alt={`Image ${index + 1}`} />
-              <button className="material-symbols-outlined">delete</button>
+              <button
+                className="material-symbols-outlined"
+                onClick={() => deleteImage(image)}
+              >
+                delete
+              </button>
             </div>
           ))}
         </div>

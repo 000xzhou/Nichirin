@@ -416,6 +416,7 @@ router.delete("/:id/deleteImage", ensureStaff, async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Invalid ID format" });
     }
+
     // Ensure that the `image` field is provided and is a string
     if (!req.body.image || typeof req.body.image !== "string") {
       return res.status(400).json({

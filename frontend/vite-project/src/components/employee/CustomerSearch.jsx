@@ -4,7 +4,7 @@ import { useState } from "react";
 function CustomerSearch() {
   const initialState = { email: "", fname: "", lname: "", phone: "" };
   const [advanced, setAdvanced] = useState(false);
-  const [apiData, loading, error, formData, handleChange, handleSubmit] =
+  const { apiData, loading, error, formData, handleChange, handleSubmit } =
     useGetSearch(`/customers/search`, initialState);
 
   const toggleAdvanced = () => {
