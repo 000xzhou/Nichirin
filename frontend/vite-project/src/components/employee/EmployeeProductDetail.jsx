@@ -3,10 +3,58 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import useGet from "../hooks/useGet";
 import ApiService from "../../api/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const Popup = ({ onClose, field, value, onSubmit }) => {
+  const [newValue, setNewValue] = useState(value);
+
+  useEffect(() => {
+    setNewValue(value);
+  }, [value]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    onSubmit(field, value);
+    // submit to db
+    // try {
+    //   const endpoint = `/products/${id}`;
+
+    //   const data = await api.patch(endpoint, { [field]: newValue });
+    //   if (data) refetch();
+
+    //   console.log("sumbit");
+
+    //   // close popup
+    // onClose();
+    // } catch (error) {
+    //   console.error("Error submitting:", error);
+    // }
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <h2>Edit {field}</h2>
+        <label htmlFor="value">{field}</label>
+        <input
+          id="value"
+          type="text"
+          value={newValue}
+          onChange={(e) => setNewValue(e.target.value)}
+        />
+        <button type="submit">Submit</button>
+        <button onClick={onClose}>Cancel</button>
+      </form>
+    </div>
+  );
+};
 
 function EmployeeProductDetail() {
   const { id } = useParams();
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedField, setSelectedField] = useState(null);
+  const [selectedValue, setSelectedValue] = useState("");
 
   const { apiData, loading, error, refetch } = useGet(`/products/${id}`);
   // console.log("apiData", apiData);
@@ -21,7 +69,7 @@ function EmployeeProductDetail() {
     // change checked in db using id
     const item = { id: id, active: checked };
     const data = await api.patch(`/products/${id}`, item);
-    refetch();
+    if (data) refetch();
     // console.log("Active changed");
   };
 
@@ -32,7 +80,7 @@ function EmployeeProductDetail() {
       const data = await api.delete(endpoint, {
         image: image,
       });
-      if (refetch) refetch();
+      if (data) refetch();
       // setDataInfo(data);
       // alert("Product deleted successfully!");
     } catch (error) {
@@ -41,9 +89,54 @@ function EmployeeProductDetail() {
     }
   };
 
+  const addImage = async () => {
+    try {
+      const endpoint = `/products/${id}/addImages`;
+      let images = [];
+
+      const data = await api.patch(endpoint, images);
+      if (data) refetch();
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+  };
+
+  const handleUpdate = async (field, newValue) => {
+    // call api
+    try {
+      const endpoint = `/products/${id}`;
+
+      const data = await api.patch(endpoint, { [field]: newValue });
+      if (data) refetch();
+
+      console.log("sumbit");
+
+      // close popup
+      // onClose();
+      setShowPopup(false);
+    } catch (error) {
+      console.error("Error submitting:", error);
+    }
+  };
+
+  const handleEditClick = (field, value) => {
+    setSelectedField(field);
+    setSelectedValue(value);
+    setShowPopup(true);
+  };
+
   return (
     <>
       <div>
+        {showPopup && (
+          <Popup
+            onClose={() => setShowPopup(false)}
+            field={selectedField}
+            value={selectedValue}
+            onSubmit={handleUpdate}
+          />
+        )}
+
         <div>
           {/* <input type="checkbox" name="" id="" /> */}
           <input
@@ -57,11 +150,21 @@ function EmployeeProductDetail() {
 
         <div>
           <div>
-            <button className="material-symbols-outlined">edit</button>
+            <button
+              className="material-symbols-outlined"
+              onClick={() => handleEditClick("Name", apiData.name)}
+            >
+              edit
+            </button>
             <div>Name: {apiData.name} </div>
           </div>
           <div>
-            <button className="material-symbols-outlined">edit</button>
+            <button
+              className="material-symbols-outlined"
+              onClick={() => handleEditClick("Price", apiData.price)}
+            >
+              edit
+            </button>
             <div>Price: {apiData.price}</div>
           </div>
           <div>

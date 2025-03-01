@@ -358,7 +358,7 @@ router.delete("/:id/variation/:color", ensureStaff, async (req, res) => {
 }
 
  */
-router.patch("/:id/images", ensureStaff, async (req, res) => {
+router.patch("/:id/addImages", ensureStaff, async (req, res) => {
   try {
     const id = req.params.id;
 
