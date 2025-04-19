@@ -1,5 +1,6 @@
 import useGetSearch from "../hooks/useGetSearch";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function CustomerSearch() {
   const initialState = { email: "", fname: "", lname: "", phone: "" };
@@ -10,14 +11,6 @@ function CustomerSearch() {
   const toggleAdvanced = () => {
     setAdvanced(!advanced);
   };
-
-  if (!loading)
-    return (
-      <>
-        apidata here in loading... should redirect to another page{" "}
-        {apiData.customers.map((data) => data.email)}
-      </>
-    );
 
   return (
     <>
@@ -71,6 +64,33 @@ function CustomerSearch() {
           </div>
         )}
       </form>
+
+      {!loading && (
+        <>
+          {apiData.customers.map((customer) => (
+            <div key={customer._id}>
+              <div>First Name: {customer.first_name}</div>
+              <div>Last Name: {customer.last_name}</div>
+              <div>Email: {customer.email}</div>
+              <div>Phone: {customer.phone}</div>
+              <div>
+                Default Address:
+                {/** find the address base on id by looking tho the addresses array */}
+              </div>
+              <div>Orders: {customer.orders.map((order) => order)}</div>
+              <div>
+                created at:{" "}
+                {/** need a function to covert the string into date object and display date only */}
+              </div>
+              <Link to={`customer/${customer._id}`}>Edit</Link>
+              {/* leads to a page that tells you that you send a password reset to the email from backend */}
+              <Link to={`/customer/${customer._id}/passwordreset`}>
+                Reset Password
+              </Link>
+            </div>
+          ))}
+        </>
+      )}
     </>
   );
 }

@@ -35,6 +35,7 @@ const useGetSearch = (endpoint, initialState) => {
       const data = await api.get(url);
       setApiData(data);
       setLoading(!loading);
+      setFormData(initialState);
     } catch (error) {
       console.log(error);
       setError(error);

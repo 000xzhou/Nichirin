@@ -11,9 +11,11 @@ function ProductsListE() {
 
   const initialState = {
     name: "",
-    price: 0,
-    stock: 0,
+    price: "",
+    stock: "",
   };
+
+  // ! I feel it's better if I just filter out options in the frontend and use onchange with delay (wait for them to stop typing for a sec before giving result).
   const {
     apiData: apiSearchData,
     formData,

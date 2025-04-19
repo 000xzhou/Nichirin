@@ -55,6 +55,10 @@ function EmployeeList() {
     }
   };
 
+  const handleStatus = () => {
+    // change status
+  };
+
   return (
     <>
       <div>
@@ -76,9 +80,14 @@ function EmployeeList() {
           <p>
             Name: {data.first_name} {data.last_name}
           </p>
-          <p>Status: {data.status}</p>
-          <p>Role: {data.role}</p>
-          <Link to={`${data._id}`}>Details</Link>
+          <p>Phone: {data.phone}</p>
+          <p>
+            Status: <button onClick={handleStatus}>{data.status}</button>
+          </p>
+          <p>
+            Role: <button onClick={handleStatus}>{data.role}</button>
+          </p>
+          <Link to={`/employee/profile/${data._id}/edit`}>Edit</Link>
         </div>
       ))}
     </>

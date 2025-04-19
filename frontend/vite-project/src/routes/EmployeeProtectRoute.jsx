@@ -10,6 +10,7 @@ import CustomerSearch from "../components/employee/CustomerSearch";
 import EmployeeNavBar from "../components/EmployeeNavBar";
 import EmployeeDashboard from "../components/employee/EmployeeDashboard";
 import EmployeeProductDetail from "../components/employee/EmployeeProductDetail";
+import EditEmployee from "../components/employee/EditEmployee";
 
 function EmployeeProtectRoute() {
   return (
@@ -19,10 +20,12 @@ function EmployeeProtectRoute() {
         {/* login | create */}
         <Route path="create" element={<CreateE />} />
 
-        {/* employee list | search | details */}
+        {/* employee list | search | details | profile*/}
         <Route path="dashboard" element={<EmployeeDashboard />} />
         <Route path="all" element={<EmployeeList />} />
-        <Route path="all/:id" element={<EmployeeDetail />} />
+        <Route path="profile/:id" element={<EmployeeDetail />} />
+        <Route path="profile/:id/edit" element={<EditEmployee />} />
+        {/* <Route path="all/:id" element={<EmployeeDetail />} /> */}
 
         {/* customers */}
         <Route path="customers" element={<CustomerSearch />} />

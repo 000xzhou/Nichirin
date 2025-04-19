@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 // import "./productDetail.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useGet from "../hooks/useGet";
 import ApiService from "../../api/api";
 import { useEffect, useState } from "react";
@@ -8,37 +8,21 @@ import { useEffect, useState } from "react";
 const Popup = ({ onClose, field, value, onSubmit }) => {
   const [newValue, setNewValue] = useState(value);
 
-  useEffect(() => {
-    setNewValue(value);
-  }, [value]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(field, value);
-    // submit to db
-    // try {
-    //   const endpoint = `/products/${id}`;
-
-    //   const data = await api.patch(endpoint, { [field]: newValue });
-    //   if (data) refetch();
-
-    //   console.log("sumbit");
-
-    //   // close popup
-    // onClose();
-    // } catch (error) {
-    //   console.error("Error submitting:", error);
-    // }
+    onSubmit(field, newValue);
   };
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <h2>Edit {field}</h2>
-        <label htmlFor="value">{field}</label>
+        <label htmlFor="value">
+          {field.charAt(0).toUpperCase() + field.slice(1)}
+        </label>
         <input
           id="value"
-          type="text"
+          type={field === "image" ? "url" : "text"}
           value={newValue}
           onChange={(e) => setNewValue(e.target.value)}
         />
@@ -51,13 +35,13 @@ const Popup = ({ onClose, field, value, onSubmit }) => {
 
 function EmployeeProductDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [showPopup, setShowPopup] = useState(false);
   const [selectedField, setSelectedField] = useState(null);
   const [selectedValue, setSelectedValue] = useState("");
 
   const { apiData, loading, error, refetch } = useGet(`/products/${id}`);
-  // console.log("apiData", apiData);
   // const [dataInfo, setDataInfo] = useState(apiData);
 
   if (loading) return <div>Loading...</div>;
@@ -89,27 +73,70 @@ function EmployeeProductDetail() {
     }
   };
 
-  const addImage = async () => {
+  const handleDeleteDList = async (type, dataItem) => {
     try {
-      const endpoint = `/products/${id}/addImages`;
-      let images = [];
+      const endpoint = `/products/${id}/featureormeasurements`;
+      let dataToDelete;
 
-      const data = await api.patch(endpoint, images);
+      if (type === "features") {
+        dataToDelete = {
+          description: {
+            features: dataItem,
+          },
+        };
+      } else {
+        dataToDelete = {
+          description: {
+            measurements: dataItem,
+          },
+        };
+      }
+      const data = await api.delete(endpoint, dataToDelete);
       if (data) refetch();
     } catch (error) {
-      console.error("Error deleting product:", error);
+      console.error("Error submitting:", error);
     }
   };
 
   const handleUpdate = async (field, newValue) => {
     // call api
     try {
-      const endpoint = `/products/${id}`;
-
-      const data = await api.patch(endpoint, { [field]: newValue });
+      let endpoint = `/products/${id}`;
+      let sendData;
+      if (field === "basic") {
+        sendData = {
+          "description.basic": newValue,
+        };
+      } else if (field === "details") {
+        sendData = {
+          "description.details": newValue,
+        };
+      }
+      // features measurements requires []
+      else if (field === "features") {
+        endpoint = `/products/${id}/featureormeasurements`;
+        sendData = {
+          description: {
+            features: [newValue],
+          },
+        };
+      } else if (field === "measurements") {
+        endpoint = `/products/${id}/featureormeasurements`;
+        sendData = {
+          description: {
+            measurements: [newValue],
+          },
+        };
+        // images require []
+      } else if (field === "image") {
+        endpoint = `/products/${id}/addImages`;
+        sendData = { images: [newValue] };
+      } else {
+        sendData = { [field]: newValue };
+      }
+      console.log(sendData);
+      const data = await api.patch(endpoint, sendData);
       if (data) refetch();
-
-      console.log("sumbit");
 
       // close popup
       // onClose();
@@ -152,7 +179,7 @@ function EmployeeProductDetail() {
           <div>
             <button
               className="material-symbols-outlined"
-              onClick={() => handleEditClick("Name", apiData.name)}
+              onClick={() => handleEditClick("name", apiData.name)}
             >
               edit
             </button>
@@ -161,14 +188,19 @@ function EmployeeProductDetail() {
           <div>
             <button
               className="material-symbols-outlined"
-              onClick={() => handleEditClick("Price", apiData.price)}
+              onClick={() => handleEditClick("price", apiData.price)}
             >
               edit
             </button>
             <div>Price: {apiData.price}</div>
           </div>
           <div>
-            <button className="material-symbols-outlined">edit</button>
+            <button
+              className="material-symbols-outlined"
+              onClick={() => handleEditClick("stock", apiData.stock)}
+            >
+              edit
+            </button>
             <div>Stock: {apiData.stock}</div>
           </div>
         </div>
@@ -176,36 +208,78 @@ function EmployeeProductDetail() {
         <div>
           <h3>Description</h3>
           <div>
-            <button className="material-symbols-outlined">edit</button>
+            <button
+              className="material-symbols-outlined"
+              onClick={() =>
+                handleEditClick("basic", apiData.description.basic)
+              }
+            >
+              edit
+            </button>
             {apiData.description.basic && (
               <div>Basic: {apiData.description.basic}</div>
             )}
           </div>
           <div>
-            <button className="material-symbols-outlined">edit</button>
+            <button
+              className="material-symbols-outlined"
+              onClick={() =>
+                handleEditClick("details", apiData.description.details)
+              }
+            >
+              edit
+            </button>
             {apiData.description.details && (
               <div>Details: {apiData.description.details}</div>
             )}
           </div>
           <div>
-            <button className="material-symbols-outlined">edit</button>
+            <button
+              className="material-symbols-outlined"
+              onClick={() => handleEditClick("features", " ")}
+            >
+              add
+            </button>
             Features:
             <div>
               {apiData.description.features?.length > 0 && (
                 <ul>
                   {apiData.description.features.map((feature, index) => (
-                    <li key={index}>{feature}</li>
+                    <ul key={index}>
+                      <li>{feature}</li>
+                      <button
+                        className="material-symbols-outlined"
+                        onClick={() => handleDeleteDList("features", feature)}
+                      >
+                        delete
+                      </button>
+                    </ul>
                   ))}
                 </ul>
               )}
             </div>
             <div>
-              <button className="material-symbols-outlined">edit</button>
+              <button
+                className="material-symbols-outlined"
+                onClick={() => handleEditClick("measurements", "")}
+              >
+                add
+              </button>
               Measurements:
               {apiData.description.measurements?.length > 0 && (
                 <ul>
                   {apiData.description.measurements.map((measure, index) => (
-                    <li key={index}>{measure}</li>
+                    <ul key={index}>
+                      <li>{measure}</li>
+                      <button
+                        className="material-symbols-outlined"
+                        onClick={() =>
+                          handleDeleteDList("measurements", measure)
+                        }
+                      >
+                        delete
+                      </button>
+                    </ul>
                   ))}
                 </ul>
               )}
@@ -214,7 +288,11 @@ function EmployeeProductDetail() {
         </div>
         <div>
           <h3>Image</h3>
-          <button>Add Image</button>
+          {/* Add image need a popup or something ... or send to the add image page. */}
+          {/* <button onClick={() => navigate(`/products/${id}/add-image`)}> */}
+          <button onClick={() => handleEditClick("image", "")}>
+            Add Image
+          </button>
           {apiData.images.map((image, index) => (
             <div key={index}>
               <img src={image} alt={`Image ${index + 1}`} />

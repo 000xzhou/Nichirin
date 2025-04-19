@@ -28,7 +28,9 @@ const EmployeeNavBar = () => {
     <nav>
       {/* For all employees */}
       <div>
-        <Link to="/employee/profile">Welcome {isUser.first_name}!</Link>
+        <Link to={`/employee/profile/${isUser._id}`}>
+          Welcome {isUser.first_name}!
+        </Link>
       </div>
       <div>
         <Link to={`/employee/dashboard`}>Dashboard</Link>

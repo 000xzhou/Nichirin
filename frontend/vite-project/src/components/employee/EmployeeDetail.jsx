@@ -1,5 +1,5 @@
 import useGet from "../hooks/useGet";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 function EmployeeDetail() {
   const { id } = useParams();
@@ -9,17 +9,18 @@ function EmployeeDetail() {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
-  console.log(apiData);
   return (
     <div id={apiData._id}>
-      <p>{apiData.email}</p>
-      <p>{apiData.fname}</p>
-      <p>{apiData.lanme}</p>
-      <p>{apiData.phone}</p>
-      <p>{apiData.role}</p>
-      <p>{apiData.status}</p>
-      <p>{apiData.created_at}</p>
-      <p>{apiData.updated_at}</p>
+      <p>Email: {apiData.email}</p>
+      <p>First Name: {apiData.first_name}</p>
+      <p>Last Name: {apiData.last_name}</p>
+      <p>Password: ******</p>
+      <p>Phone: {apiData.phone}</p>
+      <p>Role: {apiData.role}</p>
+      <p>Status: {apiData.status}</p>
+      {/* <p>Created at: {apiData.created_at}</p> */}
+      {/* <p>Updated at: {apiData.updated_at}</p> */}
+      <Link to={`/employee/profile/${apiData._id}/edit`}>Edit</Link>
     </div>
   );
 }

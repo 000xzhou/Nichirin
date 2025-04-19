@@ -199,7 +199,6 @@ router.patch("/:id", ensureStaff, async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Invalid ID format" });
     }
-
     const updatedProduct = await Product.findByIdAndUpdate(id, req.body, {
       new: true,
       runValidators: true,
@@ -433,6 +432,119 @@ router.delete("/:id/deleteImage", ensureStaff, async (req, res) => {
       { $pull: { images: imageToDelete } },
       { new: true, runValidators: true }
     );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: `Product id ${id} not found` });
+    }
+
+    res.status(200).send(updatedProduct);
+  } catch (err) {
+    console.error("Error occurred:", {
+      name: err.name, // Type of the error
+      message: err.message, // General message about the error
+      code: err.code, // MongoDB error code if available
+      path: err.path, // Path to the field that caused the error
+      value: err.value, // The value that caused the error
+    });
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/**
+ // Update a product by id for Description Features / Measurements
+ * {
+  "description": {
+    "features": "body"
+  }
+}
+ * or
+ * {
+  "description": {
+    "measurements": "body"
+  }
+}
+ */
+router.patch("/:id/featureormeasurements", ensureStaff, async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    // Check if the ID is a valid MongoDB ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid ID format" });
+    }
+    const update = {};
+
+    if (req.body.description?.features) {
+      update.$push = {
+        "description.features": {
+          $each: req.body.description.features,
+        },
+      };
+    }
+
+    if (req.body.description?.measurements) {
+      if (!update.$push) update.$push = {};
+      update.$push["description.measurements"] = {
+        $each: req.body.description.measurements,
+      };
+    }
+
+    const updatedProduct = await Product.findByIdAndUpdate(id, update, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: `Product id ${id} not found` });
+    }
+
+    res.status(200).send(updatedProduct);
+  } catch (err) {
+    console.error("Error occurred:", {
+      name: err.name, // Type of the error
+      message: err.message, // General message about the error
+      code: err.code, // MongoDB error code if available
+      path: err.path, // Path to the field that caused the error
+      value: err.value, // The value that caused the error
+    });
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Delete - Delete part of product's features and measurements
+/**
+ * delete one of each item in list only
+ * req.body be send like below
+ * {
+  "description": {
+    "features": "body"
+  }
+}
+ * or
+ * {
+  "description": {
+    "measurements": "body"
+  }
+}
+ */
+router.delete("/:id/featureormeasurements", ensureStaff, async (req, res) => {
+  try {
+    const id = req.params.id;
+    const update = {};
+
+    if (req.body.description?.features) {
+      update.$pull = { "description.features": req.body.description.features };
+    }
+
+    if (req.body.description?.measurements) {
+      update.$pull = {
+        "description.measurements": req.body.description.measurements,
+      };
+    }
+
+    const updatedProduct = await Product.findByIdAndUpdate(id, update, {
+      new: true,
+    });
 
     if (!updatedProduct) {
       return res.status(404).json({ message: `Product id ${id} not found` });

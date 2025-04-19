@@ -267,7 +267,6 @@ router.get("/:id", ensureCorrectStaff, async (req, res) => {
 router.patch("/:id", ensureCorrectStaff, async (req, res) => {
   try {
     const id = req.params.id;
-
     const updatedEmployee = await Employee.findByIdAndUpdate(id, req.body, {
       new: true,
       runValidators: true,
@@ -285,7 +284,7 @@ router.patch("/:id", ensureCorrectStaff, async (req, res) => {
 /** DELETE /[id]
  *
  * Delete employee
- * Should never be use but is here
+ * Should't never be use but is here
  *
  * Authorization required: admin
  **/
