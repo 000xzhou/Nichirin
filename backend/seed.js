@@ -96,6 +96,7 @@ const seedDatabase = async () => {
           { color: "square", stock: 3, price: 16 },
         ],
         images: ["one.jpg", "two.jpg"],
+        tags: ["black", "sword"],
       },
       {
         name: "Zenitsu’s Yellow Sword",
@@ -110,6 +111,7 @@ const seedDatabase = async () => {
           measurements: ["4", "5"],
         },
         images: ["one.jpg", "two.jpg"],
+        tags: ["yellow", "sword"],
       },
       {
         name: "Inosuke’s Chipped Dual Swords",
@@ -125,6 +127,7 @@ const seedDatabase = async () => {
         },
         variations: [{ color: "blue", stock: 5, price: 11 }],
         images: ["one.jpg", "two.jpg"],
+        tags: ["dual", "sword"],
       },
       {
         name: "Muichiro Tokito’s White Sword",
@@ -140,6 +143,7 @@ const seedDatabase = async () => {
         },
         variations: [{ color: "blue", stock: 5, price: 11 }],
         images: ["one.jpg", "two.jpg"],
+        tags: ["white", "sword"],
       },
       {
         name: "Mitsuri Kanroji’s Whip Sword",
@@ -155,6 +159,7 @@ const seedDatabase = async () => {
         },
         variations: [{ color: "blue", stock: 5, price: 11 }],
         images: ["one.jpg", "two.jpg"],
+        tags: ["whip", "sword"],
       },
       {
         name: "Obanai Iguro’s Twisted Sword",
@@ -170,6 +175,7 @@ const seedDatabase = async () => {
         },
         variations: [{ color: "blue", stock: 5, price: 11 }],
         images: ["one.jpg", "two.jpg"],
+        tags: ["twisted", "sword"],
       },
       {
         name: "Sanemi Shinazugawa’s Green Sword",
@@ -185,6 +191,7 @@ const seedDatabase = async () => {
         },
         variations: [{ color: "blue", stock: 5, price: 11 }],
         images: ["one.jpg", "two.jpg"],
+        tags: ["green", "sword"],
       },
       {
         name: "Kanae Kocho’s Poison Sword",
@@ -200,6 +207,7 @@ const seedDatabase = async () => {
         },
         variations: [{ color: "blue", stock: 5, price: 11 }],
         images: ["one.jpg", "two.jpg"],
+        tags: ["poison", "sword"],
       },
       {
         name: "Yoriichi Tsugikuni’s Black Sword",
@@ -215,6 +223,7 @@ const seedDatabase = async () => {
         },
         variations: [{ color: "blue", stock: 5, price: 11 }],
         images: ["one.jpg", "two.jpg"],
+        tags: ["black", "sword"],
       },
       {
         name: "Kyojuro Rengoku’s Red-Orange Sword",
@@ -230,6 +239,7 @@ const seedDatabase = async () => {
         },
         variations: [{ color: "blue", stock: 5, price: 11 }],
         images: ["one.jpg", "two.jpg"],
+        tags: ["orange", "sword"],
       },
       {
         name: "Giyu Tomioka’s Blue Sword",
@@ -245,6 +255,7 @@ const seedDatabase = async () => {
         },
         variations: [{ color: "blue", stock: 5, price: 11 }],
         images: ["one.jpg", "two.jpg"],
+        tags: ["blue", "sword"],
       },
       {
         name: "Shinobu Kocho’s Poison Stinger",
@@ -260,6 +271,7 @@ const seedDatabase = async () => {
         },
         variations: [{ color: "blue", stock: 5, price: 11 }],
         images: ["one.jpg", "two.jpg"],
+        tags: ["poison", "sword"],
       },
       {
         name: "Tengen Uzui’s Dual Cleavers",
@@ -275,6 +287,7 @@ const seedDatabase = async () => {
         },
         variations: [{ color: "blue", stock: 5, price: 11 }],
         images: ["one.jpg", "two.jpg"],
+        tags: ["dual", "sword"],
       },
       {
         name: "Kanao Tsuyuri’s Pink Sword",
@@ -290,6 +303,7 @@ const seedDatabase = async () => {
         },
         variations: [{ color: "blue", stock: 5, price: 11 }],
         images: ["one.jpg", "two.jpg"],
+        tags: ["pink", "sword"],
       },
       {
         name: "Kokushibo’s Demon Sword",
@@ -305,6 +319,7 @@ const seedDatabase = async () => {
         },
         variations: [{ color: "blue", stock: 5, price: 11 }],
         images: ["one.jpg", "two.jpg"],
+        tags: ["demon", "sword"],
       },
       {
         name: "Gyomei Himejima’s Spiked Flail and Axe",
@@ -320,6 +335,7 @@ const seedDatabase = async () => {
         },
         variations: [{ color: "blue", stock: 5, price: 11 }],
         images: ["one.jpg", "two.jpg"],
+        tags: ["spiked", "axe"],
       },
       {
         name: "Tengen Uzui’s Explosive Beads",
@@ -335,6 +351,7 @@ const seedDatabase = async () => {
         },
         variations: [{ color: "blue", stock: 5, price: 11 }],
         images: ["one.jpg", "two.jpg"],
+        tags: ["explosive", "sword"],
       },
       {
         name: "Genya Shinazugawa’s Shotgun",
@@ -350,6 +367,7 @@ const seedDatabase = async () => {
         },
         variations: [{ color: "blue", stock: 5, price: 11 }],
         images: ["one.jpg", "two.jpg"],
+        tags: ["shotgun"],
       },
     ];
     await Product.insertMany(products);

@@ -11,27 +11,24 @@ const Navbar = () => {
 
   return (
     <nav>
-      <Link to="/">Logo</Link>
-      <div className="navIcon">
+      <Link to="/">Home</Link>
+      <div className="nav-bar-right">
         {isUser ? (
           <Link to={`/customers/${isUser._id}`}>{isUser.email}</Link>
         ) : (
-          <Link
-            to="/login"
-            state={{ from: location }}
-            className="material-symbols-outlined"
-          >
-            person
+          <Link to="/login" state={{ from: location }}>
+            Login
           </Link>
         )}
-        {/* </div> */}
-
-        <button className="material-symbols-outlined" onClick={handleLogout}>
-          logout
-        </button>
+        {isUser && (
+          <button className="material-symbols-outlined" onClick={handleLogout}>
+            logout
+          </button>
+        )}
         {/* gets num from local storage (there should be one that just store number) */}
-        <Link to="/cart" className="material-symbols-outlined">
-          shopping_cart<span>{cartNum}</span>
+        <Link to="/cart" className="cart-container ">
+          <span className="material-symbols-outlined">shopping_cart</span>
+          <span className="navbar-cart-number">{cartNum}</span>
         </Link>
       </div>
     </nav>

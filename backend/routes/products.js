@@ -29,7 +29,7 @@ router.get("/", async (req, res) => {
 // Search Products
 router.get("/search", async (req, res) => {
   try {
-    const { name, price, stock } = req.query;
+    const { name, price, stock, tags } = req.query;
 
     let query = {};
     if (name) {
@@ -43,8 +43,14 @@ router.get("/search", async (req, res) => {
       if (stock == 0) {
         query.stock = 0;
       } else {
-        query.stock = { $gt: 0 }; // Find products with stock > 0
+        // Find products with stock > 0
+        query.stock = { $gt: 0 };
       }
+    }
+    if (tags) {
+      // split by comma
+      const tagsArray = tags.split(",").map((tag) => tag.trim());
+      query.tags = { $in: tagsArray };
     }
 
     if (Object.keys(query).length) {
@@ -144,6 +150,8 @@ router.post("/create", ensureStaff, async (req, res) => {
     req.body.images = Array.isArray(req.body.images)
       ? req.body.images.flat()
       : [];
+
+    req.body.tags = Array.isArray(req.body.tags) ? req.body.tags.flat() : [];
 
     const newProduct = new Product(req.body);
     await newProduct.save();

@@ -58,6 +58,11 @@ const productSchema = new Schema(
         message: "Images should be an array of strings",
       },
     },
+    tags: {
+      type: [String],
+      default: [],
+      required: false,
+    },
   },
   {
     strict: true,

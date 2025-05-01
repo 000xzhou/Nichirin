@@ -1,0 +1,22 @@
+.form {
+  display: grid;
+  gap: 1rem;
+  border: 1px solid var(--background-accent);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+}
+
+.form input {
+  border: 1px solid var(--secondary-text);
+  border-radius: 5px;
+  padding: 0.25rem;
+}
+
+.form label {
+  display: block;
+}
+
+/* .form input:focus {
+  border: 1px solid var(--primary-text);
+  outline: none;
+} */

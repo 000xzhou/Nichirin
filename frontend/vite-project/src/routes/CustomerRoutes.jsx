@@ -12,6 +12,12 @@ import CustomerAuthProvider from "./CustomerAuthProvider";
 import { CartProvider } from "./CartProvider";
 import Cart from "../components/product/Cart";
 import OrderConfirmation from "../components/product/OrderConfirmation";
+import About from "../components/help/About";
+import ContactUs from "../components/help/ContactUs";
+import Faq from "../components/help/Faq";
+import Careers from "../components/help/Careers";
+import Terms from "../components/help/Terms";
+import RefundPolicy from "../components/help/RefundPolicy";
 
 // import { useCustomerAuth } from "./CustomerAuthProvider";
 
@@ -27,7 +33,7 @@ function CustomerRoutes() {
       <CustomerAuthProvider>
         <CartProvider>
           <NavBar />
-          <main>
+          <main className="container">
             <Routes>
               <Route path="/" element={<Landing />} />
               {/* login and register  */}
@@ -45,6 +51,13 @@ function CustomerRoutes() {
                 path="order-confirmation"
                 element={<OrderConfirmation />}
               />
+              {/* footing routes */}
+              <Route path="about-us" element={<About />} />
+              <Route path="contact-us" element={<ContactUs />} />
+              <Route path="faq" element={<Faq />} />
+              <Route path="careers" element={<Careers />} />
+              <Route path="terms" element={<Terms />} />
+              <Route path="return-policy" element={<RefundPolicy />} />
             </Routes>
           </main>
           <Footing />

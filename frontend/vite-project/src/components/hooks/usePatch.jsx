@@ -45,7 +45,6 @@ const usePatch = (initialState, endpoint) => {
       setError(error);
     }
   };
-
   return [formData, handleChange, handleSubmit, error];
 };
 export default usePatch;

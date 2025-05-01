@@ -1,0 +1,38 @@
+.edit-customer-ul {
+  padding: 0rem;
+  /* border: 1px solid; */
+  /* border-radius: var(--border-radius); */
+}
+
+.edit-customer-ul li {
+  list-style: none;
+  background-color: var(--background-accent);
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+}
+
+.edit-customer-link {
+  padding: 0.5rem 3rem;
+}
+
+@media screen and (max-width: 768px) {
+  .edit-customer-ul li div {
+    padding-bottom: 1rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .edit-customer-ul li {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+/* .edit-customer-ul a {
+  color: var(--secondary-text);
+}
+
+.edit-customer-ul a:hover {
+  color: var(--active-state);
+} */

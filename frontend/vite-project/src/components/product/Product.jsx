@@ -15,7 +15,6 @@ function Product({ id, name, price, stock, rating, images }) {
       image: images[0],
     });
   };
-
   return (
     <div className="product-card">
       {/* Product Image */}
@@ -40,11 +39,14 @@ function Product({ id, name, price, stock, rating, images }) {
 
       {/* Add to Cart Button */}
       {stock > 0 ? (
-        <button className="button-54" onClick={addToCart}>
+        <button className="main-button padding-point-5" onClick={addToCart}>
           Add to Cart
         </button>
       ) : (
-        <button className="button-54" disabled>
+        <button
+          className="secondary-button padding-point-5 disable-button"
+          disabled
+        >
           Sold out
         </button>
       )}

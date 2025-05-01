@@ -4,11 +4,6 @@ import { Link } from "react-router-dom";
 // import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
 
 function LoginC() {
-  // const { handleLogin } = useCustomerAuth();
-
-  // const navigate = useNavigate();
-  // const location = useLocation();
-
   const initialState = {
     email: "",
     password: "",
@@ -19,43 +14,51 @@ function LoginC() {
     "/customers/login"
   );
 
-  // if (error) return <div>Error: {error.message}</div>;
-
-  // if (apiData) {
-  //   // was testing to see if I can get the navbar to auto update without editing usePost (have a usePostLogin to test out other stuff if this don't work.)
-  //   // setIsUser(apiData);
-  //   const from = location.state?.from?.pathname || "/";
-  //   navigate(from);
-  // }
   return (
-    <div>
+    <div className="login-container">
       <h2>Welcome Back!</h2>
       {error && <div>{error}</div>}
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email:</label>
-        <input
-          type="text"
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-        <button type="submit">Login</button>
+      <form onSubmit={handleSubmit} className="login-form">
+        <div>
+          <label htmlFor="email">Email:</label>
+          <input
+            type="text"
+            id="email"
+            name="email"
+            className="padding-point-5 border-radius-input"
+            value={formData.email}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            className="padding-point-5 border-radius-input"
+            value={formData.password}
+            onChange={handleChange}
+          />
+        </div>
+        <button
+          className="confirm-button padding-point-5 text-uppercase"
+          type="submit"
+        >
+          Login
+        </button>
       </form>
-      <div>Forget ypassword?</div>
-      <div>
-        <p>Don&apos;t have an account? </p>
-        <span>
-          <Link to="/register">Sign Up</Link>
-        </span>
+      <Link
+        className="forgetpassword text-color-secondary"
+        to="/forgetpassword"
+      >
+        Forget password?
+      </Link>
+      <div className="margin-top-1 flex-gap-0-25">
+        Need an account?
+        <Link to="/register" className="text-color-secondary text-uppercase">
+          Sign Up
+        </Link>
       </div>
     </div>
   );

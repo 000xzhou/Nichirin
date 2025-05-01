@@ -1,0 +1,96 @@
+.social-icon a img {
+  max-width: 50px;
+  max-height: 50px;
+}
+
+.contact-us {
+  padding-inline: 2rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+.contact-us input,
+.contact-us textarea {
+  width: 99%;
+}
+.contact-us textarea {
+  height: 4rem;
+}
+
+.max-500 {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.max-700 {
+  max-width: 700px;
+  margin: 0 auto;
+}
+.full-name input {
+  margin-right: 0.2rem;
+}
+
+.careers .position {
+  width: 50%;
+}
+
+.employment-status div {
+  display: flex;
+}
+
+.employment-status div label,
+.careers select,
+.careers input[type="date"] {
+  cursor: pointer;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  border: 1px solid var(--active-state);
+  background-color: var(--button);
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  width: max-content;
+}
+.custom-file-upload:hover {
+  background-color: var(--hover-state);
+}
+
+@media screen and (max-width: 768px) {
+  .footing-section-container {
+    padding-bottom: 2rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .social-icon,
+  .footing-container {
+    display: flex;
+  }
+  .footing-container {
+    gap: 5rem;
+  }
+  .footing-container section {
+    flex: 50;
+  }
+  .careers {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+  }
+  .careers .job-select,
+  .careers .employment-status,
+  .careers button {
+    grid-column: 1/-1;
+  }
+  .careers button {
+    justify-self: center;
+    width: 50%;
+  }
+}

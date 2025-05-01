@@ -1,6 +1,7 @@
 import usePatch from "../hooks/usePatch";
 import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
 import { useParams } from "react-router-dom";
+import "./form.css";
 
 function EditCustomerForm() {
   const { isUser } = useCustomerAuth();
@@ -29,18 +30,27 @@ function EditCustomerForm() {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <form method="post" onSubmit={handleSubmit}>
-      <label htmlFor={type}>{labelType}</label>
-      <input
-        type="text"
-        id={type}
-        name={type}
-        value={formData[type]}
-        placeholder={formData[type]}
-        onChange={handleChange}
-      />
-      <button type="submit">Save changes</button>
-    </form>
+    <>
+      <h1>Change Your {labelType}</h1>
+      <form method="post" onSubmit={handleSubmit} className="form">
+        <div>
+          <label htmlFor={type}>{labelType}</label>
+          <input
+            type="text"
+            id={type}
+            name={type}
+            value={formData[type]}
+            placeholder={formData[type]}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <button type="submit" className="main-button padding-point-5">
+            Save changes
+          </button>
+        </div>
+      </form>
+    </>
   );
 }
 

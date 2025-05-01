@@ -50,7 +50,7 @@ function LoginE() {
       <h1>Employee Login</h1>
       {error && <div>{error}</div>}
       <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email:</label>
+        <label htmlFor="email">Email</label>
         <input
           type="text"
           id="email"
@@ -58,7 +58,7 @@ function LoginE() {
           value={formData.email}
           onChange={handleChange}
         />
-        <label htmlFor="password">Password:</label>
+        <label htmlFor="password">Password</label>
         <input
           type="password"
           id="password"

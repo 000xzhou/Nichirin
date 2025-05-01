@@ -1,6 +1,7 @@
 import usePost from "../hooks/usePost";
 import { Link } from "react-router-dom";
 import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
+import "./editcustomer.css";
 
 function EditCustomer() {
   const { isUser } = useCustomerAuth();

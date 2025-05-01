@@ -2,6 +2,7 @@ import { useCart } from "../../routes/CartProvider";
 import ApiService from "../../api/api";
 import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
 import { useNavigate } from "react-router-dom";
+import "./cart.css";
 
 function Cart() {
   const { isUser } = useCustomerAuth();
@@ -38,20 +39,26 @@ function Cart() {
   return (
     <div>
       <section>
-        <button onClick={handleClearCart}>clear cart</button>
+        {/* <button onClick={handleClearCart}>clear cart</button> */}
         <ul>
           {cart.map((item) => (
-            <li key={item.id}>
-              <img
-                src={item.image}
-                alt={`Image of ${item.name}`}
-                width="50"
-                height="50"
-              />
-              <p>{item.name}</p>
-              <p>${item.price}</p>
-              <div>
-                <button onClick={() => handleRemoveFromCart(item.id)}>-</button>
+            <li key={item.id} className="cart-item-list">
+              <div className="cart-list-img-container">
+                <img
+                  src={item.image}
+                  alt={`Image of ${item.name}`}
+                  className="cart-list-img"
+                />
+              </div>
+              <p className="cart-list-name">{item.name}</p>
+              <p className="cart-list-price">${item.price}</p>
+              <div className="listQytChanger">
+                <button
+                  className="listLeftButton"
+                  onClick={() => handleRemoveFromCart(item.id)}
+                >
+                  -
+                </button>
                 <input
                   type="number"
                   min="1"
@@ -61,7 +68,10 @@ function Cart() {
                   // onBlur={(e) => handleChangeQty(item.id, e.target.value)}
                   readOnly
                 />
-                <button onClick={() => handleAddtoCart({ id: item.id })}>
+                <button
+                  className="listRightButton"
+                  onClick={() => handleAddtoCart({ id: item.id })}
+                >
                   +
                 </button>
               </div>
@@ -69,9 +79,16 @@ function Cart() {
           ))}
         </ul>
       </section>
-      <section>
-        <div>subtotal: ${total.toFixed(2)}</div>
-        <button onClick={handleCheckout}>Go to checkout</button>
+      <section className="checkoutSession">
+        <div className="checkoutSessionSubtotal">
+          subtotal: ${total.toFixed(2)}
+        </div>
+        <button
+          className="main-button padding-point-5"
+          onClick={handleCheckout}
+        >
+          Go to checkout
+        </button>
       </section>
     </div>
   );

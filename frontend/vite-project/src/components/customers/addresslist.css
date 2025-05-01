@@ -1,0 +1,37 @@
+.addresslist-ul {
+  display: grid;
+  padding: 0;
+  grid-template-columns: repeat(auto-fill, minmax(260px, max-content));
+  gap: 1rem;
+  justify-content: start;
+}
+
+.addresslist-ul {
+  position: relative;
+}
+
+.addresslist-ul li {
+  list-style: none;
+  border: 1px solid var(--background-accent);
+  width: 250px;
+  height: 250px;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+}
+
+.add-address-container {
+  border-style: dashed;
+}
+.addresslist-ul .add {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-address-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

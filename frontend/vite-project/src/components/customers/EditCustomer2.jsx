@@ -1,8 +1,6 @@
-// import usePost from "../hooks/usePost";
 import { Link } from "react-router-dom";
-// import { useState } from "react";
 import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
-// import EditCustomerForm from "./EditCustomerForm";
+import "./editcustomer.css";
 
 function EditCustomer2() {
   const { isUser } = useCustomerAuth();
@@ -31,15 +29,15 @@ function EditCustomer2() {
   return (
     <div>
       <h2>Login & Security</h2>
-      <ul>
+      <ul className="edit-customer-ul">
         <li>
-          <section>
-            <div>
-              <span className="bold">Email: </span>
-              {isUser.email}
-            </div>
-            <Link to="email">Edit</Link>
-          </section>
+          <div>
+            <span className="bold">Email: </span>
+            {isUser.email}
+          </div>
+          <Link to="email" className="main-button edit-customer-link ">
+            Edit
+          </Link>
           {/*
           Not a fan of how it looks editing on the same page esp when pressing many edit button at the same time without saving so taking it out
           {isEditing && (
@@ -58,14 +56,18 @@ function EditCustomer2() {
             <span className="bold">First Name: </span>
             {isUser.first_name}
           </div>
-          <Link to="fname">Edit</Link>
+          <Link to="fname" className="main-button edit-customer-link ">
+            Edit
+          </Link>
         </li>
         <li>
           <div>
             <span className="bold">Last Name: </span>
             {isUser.last_name}
           </div>
-          <Link to="lname">Edit</Link>
+          <Link to="lname" className="main-button edit-customer-link ">
+            Edit
+          </Link>
         </li>
         <li>
           <div>
@@ -77,7 +79,9 @@ function EditCustomer2() {
             {isUser.password} */}
             {"*".repeat(Math.min(isUser.password.length, 10))}
           </div>
-          <Link to="password">Edit</Link>
+          <Link to="password" className="main-button edit-customer-link ">
+            Edit
+          </Link>
         </li>
       </ul>
       {/* <form action="" method="post" onSubmit={handleSubmit}>

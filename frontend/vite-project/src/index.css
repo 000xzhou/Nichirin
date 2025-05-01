@@ -1,136 +1,160 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color: rgba(255, 255, 255, 0.87);
-  --color: rgba(255, 255, 255, 0.87);
-
-  background: linear-gradient(#3a3a3a, #000000);
-  --background-light: #3a3a3a;
-  --background-dark: #000000;
-
+  --background-color: #fff8f1;
+  --background-accent: #fce8d5;
+  --background-accent-transparent: hsla(29, 87%, 91%, 0.5);
+  --primary-text: #4a2e2b;
+  --secondary-text: #7a5c50;
+  /* --button: #f6afa9; */
+  --button: #feebcb;
+  /* --hover-state: #feebcb; */
+  --hover-state: #f6afa9;
+  --active-state: #e89a94;
+  --confirm-button: #b4d7a8;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  position: relative;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+  --border-radius: 16px;
 }
 
 body {
-  margin: 0;
-  /* display: flex; */
-  /* place-items: center; */
-  min-width: 320px;
-  min-height: 100vh;
-  padding-inline: 4rem;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-.slanted-cover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #000000;
-  clip-path: polygon(65% 0, 100% 0, 100% 100%, 35% 100%);
-  z-index: -1;
-}
-
-button {
-  cursor: pointer;
-}
-/* Big button */
-.big-button {
-  --b: 3px; /* border thickness */
-  --s: 0.45em; /* size of the corner */
-  /* --color: #373b44; */
-
-  padding: calc(0.5em + var(--s)) calc(0.9em + var(--s));
-  color: var(--color);
-  --_p: var(--s);
-  background: conic-gradient(
-      from 90deg at var(--b) var(--b),
-      #0000 90deg,
-      var(--color) 0
-    )
-    var(--_p) var(--_p) / calc(100% - var(--b) - 2 * var(--_p))
-    calc(100% - var(--b) - 2 * var(--_p));
-  transition: 0.3s linear, color 0s, background-color 0s;
-  outline: var(--b) solid #0000;
-  outline-offset: 0.6em;
-  font-size: 16px;
-
-  border: 0;
-
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
-
-.big-button:hover,
-.big-button:focus-visible {
-  --_p: 0px;
-  outline-color: var(--color);
-  outline-offset: 0.05em;
-}
-
-.big-button:active {
-  background: var(--color);
-  color: #fff;
-}
-
-/* CSS */
-.button-54 {
-  letter-spacing: 2px;
+a {
+  color: var(--primary-text);
   text-decoration: none;
+}
+
+a:hover {
+  color: var(--hover-state);
+}
+
+.main-button {
+  background-color: var(--secondary-text);
+  border-radius: var(--border-radius);
+  border-color: transparent;
+  color: var(--background-accent);
+}
+
+.secondary-button {
+  background-color: var(--button);
+  border-radius: var(--border-radius);
+  color: var(--primary-text);
+}
+
+.confirm-button {
+  background-color: var(--confirm-button);
+  border-radius: 10px;
+  border-color: transparent;
+  color: var(--primary-text);
+}
+
+.main-button,
+.secondary-button,
+.confirm-button {
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.main-button:active,
+.secondary-button:active,
+.confirm-button:active {
+  background-color: var(--active-state);
+  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
+  color: var(--primary-text);
+}
+
+.main-button:hover,
+.secondary-button:hover,
+.confirm-button:hover {
+  background-color: var(--hover-state);
+  color: var(--primary-text);
+  cursor: pointer;
+  /* transform: translateY(-2px); */
+}
+
+.main-button:active:hover,
+.main-button:focus:hover,
+.main-button:focus,
+.secondary-button:active:hover,
+.secondary-button:focus:hover,
+.secondary-button:focus,
+.confirm-button:active:hover,
+.confirm-button:focus:hover,
+.confirm-button:focus {
+  background-color: var(--hover-state);
+  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
+  color: var(--primary-text);
+}
+
+.font-42 {
+  font-size: 4.2rem;
+}
+.line-2 {
+  line-height: 2rem;
+}
+.margin-bottom-2 {
+  margin-bottom: 2rem;
+}
+
+.margin-top-1 {
+  margin-top: 1rem;
+}
+
+.padding-point-5 {
+  padding: 0.5rem;
+}
+
+.padding-1 {
+  padding: 1rem;
+}
+
+.disable-button:hover {
+  background-color: var(--button);
+  cursor: not-allowed;
+}
+
+.border-radius-input {
+  border: 1px solid var(--primary-text);
+  border-radius: 5px;
+}
+
+.text-color-green {
+  color: var(--confirm-button);
+}
+
+.text-color-secondary {
+  color: var(--secondary-text);
+}
+
+.text-uppercase {
   text-transform: uppercase;
-  color: var(--color);
-  border: 3px solid;
-  padding: 0.25em 0.5em;
-  background-color: var(--background-dark);
-  box-shadow: 1px 1px 0px 0px #000000, 2px 2px 0px 0px, 3px 3px 0px 0px,
-    4px 4px 0px 0px, 5px 5px 0px 0px;
-  position: relative;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
 }
 
-.button-54:hover,
-.button-54:focus-visible {
-  background-color: var(--background-light);
+.flex-gap-0-25 {
+  display: flex;
+  gap: 0.25rem;
 }
 
-.button-54:active {
-  box-shadow: 0px 0px 0px 0px;
-  top: 5px;
-  left: 5px;
+img {
+  border-radius: var(--border-radius);
 }
 
-@media (min-width: 768px) {
-  .button-54 {
-    padding: 0.25em 0.75em;
-  }
+.margin-right-point-5 {
+  margin-right: 0.5rem;
 }
 
-.button-54:disabled {
-  background-color: #ccc; /* Set a lighter color for the disabled state */
-  cursor: not-allowed; /* Show a "not allowed" cursor */
-  opacity: 0.6; /* Make the button appear grayed out */
+.margin-block-2 {
+  margin-block: 2rem;
+}
+
+textarea {
+  border-radius: 5px;
+}
+
+input,
+textarea {
+  text-indent: 0.25rem;
 }
