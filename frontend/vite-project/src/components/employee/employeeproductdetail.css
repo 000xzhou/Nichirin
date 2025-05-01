@@ -1,0 +1,59 @@
+.popup {
+  background-color: var(--background-accent);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: var(--border-radius);
+  z-index: 99;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--background-accent-transparent);
+  z-index: 98;
+}
+.popup h2 {
+  margin-top: 0;
+  text-align: center;
+}
+.popup form .button-group {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup form input {
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--secondary-text);
+}
+
+.e-product-detail-container button {
+  background-color: transparent;
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.tags-api-wrapper {
+  margin: 0;
+}
+.tags-api-wrapper li {
+  list-style: none;
+}
+
+.employee-product-image-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 1rem;
+}
+.employee-product-image {
+  width: 100%;
+}

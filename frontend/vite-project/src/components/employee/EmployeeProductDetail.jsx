@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useGet from "../hooks/useGet";
 import ApiService from "../../api/api";
 import { useEffect, useState } from "react";
+import "./employeeproductdetail.css";
 
 const Popup = ({ onClose, field, value, onSubmit }) => {
   const [newValue, setNewValue] = useState(value);
@@ -14,28 +15,36 @@ const Popup = ({ onClose, field, value, onSubmit }) => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="overlay" onClick={onClose}>
+      <div className="popup" onClick={(e) => e.stopPropagation()}>
         <h2>Edit {field}</h2>
-        <label htmlFor="value">
-          {field.charAt(0).toUpperCase() + field.slice(1)}
-        </label>
-        <input
-          id="value"
-          type={field === "image" ? "url" : "text"}
-          value={newValue}
-          onChange={(e) => setNewValue(e.target.value)}
-        />
-        <button type="submit">Submit</button>
-        <button onClick={onClose}>Cancel</button>
-      </form>
+        <form onSubmit={handleSubmit}>
+          {/* <label htmlFor="value">
+            {field.charAt(0).toUpperCase() + field.slice(1)}
+          </label> */}
+          <input
+            id="value"
+            type={field === "image" ? "url" : "text"}
+            value={newValue}
+            onChange={(e) => setNewValue(e.target.value)}
+          />
+          <div className="button-group">
+            <button type="submit" className="main-button padding-point-5 ">
+              Submit
+            </button>
+            <button onClick={onClose} className="main-button padding-point-5 ">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
 
 function EmployeeProductDetail() {
   const { id } = useParams();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [showPopup, setShowPopup] = useState(false);
   const [selectedField, setSelectedField] = useState(null);
@@ -73,30 +82,46 @@ function EmployeeProductDetail() {
     }
   };
 
-  const handleDeleteDList = async (type, dataItem) => {
+  const deleteTags = async (tag) => {
     try {
-      const endpoint = `/products/${id}/featureormeasurements`;
-      let dataToDelete;
+      const endpoint = `/products/${id}/deleteTag`;
 
-      if (type === "features") {
-        dataToDelete = {
-          description: {
-            features: dataItem,
-          },
-        };
-      } else {
-        dataToDelete = {
-          description: {
-            measurements: dataItem,
-          },
-        };
-      }
-      const data = await api.delete(endpoint, dataToDelete);
+      const data = await api.delete(endpoint, {
+        tag: tag,
+      });
       if (data) refetch();
+      // setDataInfo(data);
+      // alert("Product deleted successfully!");
     } catch (error) {
-      console.error("Error submitting:", error);
+      console.error("Error deleting product:", error);
+      // alert("Failed to delete product. Please try again.");
     }
   };
+
+  // const handleDeleteDList = async (type, dataItem) => {
+  //   try {
+  //     const endpoint = `/products/${id}/featureormeasurements`;
+  //     let dataToDelete;
+
+  //     if (type === "tags") {
+  //       dataToDelete = {
+  //         description: {
+  //           tags: dataItem,
+  //         },
+  //       };
+  //     } else {
+  //       dataToDelete = {
+  //         description: {
+  //           measurements: dataItem,
+  //         },
+  //       };
+  //     }
+  //     const data = await api.delete(endpoint, dataToDelete);
+  //     if (data) refetch();
+  //   } catch (error) {
+  //     console.error("Error submitting:", error);
+  //   }
+  // };
 
   const handleUpdate = async (field, newValue) => {
     // call api
@@ -112,21 +137,17 @@ function EmployeeProductDetail() {
           "description.details": newValue,
         };
       }
-      // features measurements requires []
-      else if (field === "features") {
-        endpoint = `/products/${id}/featureormeasurements`;
-        sendData = {
-          description: {
-            features: [newValue],
-          },
-        };
-      } else if (field === "measurements") {
-        endpoint = `/products/${id}/featureormeasurements`;
-        sendData = {
-          description: {
-            measurements: [newValue],
-          },
-        };
+      // tags measurements requires []
+      else if (field === "tags") {
+        endpoint = `/products/${id}/addtags`;
+        sendData = { tags: [newValue] };
+        // } else if (field === "measurements") {
+        //   endpoint = `/products/${id}/featureormeasurements`;
+        //   sendData = {
+        //     description: {
+        //       measurements: [newValue],
+        //     },
+        //   };
         // images require []
       } else if (field === "image") {
         endpoint = `/products/${id}/addImages`;
@@ -154,16 +175,15 @@ function EmployeeProductDetail() {
 
   return (
     <>
-      <div>
-        {showPopup && (
-          <Popup
-            onClose={() => setShowPopup(false)}
-            field={selectedField}
-            value={selectedValue}
-            onSubmit={handleUpdate}
-          />
-        )}
-
+      {showPopup && (
+        <Popup
+          onClose={() => setShowPopup(false)}
+          field={selectedField}
+          value={selectedValue}
+          onSubmit={handleUpdate}
+        />
+      )}
+      <div className="e-product-detail-container">
         <div>
           {/* <input type="checkbox" name="" id="" /> */}
           <input
@@ -176,7 +196,7 @@ function EmployeeProductDetail() {
         </div>
 
         <div>
-          <div>
+          <div className="flex-gap-0-25">
             <button
               className="material-symbols-outlined"
               onClick={() => handleEditClick("name", apiData.name)}
@@ -185,7 +205,7 @@ function EmployeeProductDetail() {
             </button>
             <div>Name: {apiData.name} </div>
           </div>
-          <div>
+          <div className="flex-gap-0-25">
             <button
               className="material-symbols-outlined"
               onClick={() => handleEditClick("price", apiData.price)}
@@ -194,7 +214,7 @@ function EmployeeProductDetail() {
             </button>
             <div>Price: {apiData.price}</div>
           </div>
-          <div>
+          <div className="flex-gap-0-25">
             <button
               className="material-symbols-outlined"
               onClick={() => handleEditClick("stock", apiData.stock)}
@@ -207,7 +227,7 @@ function EmployeeProductDetail() {
 
         <div>
           <h3>Description</h3>
-          <div>
+          <div className="flex-gap-0-25">
             <button
               className="material-symbols-outlined"
               onClick={() =>
@@ -217,10 +237,10 @@ function EmployeeProductDetail() {
               edit
             </button>
             {apiData.description.basic && (
-              <div>Basic: {apiData.description.basic}</div>
+              <div>Description: {apiData.description.basic}</div>
             )}
           </div>
-          <div>
+          {/* <div>
             <button
               className="material-symbols-outlined"
               onClick={() =>
@@ -232,33 +252,36 @@ function EmployeeProductDetail() {
             {apiData.description.details && (
               <div>Details: {apiData.description.details}</div>
             )}
-          </div>
-          <div>
-            <button
-              className="material-symbols-outlined"
-              onClick={() => handleEditClick("features", " ")}
-            >
-              add
-            </button>
-            Features:
-            <div>
-              {apiData.description.features?.length > 0 && (
+          </div> */}
+          <div className="tags-container">
+            <div className="flex-gap-0-25 cursor-pointer">
+              <button
+                className="material-symbols-outlined"
+                onClick={() => handleEditClick("tags", " ")}
+              >
+                add
+              </button>
+              Tags
+            </div>
+            <div className="tags-api-wrapper">
+              {apiData.tags?.length > 0 && (
                 <ul>
-                  {apiData.description.features.map((feature, index) => (
-                    <ul key={index}>
-                      <li>{feature}</li>
+                  {apiData.tags.map((tag, index) => (
+                    <li key={index} className="flex-gap-0-25">
+                      <div>{tag}</div>
                       <button
                         className="material-symbols-outlined"
-                        onClick={() => handleDeleteDList("features", feature)}
+                        onClick={() => deleteTags(tag)}
                       >
                         delete
                       </button>
-                    </ul>
+                    </li>
                   ))}
                 </ul>
               )}
             </div>
-            <div>
+          </div>
+          {/* <div>
               <button
                 className="material-symbols-outlined"
                 onClick={() => handleEditClick("measurements", "")}
@@ -283,27 +306,39 @@ function EmployeeProductDetail() {
                   ))}
                 </ul>
               )}
-            </div>
-          </div>
+            </div> */}
         </div>
         <div>
           <h3>Image</h3>
           {/* Add image need a popup or something ... or send to the add image page. */}
           {/* <button onClick={() => navigate(`/products/${id}/add-image`)}> */}
-          <button onClick={() => handleEditClick("image", "")}>
+          <div
+            className="flex-gap-0-25 cursor-pointer"
+            onClick={() => handleEditClick("image", " ")}
+          >
+            <button className="material-symbols-outlined">add</button>
+            Image
+          </div>
+          {/* <button onClick={() => handleEditClick("image", "")}>
             Add Image
-          </button>
-          {apiData.images.map((image, index) => (
-            <div key={index}>
-              <img src={image} alt={`Image ${index + 1}`} />
-              <button
-                className="material-symbols-outlined"
-                onClick={() => deleteImage(image)}
-              >
-                delete
-              </button>
-            </div>
-          ))}
+          </button> */}
+          <div className="employee-product-image-wrapper">
+            {apiData.images.map((image, index) => (
+              <div key={index}>
+                <img
+                  className="employee-product-image"
+                  src={image}
+                  alt={`Image ${index + 1}`}
+                />
+                <button
+                  className="material-symbols-outlined"
+                  onClick={() => deleteImage(image)}
+                >
+                  delete
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>

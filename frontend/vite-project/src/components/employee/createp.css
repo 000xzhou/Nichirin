@@ -1,0 +1,27 @@
+.create-tags-input button,
+.create-tags-image button {
+  cursor: pointer;
+  border: transparent;
+  background-color: transparent;
+}
+
+.createp-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.createp-form {
+  width: 80%;
+  max-width: 600px;
+  min-width: 300px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.createp-form input {
+  width: 100%;
+}
+
+.createp-checkbox {
+  width: fit-content;
+}

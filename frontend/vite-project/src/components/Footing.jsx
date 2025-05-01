@@ -58,7 +58,7 @@ function Footing() {
               placeholder="Enter Email Address"
               className="margin-right-point-5 padding-point-5 border-radius-input"
             />
-            <button className="main-button text-uppercase border-radius-input padding-point-5 ">
+            <button className="main-button text-uppercase border-radius-button padding-point-5 ">
               Join
             </button>
           </div>

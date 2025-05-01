@@ -12,9 +12,6 @@ const descriptionSchema = new Schema(
     },
     details: {
       type: String,
-      required: function () {
-        return this.isNew;
-      },
     },
     features: {
       type: [String],

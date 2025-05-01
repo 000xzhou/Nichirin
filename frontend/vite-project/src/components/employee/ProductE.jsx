@@ -36,7 +36,7 @@ function ProductE({
   const [isActive, setIsActive] = useState(active);
 
   return (
-    <tbody>
+    <tbody className="product-list-table">
       <tr id={id}>
         {/* <td>{active ? "Yes" : "No"}</td> */}
         <td>

@@ -1,0 +1,46 @@
+/* .create-e-form-wrapper {
+  margin: 0 auto;
+} */
+
+.create-e-form-wrapper form {
+  grid-template-areas:
+    "email phone"
+    "first-name  last-name"
+    "role role"
+    "button button";
+}
+.create-e-form-wrapper form .email {
+  grid-area: email;
+}
+.create-e-form-wrapper form .first-name {
+  grid-area: first-name;
+}
+.create-e-form-wrapper form .last-name {
+  grid-area: last-name;
+}
+.create-e-form-wrapper form .phone {
+  grid-area: phone;
+}
+.create-e-form-wrapper form .role {
+  grid-area: role;
+}
+.create-e-form-wrapper form .role div {
+  display: flex;
+  align-items: center;
+}
+.create-e-form-wrapper form button {
+  grid-area: button;
+  width: max-content;
+  padding-inline: 2rem;
+}
+
+/* @media screen and (max-width: 768px) {
+  .create-e-form-wrapper form {
+    max-width: 400px;
+  }
+}
+@media screen and (min-width: 768px) {
+  .create-e-form-wrapper form {
+    max-width: 767px;
+  }
+} */

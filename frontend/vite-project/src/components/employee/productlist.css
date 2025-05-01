@@ -1,0 +1,20 @@
+.product-list-search-form {
+  /* display: grid; */
+}
+.product-list-search-form button {
+  /* width: max-content; */
+}
+
+.product-list-table input[type="checkbox"] {
+  cursor: pointer;
+}
+
+.product-list-table button {
+  background-color: transparent;
+  border: transparent;
+  cursor: pointer;
+}
+
+.product-list-table button:hover {
+  color: var(--hover-state);
+}

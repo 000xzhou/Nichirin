@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 const usePostProduct = (initialState, endpoint) => {
   const [formData, setFormData] = useState(initialState);
   const [imageInputs, setImageInputs] = useState([formData.images]);
+  const [tagsInputs, setTagsInputs] = useState([formData.tags]);
   const [featuresInputs, setFeaturesInputs] = useState([
     formData.description.features,
   ]);
@@ -21,13 +22,14 @@ const usePostProduct = (initialState, endpoint) => {
     setFormData((prevData) => ({
       ...prevData,
       images: imageInputs,
+      tags: tagsInputs,
       description: {
         ...prevData.description,
         features: featuresInputs,
         measurements: measurementInputs,
       },
     }));
-  }, [imageInputs, featuresInputs, measurementInputs]);
+  }, [imageInputs, featuresInputs, measurementInputs, tagsInputs]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -66,6 +68,20 @@ const usePostProduct = (initialState, endpoint) => {
     setImageInputs(newImages);
   };
 
+  // tags
+  const handleTagsChange = (index, value) => {
+    const newTag = [...tagsInputs];
+    newTag[index] = value;
+    setTagsInputs(newTag);
+  };
+  const handleAddTagsInput = () => {
+    setTagsInputs([...tagsInputs, ""]);
+  };
+  const handleRemoveTagsInput = (index) => {
+    const newTags = tagsInputs.filter((_, i) => i !== index);
+    setTagsInputs(newTags);
+  };
+
   // description features
   const handlefeaturesChange = (index, value) => {
     const newFeatures = [...featuresInputs];
@@ -97,7 +113,7 @@ const usePostProduct = (initialState, endpoint) => {
   //   fetching data from api
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(formData);
+    console.log(formData);
     try {
       // api
       const api = new ApiService("http://localhost:3000");
@@ -129,6 +145,10 @@ const usePostProduct = (initialState, endpoint) => {
     handleAddmeasurementsInput,
     handleRemovemeasurementsInput,
     measurementInputs,
+    handleAddTagsInput,
+    handleTagsChange,
+    handleRemoveTagsInput,
+    tagsInputs,
   };
 };
 export default usePostProduct;

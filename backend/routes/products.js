@@ -458,6 +458,109 @@ router.delete("/:id/deleteImage", ensureStaff, async (req, res) => {
   }
 });
 
+// Update a product by id for tags
+/**
+ * req.body be send like below
+{
+  "tags": ["tag", "tag2"]
+}
+{
+  "tags": ["tag"]
+}
+
+ */
+router.patch("/:id/addtags", ensureStaff, async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    // Check if the ID is a valid MongoDB ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid ID format" });
+    }
+
+    // Ensure that the `tag` field is an array
+    if (!Array.isArray(req.body.tags)) {
+      return res
+        .status(400)
+        .json({ message: "Tags must be an array of strings" });
+    }
+
+    const tagsToAdd = req.body.tags;
+
+    // Use $push with $each to add multiple items
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      { $push: { tags: { $each: tagsToAdd } } },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: `Product id ${id} not found` });
+    }
+
+    res.status(200).send(updatedProduct);
+  } catch (err) {
+    console.error("Error occurred:", {
+      name: err.name, // Type of the error
+      message: err.message, // General message about the error
+      code: err.code, // MongoDB error code if available
+      path: err.path, // Path to the field that caused the error
+      value: err.value, // The value that caused the error
+    });
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Delete - Update a product by id for tags
+/**
+ * req.body be send like below
+{
+  "tag": "tag"
+}
+
+ */
+router.delete("/:id/deleteTag", ensureStaff, async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    // Check if the ID is a valid MongoDB ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid ID format" });
+    }
+
+    // Ensure that the `tag` field is provided and is a string
+    if (!req.body.tag || typeof req.body.tag !== "string") {
+      return res.status(400).json({
+        message: "Tag must be a string",
+      });
+    }
+
+    const tagToDelete = req.body.tag;
+
+    // Use $pull to remove the specified tag from the tags array
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      { $pull: { tags: tagToDelete } },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: `Product id ${id} not found` });
+    }
+
+    res.status(200).send(updatedProduct);
+  } catch (err) {
+    console.error("Error occurred:", {
+      name: err.name, // Type of the error
+      message: err.message, // General message about the error
+      code: err.code, // MongoDB error code if available
+      path: err.path, // Path to the field that caused the error
+      value: err.value, // The value that caused the error
+    });
+    res.status(500).json({ error: err.message });
+  }
+});
+
 /**
  // Update a product by id for Description Features / Measurements
  * {

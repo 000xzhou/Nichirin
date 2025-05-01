@@ -3,6 +3,7 @@ import useGet from "../hooks/useGet";
 import ApiService from "../../api/api";
 import useGetSearch from "../hooks/useGetSearch";
 import { useState, useEffect } from "react";
+import "./productlist.css";
 
 function ProductsListE() {
   const { apiData, loading, error, refetch } = useGet(`/products`);
@@ -15,7 +16,7 @@ function ProductsListE() {
     stock: "",
   };
 
-  // ! I feel it's better if I just filter out options in the frontend and use onchange with delay (wait for them to stop typing for a sec before giving result).
+  // ! I feel it's better if I just filter out options in the frontend and use onchange with delay then go though the backend.
   const {
     apiData: apiSearchData,
     formData,
@@ -53,35 +54,45 @@ function ProductsListE() {
 
   return (
     <>
-      <button onClick={resetList}>Reset</button>
-      <form onSubmit={onHandleSubmit}>
+      <button onClick={resetList} className="secondary-button padding-point-5">
+        Reset search
+      </button>
+      <form onSubmit={onHandleSubmit} className="product-list-search-form">
         {error && <div>{formError.message}</div>}
         <div>Fill in one or more to search:</div>
-        <label htmlFor="name">Name: </label>
-        <input
-          type="search"
-          name="name"
-          id="name"
-          value={formData.name}
-          onChange={handleChange}
-        />
-        <label htmlFor="price">Price: </label>
-        <input
-          type="search"
-          name="price"
-          id="price"
-          value={formData.price}
-          onChange={handleChange}
-        />
-        <label htmlFor="stock">Stock: </label>
-        <input
-          type="search"
-          name="stock"
-          id="stock"
-          value={formData.stock}
-          onChange={handleChange}
-        />
-        <button type="submit">Search</button>
+        <div>
+          <label htmlFor="name">Name: </label>
+          <input
+            type="search"
+            name="name"
+            id="name"
+            value={formData.name}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="price">Price: </label>
+          <input
+            type="search"
+            name="price"
+            id="price"
+            value={formData.price}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="stock">Stock: </label>
+          <input
+            type="search"
+            name="stock"
+            id="stock"
+            value={formData.stock}
+            onChange={handleChange}
+          />
+        </div>
+        <button type="submit" className="main-button padding-point-5">
+          Search
+        </button>
       </form>
       <table>
         <thead>
