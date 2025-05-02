@@ -1,0 +1,25 @@
+.employeedetail-wrapper div:not(:last-child) {
+  background-color: var(--background-accent);
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+}
+
+.employeedetail-wrapper,
+.editemployee-form-wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.employeedetail-wrapper div:last-child {
+  width: max-content;
+  padding: 1rem 4rem;
+  margin: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  .edit-customer-ul li {
+    display: flex;
+    justify-content: space-between;
+  }
+}

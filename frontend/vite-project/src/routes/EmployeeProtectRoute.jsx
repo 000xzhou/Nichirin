@@ -16,26 +16,28 @@ function EmployeeProtectRoute() {
   return (
     <EmployeeAuthProvider>
       <EmployeeNavBar />
-      <Routes>
-        {/* login | create */}
-        <Route path="create" element={<CreateE />} />
+      <div className="employee-main-content">
+        <Routes>
+          {/* login | create */}
+          <Route path="create" element={<CreateE />} />
 
-        {/* employee list | search | details | profile*/}
-        <Route path="dashboard" element={<EmployeeDashboard />} />
-        <Route path="all" element={<EmployeeList />} />
-        <Route path="profile/:id" element={<EmployeeDetail />} />
-        <Route path="profile/:id/edit" element={<EditEmployee />} />
-        {/* <Route path="all/:id" element={<EmployeeDetail />} /> */}
+          {/* employee list | search | details | profile*/}
+          <Route path="dashboard" element={<EmployeeDashboard />} />
+          <Route path="all" element={<EmployeeList />} />
+          <Route path="profile/:id" element={<EmployeeDetail />} />
+          <Route path="profile/:id/edit" element={<EditEmployee />} />
+          {/* <Route path="all/:id" element={<EmployeeDetail />} /> */}
 
-        {/* customers */}
-        <Route path="customers" element={<CustomerSearch />} />
-        {/* <Route path="customers/:id" element={<CustomerDetail />} /> */}
+          {/* customers */}
+          <Route path="customers" element={<CustomerSearch />} />
+          {/* <Route path="customers/:id" element={<CustomerDetail />} /> */}
 
-        {/* products */}
-        <Route path="products/create" element={<CreateP />} />
-        <Route path="products" element={<ProductsListE />} />
-        <Route path="products/:id" element={<EmployeeProductDetail />} />
-      </Routes>
+          {/* products */}
+          <Route path="products/create" element={<CreateP />} />
+          <Route path="products" element={<ProductsListE />} />
+          <Route path="products/:id" element={<EmployeeProductDetail />} />
+        </Routes>
+      </div>
     </EmployeeAuthProvider>
   );
 }

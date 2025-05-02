@@ -17,6 +17,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   --border-radius: 16px;
+  --employee-navbar-small-height: 68px;
+  --employee-navbar-large-height: 108px;
 }
 
 body {

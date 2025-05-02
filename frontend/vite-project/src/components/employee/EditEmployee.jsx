@@ -90,72 +90,89 @@ function EditEmployee() {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email:</label>
-        <input
-          type="text"
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        <label htmlFor="fname">First Name:</label>
-        <input
-          type="text"
-          id="fname"
-          name="first_name"
-          value={formData.first_name}
-          onChange={handleChange}
-        />
-        <label htmlFor="lname">Last Name:</label>
-        <input
-          type="text"
-          id="lname"
-          name="last_name"
-          value={formData.last_name}
-          onChange={handleChange}
-        />
-        <label htmlFor="phone">Phone:</label>
-        <input
-          type="text"
-          id="phone"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-        />
-        <label htmlFor="status">Status:</label>
-        <input
-          type="checkbox"
-          id="status"
-          name="status"
-          checked={formData.status === "active"}
-          onChange={handleChange}
-        />
-        <label htmlFor="role">Role:</label>
+    <div className="editemployee-form-wrapper">
+      <form onSubmit={handleSubmit} className="form">
         <div>
+          <label htmlFor="email">Email:</label>
           <input
-            type="radio"
-            id="employee"
-            name="role"
-            value="employee"
-            checked={formData.role === "employee"}
+            type="text"
+            id="email"
+            name="email"
+            value={formData.email}
             onChange={handleChange}
           />
-          <label htmlFor="employee">Employee</label>
         </div>
         <div>
+          <label htmlFor="fname">First Name:</label>
           <input
-            type="radio"
-            id="admin"
-            name="role"
-            value="admin"
-            checked={formData.role === "admin"}
+            type="text"
+            id="fname"
+            name="first_name"
+            value={formData.first_name}
             onChange={handleChange}
           />
-          <label htmlFor="admin">Admin</label>
         </div>
-        <button type="submit">Submit</button>
+        <div>
+          <label htmlFor="lname">Last Name:</label>
+          <input
+            type="text"
+            id="lname"
+            name="last_name"
+            value={formData.last_name}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="phone">Phone:</label>
+          <input
+            type="text"
+            id="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="status">Status:</label>
+          <input
+            type="checkbox"
+            id="status"
+            name="status"
+            checked={formData.status === "active"}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="role">Role:</label>
+          <div>
+            <input
+              type="radio"
+              id="employee"
+              name="role"
+              value="employee"
+              checked={formData.role === "employee"}
+              onChange={handleChange}
+            />
+            <label htmlFor="employee">Employee</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              id="admin"
+              name="role"
+              value="admin"
+              checked={formData.role === "admin"}
+              onChange={handleChange}
+            />
+            <label htmlFor="admin">Admin</label>
+          </div>
+        </div>
+        <button
+          type="submit"
+          className="main-button padding-point-5 border-radius-button"
+        >
+          Submit
+        </button>
       </form>
     </div>
   );

@@ -2,9 +2,12 @@ import { Link } from "react-router-dom";
 // import { useEmployeeAuth } from "../routes/EmployeeAuthContext";
 import { useEmployeeAuth } from "../routes/EmployeeAuthProvider";
 import ApiService from "../api/api";
+import "./employeenavbar.css";
+import { useState } from "react";
 
 const EmployeeNavBar = () => {
   const { setIsAuthenticated, isUser, setIsUser } = useEmployeeAuth();
+  const [openMenu, setOpenMenu] = useState(false);
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -24,41 +27,59 @@ const EmployeeNavBar = () => {
     }
   };
 
+  const handleOpenMenu = () => {
+    setOpenMenu((prev) => !prev);
+  };
+
   return (
-    <nav>
+    <nav className="employee-navbar">
       {/* For all employees */}
-      <div>
-        <Link to={`/employee/profile/${isUser._id}`}>
-          Welcome {isUser.first_name}!
+      <div className="employee-navbar-always-display">
+        <div className="flex-gap-0-25">
+          <span
+            className="employee-small-screen-menu material-symbols-outlined"
+            onClick={handleOpenMenu}
+          >
+            menu
+          </span>
+          <Link to={`/employee/profile/${isUser._id}`}>
+            Welcome {isUser.first_name}!
+          </Link>
+        </div>
+        <div>
+          <button
+            onClick={handleLogout}
+            className="main-button padding-point-5 border-radius-button"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+      <div className={`employee-navbar-list ${openMenu ? "show" : "hide"}`}>
+        <Link to={`/employee/dashboard`}>
+          <div onClick={handleOpenMenu}>Dashboard</div>
         </Link>
-      </div>
-      <div>
-        <Link to={`/employee/dashboard`}>Dashboard</Link>
-      </div>
-      <div>
-        <Link to={`/employee/customers`}>Lookup Customer</Link>
-      </div>
-      <div>
-        <Link to={`/employee/products/create`}>Add Product</Link>
-      </div>
-      <div>
-        <Link to={`/employee/products`}>All Products</Link>
-      </div>
+        <Link to={`/employee/customers`}>
+          <div onClick={handleOpenMenu}>Lookup Customer</div>
+        </Link>
+        <Link to={`/employee/products/create`}>
+          <div onClick={handleOpenMenu}>Add Product</div>
+        </Link>
+        <Link to={`/employee/products`}>
+          <div onClick={handleOpenMenu}>All Products</div>
+        </Link>
 
-      {/* Only for admin */}
-      {isUser.role === "admin" && (
-        <>
-          <div>
-            <Link to={`/employee/create`}>Create Employee</Link>
-          </div>
-          <div>
-            <Link to={`/employee/all`}>All Employees</Link>
-          </div>
-        </>
-      )}
-
-      <div>
-        <button onClick={handleLogout}>Logout</button>
+        {/* Only for admin */}
+        {isUser.role === "admin" && (
+          <>
+            <Link to={`/employee/create`}>
+              <div onClick={handleOpenMenu}>Create Employee</div>
+            </Link>
+            <Link to={`/employee/all`}>
+              <div onClick={handleOpenMenu}>All Employees</div>
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );

@@ -10,7 +10,7 @@ const Navbar = () => {
   const { cartNum } = useCart();
 
   return (
-    <nav>
+    <nav className="navbar">
       <Link to="/">Home</Link>
       <div className="nav-bar-right">
         {isUser ? (

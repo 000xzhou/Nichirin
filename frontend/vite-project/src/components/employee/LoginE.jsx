@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ApiService from "../../api/api";
 import { useNavigate } from "react-router-dom";
+import "./logine.css";
 // import { useEmployeeAuth } from "../../routes/EmployeeAuthProvider";
 
 function LoginE() {
@@ -46,10 +47,10 @@ function LoginE() {
   };
 
   return (
-    <div>
+    <div className="employee-login-wrapper">
       <h1>Employee Login</h1>
       {error && <div>{error}</div>}
-      <form onSubmit={handleSubmit}>
+      <form className="form employee-login-form" onSubmit={handleSubmit}>
         <label htmlFor="email">Email</label>
         <input
           type="text"
@@ -66,7 +67,9 @@ function LoginE() {
           value={formData.password}
           onChange={handleChange}
         />
-        <button type="submit">Login</button>
+        <button type="submit" className="main-button padding-point-5">
+          Login
+        </button>
       </form>
     </div>
   );

@@ -1,17 +1,6 @@
-import useGet from "../hooks/useGet";
-import { useParams, Link } from "react-router-dom";
-import EditAddress from "./EditAddressForm";
-import EditCustomer from "./EditCustomer";
+import { Link } from "react-router-dom";
 
 function CustomerDetail() {
-  // const { id } = useParams();
-
-  // const [apiData, loading, error] = useGet(`/customers/${id}`);
-
-  // if (loading) return <div>Loading...</div>;
-  // if (error) return <div>Error: {error.message}</div>;
-
-  // console.log(apiData);
   return (
     <div>
       <h2>Your Account</h2>
@@ -39,13 +28,6 @@ function CustomerDetail() {
             <p>Edit your address</p>
           </div>
         </Link>
-        {/* <Link to="/customers/edit-address">
-          <span className="material-symbols-outlined">local_shipping</span>
-          <div>
-            <h3>Your Shipping Address</h3>
-            <p>Edit your Shipping address</p>
-          </div>
-        </Link> */}
       </div>
     </div>
   );

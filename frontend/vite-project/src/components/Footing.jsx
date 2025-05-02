@@ -27,7 +27,7 @@ function Footing() {
                 {isUser ? (
                   <Link to={`/customers/${isUser._id}`}>My Account</Link>
                 ) : (
-                  <Link to={`/`}>My Account</Link>
+                  <Link to={`/login`}>My Account</Link>
                 )}
                 <span> | </span>
                 {/* <Link to="/about-us">Exchanges & Returns</Link> */}
