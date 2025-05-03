@@ -1,0 +1,18 @@
+.reviewBox {
+  display: grid;
+  gap: 1rem;
+}
+
+.reviewDetailBox {
+  width: 100%;
+  background-color: var(--background-accent);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+}
+
+.review-button-container {
+  display: flex;
+  flex-direction: column;
+  text-align: end;
+  justify-content: end;
+}

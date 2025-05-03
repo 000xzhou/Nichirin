@@ -5,6 +5,7 @@ import StarRating from "./reviews/StarRating";
 import useGet from "../hooks/useGet";
 // import useCart from "../hooks/useCart";
 import { useCart } from "../../routes/CartProvider";
+import Reviews from "./reviews/Reviews";
 
 function ProductDetail() {
   const { id } = useParams();
@@ -12,8 +13,62 @@ function ProductDetail() {
   const { apiData, loading, error } = useGet(`/products/${id}`);
   const { handleAddtoCart } = useCart();
 
+  // temp db - table: review rating [useGet review with item id of this product]
+  const db = [
+    {
+      "review-id": "1",
+      "user-id": "user 1", // link to user table
+      "user-f-name": "user 1", // so I don't have to look cross-ref it
+      rating: 1,
+      title: "review title",
+      post: "reviw post",
+      "created-at": "some date",
+      "item-id": "item1",
+    },
+    {
+      "review-id": "2",
+      "user-id": "user 2",
+      "user-f-name": "user 2",
+      rating: 2,
+      title: "review title 2",
+      post: "reviw post 2",
+      "created-at": "some date",
+      "item-id": "item1",
+    },
+    {
+      "review-id": "3",
+      "user-id": "user 3",
+      "user-f-name": "user 3",
+      rating: 3,
+      title: "review title 3",
+      post: "reviw post 3",
+      "created-at": "some date",
+      "item-id": "item1",
+    },
+    {
+      "review-id": "4",
+      "user-id": "user 4",
+      "user-f-name": "user 4",
+      rating: 4,
+      title: "review title 4",
+      post: "reviw post 4",
+      "created-at": "some date",
+      "item-id": "item1",
+    },
+  ];
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
+
+  // do math for rating
+  const ratingMath = () => {
+    let total = 0;
+    db.map((item) => {
+      total += item.rating;
+    });
+
+    return total / db.length;
+  };
 
   // Add a product to the cart
   const addToCart = () => {
@@ -47,7 +102,7 @@ function ProductDetail() {
             <h3>{apiData.name}</h3>
             <div>
               <div>
-                <StarRating rating={4.5} />
+                <StarRating rating={ratingMath()} />
               </div>
               <Link to={`/reviews/create/${id}`}>leave a review</Link>
             </div>
@@ -64,17 +119,22 @@ function ProductDetail() {
             </p>
           </div>
           {apiData.stock > 0 ? (
-            <button className="button-54 product_button" onClick={addToCart}>
+            <button
+              className="main-button padding-point-5 product_button"
+              onClick={addToCart}
+            >
               Add to Cart
             </button>
           ) : (
-            <button className="button-54" disabled>
+            <button
+              className="secondary-button padding-point-5 disable-button product_button"
+              disabled
+            >
               Sold out
             </button>
           )}
         </article>
-        <article>
-          <div>
+        {/* <div>
             <h3>Details</h3>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
@@ -116,75 +176,10 @@ function ProductDetail() {
                 Handle Length: <span>10.6`&quot`</span>
               </li>
             </ul>
-          </div>
-          <div>
-            <h2>Latest reviews</h2>
-            <div className="reviewBox">
-              <div className="reviewDetailBox">
-                <div>review first name only</div>
-                <div>review star</div>
-                <h4>Reivew TItle</h4>
-                <p>review text</p>
-              </div>
-              <div className="reviewDetailBox">
-                <div>review first name only</div>
-                <div>review star</div>
-                <h4>Reivew TItle</h4>
-                <p>review text</p>
-              </div>
-              <div className="reviewDetailBox">
-                <div>review first name only</div>
-                <div>review star</div>
-                <h4>Reivew TItle</h4>
-                <p>review text</p>
-              </div>
-            </div>
-            <div className="button-container">
-              <Link to={`/reviews/${id}`}>More</Link>
-              <Link to={`/reviews/${id}`}>Write a review</Link>
-            </div>
-          </div>
-        </article>
+          </div> */}
       </section>
-      {/* 
-      <section>
-        <h2>People Also Viewed</h2>
-        <div className="scroll-container">
-          <button className="prev" onClick={handleToLeft}>
-            ←
-          </button>
-          <div className="alsoView">
-            <div className="box">
-              <img src="some.jpg" alt="some" />
-              <Link>title</Link>
-              <p>$20</p>
-            </div>
-            <div className="box">
-              <img src="some.jpg" alt="some" />
-              <Link>title</Link>
-              <p>$20</p>
-            </div>
-            <div className="box">
-              <img src="some.jpg" alt="some" />
-              <Link>title</Link>
-              <p>$20</p>
-            </div>
-            <div className="box">
-              <img src="some.jpg" alt="some" />
-              <Link>title</Link>
-              <p>$20</p>
-            </div>
-            <div className="box">
-              <img src="some.jpg" alt="some" />
-              <Link>title</Link>
-              <p>$20</p>
-            </div>
-            <button className="next" onClick={handleToRight}>
-              →
-            </button>
-          </div>
-        </div>
-      </section> */}
+
+      <Reviews id={id} />
     </>
   );
 }

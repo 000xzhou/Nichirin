@@ -3,6 +3,7 @@ import ApiService from "../../api/api";
 import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
 import { useNavigate } from "react-router-dom";
 import "./cart.css";
+import { Link } from "react-router-dom";
 
 function Cart() {
   const { isUser } = useCustomerAuth();
@@ -50,7 +51,9 @@ function Cart() {
                   className="cart-list-img"
                 />
               </div>
-              <p className="cart-list-name">{item.name}</p>
+              <Link to={`/products/${item.id}`}>
+                <div className="cart-list-name">{item.name}</div>
+              </Link>
               <p className="cart-list-price">${item.price}</p>
               <div className="listQytChanger">
                 <button
@@ -74,6 +77,7 @@ function Cart() {
                 >
                   +
                 </button>
+                <span className="cart-delete-span">delete</span>
               </div>
             </li>
           ))}
