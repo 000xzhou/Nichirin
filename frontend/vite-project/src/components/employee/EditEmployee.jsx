@@ -92,6 +92,16 @@ function EditEmployee() {
   return (
     <div className="editemployee-form-wrapper">
       <form onSubmit={handleSubmit} className="form">
+        <div className="flex-gap-0-25">
+          <input
+            type="checkbox"
+            id="status"
+            name="status"
+            checked={formData.status === "active"}
+            onChange={handleChange}
+          />
+          <label htmlFor="status">active</label>
+        </div>
         <div>
           <label htmlFor="email">Email:</label>
           <input
@@ -133,18 +143,8 @@ function EditEmployee() {
           />
         </div>
         <div>
-          <label htmlFor="status">Status:</label>
-          <input
-            type="checkbox"
-            id="status"
-            name="status"
-            checked={formData.status === "active"}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
           <label htmlFor="role">Role:</label>
-          <div>
+          <div className="flex-gap-0-25">
             <input
               type="radio"
               id="employee"
@@ -155,7 +155,7 @@ function EditEmployee() {
             />
             <label htmlFor="employee">Employee</label>
           </div>
-          <div>
+          <div className="flex-gap-0-25">
             <input
               type="radio"
               id="admin"
@@ -169,7 +169,7 @@ function EditEmployee() {
         </div>
         <button
           type="submit"
-          className="main-button padding-point-5 border-radius-button"
+          className="confirm-button padding-point-5 border-radius-button"
         >
           Submit
         </button>

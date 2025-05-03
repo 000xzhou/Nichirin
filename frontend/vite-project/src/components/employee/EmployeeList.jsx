@@ -3,6 +3,7 @@ import ApiService from "../../api/api";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEmployeeAuth } from "../../routes//EmployeeAuthProvider";
+import "./employeelist.css";
 
 function EmployeeList() {
   const { isUser } = useEmployeeAuth();
@@ -55,10 +56,6 @@ function EmployeeList() {
     }
   };
 
-  const handleStatus = () => {
-    // change status
-  };
-
   return (
     <>
       <div>
@@ -74,22 +71,28 @@ function EmployeeList() {
           Search
         </button>
       </div>
-      {apiData.map((data) => (
-        <div key={data._id}>
-          <p>Email: {data.email}</p>
-          <p>
-            Name: {data.first_name} {data.last_name}
-          </p>
-          <p>Phone: {data.phone}</p>
-          <p>
-            Status: <button onClick={handleStatus}>{data.status}</button>
-          </p>
-          <p>
-            Role: <button onClick={handleStatus}>{data.role}</button>
-          </p>
-          <Link to={`/employee/profile/${data._id}/edit`}>Edit</Link>
-        </div>
-      ))}
+      <div className="employee-list-data-wrapper">
+        {apiData.map((data) => (
+          <div key={data._id} className="employee-list-data">
+            <p className="employee-list-email">Email: {data.email}</p>
+            <p className="employee-list-name">
+              Name: {data.first_name} {data.last_name}
+            </p>
+            <p className="employee-list-phone">Phone: {data.phone}</p>
+            <p className="employee-list-role">
+              Status: <span>{data.status}</span>
+            </p>
+            <p className="employee-list-status">
+              Role: <span>{data.role}</span>
+            </p>
+            <Link to={`/employee/profile/${data._id}/edit`}>
+              <div className="employee-list-edit main-button padding-point-5 border-radius-button">
+                Edit
+              </div>
+            </Link>
+          </div>
+        ))}
+      </div>
     </>
   );
 }

@@ -1,0 +1,52 @@
+.employee-list-data {
+  background-color: var(--background-accent);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  display: grid;
+  grid-template-areas:
+    "email role"
+    "name status"
+    "phone phone"
+    "edit edit";
+}
+
+.employee-list-email {
+  grid-area: email;
+}
+.employee-list-role {
+  grid-area: role;
+}
+.employee-list-name {
+  grid-area: name;
+}
+.employee-list-status {
+  grid-area: status;
+}
+
+.employee-list-status span,
+.employee-list-role span {
+  background-color: transparent;
+  border: 1px dashed;
+  padding: 0.25rem;
+  font-size: 14px;
+}
+
+.employee-list-phone {
+  grid-area: phone;
+}
+
+.employee-list-edit {
+  grid-area: edit;
+}
+
+.employee-list-data-wrapper {
+  display: grid;
+  /* grid-template-columns: repeat(2, 1fr); */
+  gap: 1rem;
+  margin-top: 1rem;
+}
+/* @media (max-width: 768px) {
+  .employee-list-data-wrapper {
+    grid-template-columns: 1fr;
+  }
+} */
