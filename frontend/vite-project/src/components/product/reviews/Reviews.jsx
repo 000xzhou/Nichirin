@@ -3,6 +3,8 @@ import "./review.css";
 import StarRating from "./StarRating";
 
 // temp db - table: review rating
+// Just need to pull up the first 4-5 reviews
+// Need to get the overall rating too from product (add in later)
 const db = [
   {
     "review-id": "1",
@@ -62,8 +64,8 @@ const Reviews = ({ id }) => {
           ))}
         </div>
         <div className="review-button-container">
-          <Link to={`/reviews/${id}`}>More</Link>
-          <Link to={`/reviews/${id}`}>Write a review</Link>
+          <Link to={`reviews/all`}>More</Link>
+          <Link to={`reviews/add`}>Write a review</Link>
         </div>
       </div>
     </article>

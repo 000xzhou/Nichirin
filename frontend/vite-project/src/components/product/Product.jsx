@@ -29,9 +29,9 @@ function Product({ id, name, price, stock, rating, images }) {
         </Link>
 
         {/* Star Rating */}
-        <div className="product-rating">
+        {/* <div className="product-rating">
           <StarRating rating={rating} />
-        </div>
+        </div> */}
 
         {/* Product Price */}
         <div className="product-price">${price}</div>

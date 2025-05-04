@@ -14,6 +14,11 @@ function ProductDetail() {
   const { handleAddtoCart } = useCart();
 
   // temp db - table: review rating [useGet review with item id of this product]
+  /**
+   * ! I should add an overall rating in the product table.
+   * And update that nubmer anytime a new review is added.
+   * So I don't have to pull up all the reviews everytime.
+   */
   const db = [
     {
       "review-id": "1",
@@ -104,7 +109,7 @@ function ProductDetail() {
               <div>
                 <StarRating rating={ratingMath()} />
               </div>
-              <Link to={`/reviews/create/${id}`}>leave a review</Link>
+              <Link to={`reviews/add`}>leave a review</Link>
             </div>
             <div className="detailPrice">${apiData.price}</div>
           </div>

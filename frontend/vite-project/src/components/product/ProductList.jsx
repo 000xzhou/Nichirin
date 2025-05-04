@@ -21,7 +21,7 @@ function ProductsList() {
               price={data.price}
               stock={data.stock}
               // rating={data.rating}
-              rating={4.5}
+              // rating={4.5}
               images={data.images}
             />
           )

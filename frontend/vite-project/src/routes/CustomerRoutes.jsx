@@ -18,6 +18,8 @@ import Faq from "../components/help/Faq";
 import Careers from "../components/help/Careers";
 import Terms from "../components/help/Terms";
 import RefundPolicy from "../components/help/RefundPolicy";
+import ReviewForm from "../components/product/reviews/ReviewForm";
+import AllReviews from "../components/product/reviews/AllReviews";
 
 // import { useCustomerAuth } from "./CustomerAuthProvider";
 
@@ -45,6 +47,14 @@ function CustomerRoutes() {
               {/* products */}
               <Route path="products" element={<ProductsList />} />
               <Route path="products/:id" element={<ProductDetail />} />
+              <Route
+                path="/products/:id/reviews/add"
+                element={<ReviewForm />}
+              />
+              <Route
+                path="/products/:id/reviews/all"
+                element={<AllReviews />}
+              />
               <Route path="/cart" element={<Cart />} />
               <Route path="checkout" element={<Checkout />} />
               <Route

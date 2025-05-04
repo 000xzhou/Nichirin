@@ -1,4 +1,4 @@
-.star-rating {
+/* .star-rating {
   position: relative;
   display: inline-block;
   font-size: 24px;
@@ -20,4 +20,13 @@
 
 .stars::before {
   content: "★★★★★";
+} */
+
+.star-icon {
+  /* font-size: "2rem"; */
+  color: gold;
+}
+
+.star-cursor-pointer {
+  cursor: pointer;
 }
