@@ -1,20 +1,36 @@
 import { Link } from "react-router-dom";
 import "./landing.css";
 import useGet from "./hooks/useGet";
+import "./landing-main.modules.css";
+
+// mock db for landing
+const db = {
+  bannerMobile: "https://i.postimg.cc/8cMfXP9X/mincraft-mobilel-screen.png",
+  bannerDesktop: "https://i.postimg.cc/d0gTB30J/minecraft-full-screen.png", // image url
+  title: "Puffy Pals X Minecraft",
+  content:
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. oriosam nobis, dolorem voluptas eveniet itaque nisi saepe quas Voluptate cupiditate ad voluptatibus vel sapie",
+  "product-tag": "mincraft", // the current product display in frontpage
+};
 
 function Landing() {
-  const { apiData, loading, error } = useGet("/endpoint");
+  const { apiData, loading, error } = useGet("/products/tags?tag=minecraft");
   return (
     <div>
-      <section className="landing-container background-accent-transparent">
-        <div className="left-hero-container">
-          <h1 className="font-42">Whipped to Perfection</h1>
-          <p className="line-2 margin-bottom-2">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
-            cupiditate ad voluptatibus vel sapiente aspernatur quasi quibusdam
-            laboriosam nobis, dolorem voluptas eveniet itaque nisi saepe quas
-            fugit nihil quam magnam?
-          </p>
+      <section className="hero">
+        <img
+          src={db.bannerDesktop}
+          alt="cream puff image"
+          className="hero-background desktop-image"
+        />
+        <img
+          src={db.bannerMobile}
+          alt="cream puff image"
+          className="hero-background mobile-image"
+        />
+        <div className="hero-content">
+          <h1 className="font-42">{db.title}</h1>
+          <p className="line-2 margin-bottom-2">{db.content}</p>
           <div className="a-hero-container">
             <Link to="/products" className="main-button a-button-padding">
               Shop Flavors
@@ -24,7 +40,6 @@ function Landing() {
             </Link>
           </div>
         </div>
-        <img src="hero-photo.png" alt="plate of cream puffs right" />
       </section>
       <section className="landing-popular-item">
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quia,

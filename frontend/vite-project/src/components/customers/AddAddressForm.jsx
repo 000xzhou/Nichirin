@@ -20,7 +20,7 @@ function AddAddressForm() {
     `/customers/${isUser._id}/add-address`
   );
   return (
-    <div>
+    <div className="container">
       <h2>Add a new address</h2>
       <div>{error ? error.message : ""}</div>
       <form onSubmit={handleSubmit} className="form">

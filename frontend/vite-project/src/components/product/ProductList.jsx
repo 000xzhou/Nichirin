@@ -9,7 +9,7 @@ function ProductsList() {
   if (ListError) return <div>Error: {ListError.message}</div>;
 
   return (
-    <div className="productList">
+    <div className="productList container">
       {apiData.products.map(
         (data) =>
           data.active && (

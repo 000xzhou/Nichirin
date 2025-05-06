@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function CustomerDetail() {
   return (
-    <div>
+    <div className="container">
       <h2>Your Account</h2>
       <div>
         <Link to="/customers/order">

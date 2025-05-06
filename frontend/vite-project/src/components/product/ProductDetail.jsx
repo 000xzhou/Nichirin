@@ -95,7 +95,7 @@ function ProductDetail() {
   };
   // console.log(apiData);
   return (
-    <>
+    <div className="container">
       <section className="productDetail">
         <div className="imageBox">
           {apiData.images.map((image, index) => (
@@ -185,7 +185,7 @@ function ProductDetail() {
       </section>
 
       <Reviews id={id} />
-    </>
+    </div>
   );
 }
 

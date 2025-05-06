@@ -1,12 +1,15 @@
 import { useState } from "react";
 import StarRating from "./StarRating";
+import { Link } from "react-router-dom";
 
 // get all reviews from latest to early
+// need ref to product
 const db = [
   {
     "review-id": "1",
     "user-id": "user 1",
     "user-f-name": "user 1",
+    "product-id": "123",
     rating: 1,
     title: "review title",
     post: "reviw post",
@@ -47,13 +50,17 @@ const db = [
 
 const AllReviews = () => {
   return (
-    <article className="product-latest-review">
+    <article className="product-latest-review container">
+      <Link to={`/products/${db[0]["product-id"]}`} className="flex-gap-0-25">
+        <span className="material-symbols-outlined">arrow_back_ios_new</span>
+        Back
+      </Link>
       <h2>All reviews</h2>
       <div className="reviewBox">
         {db.map((review) => (
           <div className="reviewDetailBox" key={review["review-id"]}>
-            <div>{review["user-f-name"]}</div>
             <StarRating rating={review["rating"]} />
+            <div>{review["user-f-name"]}</div>
             <h4>{review["title"]}</h4>
             <p>{review["post"]}</p>
           </div>

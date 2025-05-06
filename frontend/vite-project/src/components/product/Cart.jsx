@@ -38,7 +38,7 @@ function Cart() {
   };
 
   return (
-    <div>
+    <div className="container">
       <section>
         {/* <button onClick={handleClearCart}>clear cart</button> */}
         <ul>

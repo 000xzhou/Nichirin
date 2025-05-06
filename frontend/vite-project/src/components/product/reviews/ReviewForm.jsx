@@ -8,7 +8,7 @@ const ReviewForm = () => {
   };
 
   return (
-    <div className="form">
+    <div className="form container">
       <h2>Leave a review!</h2>
       <div>
         <label htmlFor="rating ">Rating</label>

@@ -27,7 +27,7 @@ function EditCustomer2() {
   // if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div>
+    <div className="container">
       <h2>Login & Security</h2>
       <ul className="edit-customer-ul">
         <li>

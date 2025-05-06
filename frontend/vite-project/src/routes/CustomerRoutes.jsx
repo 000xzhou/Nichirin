@@ -35,7 +35,7 @@ function CustomerRoutes() {
       <CustomerAuthProvider>
         <CartProvider>
           <NavBar />
-          <main className="container">
+          <main>
             <Routes>
               <Route path="/" element={<Landing />} />
               {/* login and register  */}

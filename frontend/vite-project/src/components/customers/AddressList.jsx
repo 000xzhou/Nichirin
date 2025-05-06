@@ -9,7 +9,7 @@ function AddressList() {
   const [handleDelete, setDefaultAdress] = useAddresses(isUser._id);
 
   return (
-    <div>
+    <div className="container">
       <h3>Your Addresses</h3>
       <ul className="addresslist-ul">
         <li className="add-address-container">
