@@ -11,6 +11,7 @@ import EmployeeNavBar from "../components/EmployeeNavBar";
 import EmployeeDashboard from "../components/employee/EmployeeDashboard";
 import EmployeeProductDetail from "../components/employee/EmployeeProductDetail";
 import EditEmployee from "../components/employee/EditEmployee";
+import EditCustomer from "../components/employee/EditCustomer";
 
 function EmployeeProtectRoute() {
   return (
@@ -30,6 +31,7 @@ function EmployeeProtectRoute() {
 
           {/* customers */}
           <Route path="customers" element={<CustomerSearch />} />
+          <Route path="customers/:id/edit" element={<EditCustomer />} />
           {/* <Route path="customers/:id" element={<CustomerDetail />} /> */}
 
           {/* products */}

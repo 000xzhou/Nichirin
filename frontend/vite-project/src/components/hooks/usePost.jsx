@@ -18,6 +18,14 @@ const usePost = (initialState, endpoint) => {
     }));
   };
 
+  const handleInitialChange = (data) => {
+    // setFormData((data) => ({
+    //   ...data,
+    //   [name]: value,
+    // }));
+    setFormData(data);
+  };
+
   //   fetching data from api
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +48,6 @@ const usePost = (initialState, endpoint) => {
       setError(error);
     }
   };
-
-  return [formData, handleChange, handleSubmit, error];
+  return [formData, handleChange, handleSubmit, error, handleInitialChange];
 };
 export default usePost;

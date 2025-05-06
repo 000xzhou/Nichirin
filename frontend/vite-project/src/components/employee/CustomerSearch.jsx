@@ -116,11 +116,11 @@ function CustomerSearch() {
                 {/** need a function to covert the string into date object and display date only */}
               </div>
               <div className="cusotmer-search-result-button-group">
-                <Link to={`customer/${customer._id}`}>
+                <Link to={`${customer._id}/edit`}>
                   <div className="main-button">Edit</div>
                 </Link>
                 {/* leads to a page that tells you that you send a password reset to the email from backend */}
-                <Link to={`/customer/${customer._id}/passwordreset`}>
+                <Link to={`${customer._id}/passwordreset`}>
                   <div className="secondary-button">Reset Password</div>
                 </Link>
               </div>
