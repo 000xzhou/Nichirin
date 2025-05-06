@@ -17,7 +17,9 @@ const Popup = ({ onClose, field, value, onSubmit }) => {
   return (
     <div className="overlay" onClick={onClose}>
       <div className="popup" onClick={(e) => e.stopPropagation()}>
-        <h2>Edit {field}</h2>
+        <h2>
+          {field === "image" || field === "tags" ? "Add" : "Edit"} {field}
+        </h2>
         <form onSubmit={handleSubmit}>
           {/* <label htmlFor="value">
             {field.charAt(0).toUpperCase() + field.slice(1)}

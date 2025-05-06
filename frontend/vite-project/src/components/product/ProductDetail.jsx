@@ -1,17 +1,18 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import "./productDetail.css";
-import { Link } from "react-router-dom";
 import StarRating from "./reviews/StarRating";
 import useGet from "../hooks/useGet";
 // import useCart from "../hooks/useCart";
 import { useCart } from "../../routes/CartProvider";
 import Reviews from "./reviews/Reviews";
+import { useState } from "react";
 
 function ProductDetail() {
   const { id } = useParams();
 
   const { apiData, loading, error } = useGet(`/products/${id}`);
   const { handleAddtoCart } = useCart();
+  const [currentImage, setCurrentImage] = useState(0);
 
   // temp db - table: review rating [useGet review with item id of this product]
   /**
@@ -85,22 +86,37 @@ function ProductDetail() {
     });
   };
 
-  const handleToRight = () => {
-    console.log("move right");
-    // arrow to right
-  };
-  const handleToLeft = () => {
-    console.log("move left");
-    // arrow to left
+  const handleImages = (index) => {
+    setCurrentImage(index);
   };
   // console.log(apiData);
   return (
     <div className="container">
       <section className="productDetail">
-        <div className="imageBox">
-          {apiData.images.map((image, index) => (
+        <div className="image-container">
+          {/* {apiData.images.map((image, index) => (
             <img key={index} src={image} alt={`Image ${index + 1}`} />
-          ))}
+          ))} */}
+          <img
+            src={apiData.images[currentImage]}
+            alt={`Image of ${apiData.name}`}
+            className="carousel-image"
+          />
+
+          <div className="radio-buttons">
+            {apiData.images.map((_, index) => (
+              <button
+                key={index}
+                // className={`dot ${currentImage === index ? "active" : ""}`}
+                className="material-symbols-outlined"
+                onClick={() => handleImages(index)}
+              >
+                {currentImage === index
+                  ? "radio_button_checked"
+                  : "radio_button_unchecked"}
+              </button>
+            ))}
+          </div>
         </div>
         <article className="detailBox">
           <div>
