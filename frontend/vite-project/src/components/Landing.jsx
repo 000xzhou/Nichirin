@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./landing.css";
 import useGet from "./hooks/useGet";
-import "./landing-main.modules.css";
+import Product from "./product/Product";
 
 // mock db for landing
 const db = {
@@ -11,10 +11,15 @@ const db = {
   content:
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. oriosam nobis, dolorem voluptas eveniet itaque nisi saepe quas Voluptate cupiditate ad voluptatibus vel sapie",
   "product-tag": "mincraft", // the current product display in frontpage
+  displayTag: "black",
 };
 
 function Landing() {
-  const { apiData, loading, error } = useGet("/products/tags?tag=minecraft");
+  const { apiData, loading, error } = useGet(
+    `/products/search?tags=${db.displayTag}`
+  );
+  console.log(apiData);
+
   return (
     <div>
       <section className="hero">
@@ -41,11 +46,22 @@ function Landing() {
           </div>
         </div>
       </section>
-      <section className="landing-popular-item">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quia,
-        accusamus et voluptas nesciunt distinctio sint quae voluptates. Expedita
-        quo, tempore ea laudantium voluptate, accusamus unde, cumque labore enim
-        itaque debitis. A place to buy some feature puffs
+      <section className=" landing-popular-item">
+        <h1>Features</h1>
+        <div className="productList container">
+          {!loading &&
+            apiData.products.map((item) => (
+              <Product
+                key={item._id}
+                id={item._id}
+                name={item.name}
+                price={item.price}
+                stock={item.stock}
+                rating="5"
+                images={item.images}
+              />
+            ))}
+        </div>
       </section>
     </div>
   );
