@@ -11,14 +11,13 @@ const db = {
   content:
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. oriosam nobis, dolorem voluptas eveniet itaque nisi saepe quas Voluptate cupiditate ad voluptatibus vel sapie",
   "product-tag": "mincraft", // the current product display in frontpage
-  displayTag: "black",
+  displayTag: "black", // the current product tag in frontpage
 };
 
 function Landing() {
   const { apiData, loading, error } = useGet(
     `/products/search?tags=${db.displayTag}`
   );
-  console.log(apiData);
 
   return (
     <div>
@@ -46,8 +45,8 @@ function Landing() {
           </div>
         </div>
       </section>
-      <section className=" landing-popular-item">
-        <h1>Features</h1>
+      <section className="landing-popular-item">
+        <h2>Features</h2>
         <div className="productList container">
           {!loading &&
             apiData.products.map((item) => (

@@ -58,6 +58,11 @@
   margin-top: 5rem;
 }
 
+.landing-popular-item h2 {
+  text-align: center;
+  font-size: 2.5rem;
+}
+
 /* old one where image isn't full  and only half */
 /* mobile breakpoint: 320px — 480px */
 @media screen and (max-width: 768px) {

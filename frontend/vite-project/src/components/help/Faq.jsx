@@ -1,44 +1,42 @@
+import Dropdown from "../Dropdown";
+import "./faq.css";
+
+// temp db
+const faq = [
+  {
+    question: "How to order?",
+    answer: "Go to the shop page and click 'Add to Cart'.",
+  },
+  {
+    question: "What payment methods do you accept?",
+    answer: "We accept credit card, PayPal, and Apple Pay.",
+  },
+  {
+    question: "What if I dislike like the product?",
+    answer: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
+  },
+  {
+    question: "Do you like cats?",
+    answer: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
+  },
+  {
+    question: "I did not look for sample questions.",
+    answer: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
+  },
+];
+
 function Faq() {
-  const showAnswer = () => {
-    //show answer
-  };
   return (
-    <>
+    <div className="container">
       <h1>FAQ</h1>
-      <div className="max-700">
-        <div>
-          <div className="dropdown" onClick={showAnswer}>
-            How to order?
-          </div>
-          <div className="dropdown-content">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sint
-            praesentium enim rem repudiandae facilis minima velit suscipit
-            repellendus doloribus magnam.
-          </div>
-        </div>
-        <div>
-          <div>What if I dislike like the product?</div>
-          <div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate,
-            sapiente?
-          </div>
-        </div>
-        <div>
-          <div>Do you like cats?</div>
-          <div>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione
-            voluptatem unde vitae recusandae saepe eius.
-          </div>
-        </div>
-        <div>
-          <div>I did not look for sample questions.</div>
-          <div>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione
-            voluptatem unde vitae recusandae saepe eius.
-          </div>
-        </div>
+      <div className="question-wrapper">
+        {faq.map((item) => (
+          <Dropdown label={item.question} key={item.question}>
+            <div className="dropdown-item">{item.answer}</div>
+          </Dropdown>
+        ))}
       </div>
-    </>
+    </div>
   );
 }
 

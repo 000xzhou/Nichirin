@@ -6,6 +6,7 @@ import EditCustomerPasswordForm from "../components/customers/EditCustomerPasswo
 import EditAddressForm from "../components/customers/EditAddressForm";
 import AddAddressForm from "../components/customers/AddAddressForm";
 import AddressList from "../components/customers/AddressList";
+import CustomerOrders from "../components/customers/CustomerOrders";
 
 function CustomerProtectRoute() {
   return (
@@ -25,6 +26,10 @@ function CustomerProtectRoute() {
         <Route index element={<AddressList />} />
         <Route path="add" element={<AddAddressForm />} />
         <Route path="edit/:addressId" element={<EditAddressForm />} />
+      </Route>
+
+      <Route path="orders">
+        <Route index element={<CustomerOrders />} />
       </Route>
       {/* <Route path="/add-shipping" element={<EditAddress type="shipping" />} /> */}
     </Routes>

@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const { ensureAuthenticated } = require("../middleware/auth");
 const { BadRequestError } = require("../expressError");
 const Customer = require("../models/customers/customers");
+const Order = require("../models/customers/order");
 require("dotenv").config();
 const Nodemailer = require("nodemailer");
 const { MailtrapTransport } = require("mailtrap");
@@ -15,6 +16,9 @@ const {
   ensureCorrectUserOrStaff,
 } = require("../middleware/auth");
 
+/**
+ * Sends email after checkout successful
+ */
 router.get(
   "/:id/find/:sessionId",
   ensureCorrectUserOrStaff,
@@ -22,16 +26,17 @@ router.get(
     try {
       const { id, sessionId } = req.params;
 
-      const customer = await Customer.findOne({
-        _id: id,
-        "orders.sessionId": sessionId,
+      // ! Need checking to make sure it works
+      const order = await Order.findOne({
+        customerId: id,
+        sessionId: sessionId,
       });
 
-      if (!customer) {
-        return res.status(404).json({ error: "Customer or Order not found" });
+      if (!order) {
+        return res.status(404).json({ error: "Order not found" });
       }
 
-      const order = customer.orders.find((ord) => ord.sessionId === sessionId);
+      // const order = customer.orders.find((ord) => ord.sessionId === sessionId);
 
       // check if mail been send before
       if (order.emailSent) {
@@ -95,5 +100,28 @@ router.get(
     }
   }
 );
+
+/**
+ * Sends email after checkout successful
+ */
+router.get("/:id/allorders", ensureCorrectUserOrStaff, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const customer = await Order.findById({
+      _id: id,
+    });
+    res.json(customer);
+  } catch (err) {
+    console.error("Error occurred:", {
+      name: err.name, // Type of the error
+      message: err.message, // General message about the error
+      code: err.code, // MongoDB error code if available
+      path: err.path, // Path to the field that caused the error
+      value: err.value, // The value that caused the error
+    });
+    res.status(500).json({ error: err.message });
+  }
+});
 
 module.exports = router;
