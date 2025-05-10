@@ -52,7 +52,6 @@ const useGet = (endpoint, initialState = null) => {
     try {
       const response = await api.get(endpoint);
       setApiData(response);
-      console.log(" set here");
     } catch (err) {
       setError(err);
     } finally {

@@ -7,6 +7,7 @@ import EditAddressForm from "../components/customers/EditAddressForm";
 import AddAddressForm from "../components/customers/AddAddressForm";
 import AddressList from "../components/customers/AddressList";
 import CustomerOrders from "../components/customers/CustomerOrders";
+import EditAddress from "../components/customers/EditAddress";
 
 function CustomerProtectRoute() {
   return (
@@ -25,7 +26,7 @@ function CustomerProtectRoute() {
       <Route path="addresses">
         <Route index element={<AddressList />} />
         <Route path="add" element={<AddAddressForm />} />
-        <Route path="edit/:addressId" element={<EditAddressForm />} />
+        <Route path="edit/:addressId" element={<EditAddress />} />
       </Route>
 
       <Route path="orders">

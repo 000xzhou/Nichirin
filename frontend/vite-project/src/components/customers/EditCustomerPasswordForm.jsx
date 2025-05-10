@@ -6,7 +6,7 @@ function EditCustomerPasswordForm() {
   const { isUser } = useCustomerAuth();
 
   // password only
-  const [formData, handleChange, handleSubmit, error] = usePatchPassword(
+  const { formData, handleChange, handleSubmit, error } = usePatchPassword(
     { oldPassword: "", newPassword: "", reenterNewPassword: "" },
     `/customers/${isUser._id}/password`
   );

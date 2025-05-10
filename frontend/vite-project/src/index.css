@@ -21,8 +21,32 @@
   --employee-navbar-large-height: 108px;
 }
 
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    line-height: 1.5;
+    font-weight: 400;
+    --background-color: black;
+    --background-accent: black;
+    --background-accent-transparent: hsla(29, 87%, 91%, 0.5);
+    --primary-text: white;
+    --secondary-text: white;
+    --button: #feebcb;
+    --hover-state: #f6afa9;
+    --active-state: #e89a94;
+    --confirm-button: #b4d7a8;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    --border-radius: 16px;
+    --employee-navbar-small-height: 68px;
+    --employee-navbar-large-height: 108px;
+  }
+} */
+
 body {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background-color: var(--background-color);
 }
 
 a {

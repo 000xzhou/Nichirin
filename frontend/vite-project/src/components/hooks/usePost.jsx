@@ -2,7 +2,7 @@ import { useState } from "react";
 import ApiService from "../../api/api";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const usePost = (initialState, endpoint) => {
+const usePost = (initialState, endpoint, returnpoint = null) => {
   const [formData, setFormData] = useState(initialState);
   // const [apiData, setApiData] = useState(null);
   const [error, setError] = useState(null);
@@ -29,7 +29,7 @@ const usePost = (initialState, endpoint) => {
   //   fetching data from api
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    // console.log(formData);
     try {
       // api
       const api = new ApiService("http://localhost:3000");
@@ -38,9 +38,13 @@ const usePost = (initialState, endpoint) => {
         .post(endpoint, formData)
         .then((data) => {
           console.log(data);
-          // send them back to the page they were at.
-          console.log("Here at right before nav from", from);
-          navigate(from);
+          if (returnpoint) {
+            navigate(returnpoint);
+          } else {
+            // send them back to the page they were at.
+            // console.log("Here at right before nav from", from);
+            navigate(from);
+          }
         })
         .catch((err) => setError(err));
     } catch (error) {

@@ -1,33 +1,37 @@
 import usePatch from "../hooks/usePatch";
 import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
-import { useParams } from "react-router-dom";
 
-function EditAddressForm() {
+function EditAddressForm({
+  id,
+  line1,
+  line2,
+  city,
+  state,
+  postal_code,
+  country,
+}) {
   // USA shipping only. country should auto fill as usa
-  const { isUser } = useCustomerAuth();
-  const { addressId } = useParams();
-
-  const address = isUser.addresses.find((addr) => addr._id === addressId);
-
   const initialState = {
-    line1: address.line1,
-    line2: address.line2,
-    city: address.city,
-    state: address.state,
-    postal_code: address.postal_code,
-    country: "United States",
+    line1: line1,
+    line2: line2,
+    city: city,
+    state: state,
+    postal_code: postal_code,
+    country: country,
   };
 
-  const [formData, handleChange, handleSubmit, error] = usePatch(
+  const { formData, handleChange, handleSubmit, error } = usePatch(
     initialState,
-    `/customers/${isUser._id}/edit-address/${address._id}`
+    `/address/edit-address/${id}`,
+    "/customers/addresses",
+    true
   );
 
   return (
-    <div>
+    <div className="container">
       <h2>Edit your address</h2>
       <div>{error ? error.message : ""}</div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="form">
         <label htmlFor="line1">Country:</label>
         <input type="text" value="USA" name="usa" disabled />
         <label htmlFor="line1">Address Line1:</label>
@@ -75,7 +79,9 @@ function EditAddressForm() {
           onChange={handleChange}
         />
 
-        <button type="submit">Add address</button>
+        <button type="submit" className="confirm-button padding-point-5">
+          Add address
+        </button>
       </form>
     </div>
   );

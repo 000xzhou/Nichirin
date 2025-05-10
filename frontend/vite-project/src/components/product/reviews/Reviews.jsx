@@ -4,6 +4,7 @@ import StarRating from "./StarRating";
 
 // temp db - table: review rating
 // Just need to pull up the first 4-5 reviews
+// ! get from db the overall rating
 // Need to get the overall rating too from product (add in later)
 const db = [
   {

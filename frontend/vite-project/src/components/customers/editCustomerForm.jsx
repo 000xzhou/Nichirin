@@ -22,7 +22,7 @@ function EditCustomerForm() {
     labelType = "";
   }
 
-  const [formData, handleChange, handleSubmit, error] = usePatch(
+  const { formData, handleChange, handleSubmit, error } = usePatch(
     { [type]: isUser[type] },
     `/customers/${isUser._id}`
   );

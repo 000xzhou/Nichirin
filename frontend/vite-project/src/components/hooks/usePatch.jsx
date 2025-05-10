@@ -3,7 +3,12 @@ import ApiService from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
 
-const usePatch = (initialState, endpoint) => {
+const usePatch = (
+  initialState,
+  endpoint,
+  returnpoint = null,
+  noUpdate = false
+) => {
   const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState(null);
   const { setIsUser } = useCustomerAuth();
@@ -28,23 +33,45 @@ const usePatch = (initialState, endpoint) => {
       console.log("PATCH success:");
       // console.log("PATCH success:", updatedUser);
 
-      // update user
-      setIsUser((prevUser) => ({
-        ...prevUser,
-        ...updatedUser,
-      }));
-
-      // send them back
-      if (endpoint.includes("address")) {
-        navigate("/customers/addresses");
-      } else {
-        navigate("/customers/login-security");
+      if (!noUpdate) {
+        // update user
+        setIsUser((prevUser) => ({
+          ...prevUser,
+          ...updatedUser,
+        }));
       }
+      // send them back
+      if (returnpoint) {
+        navigate(returnpoint);
+      }
+      // navigate("/customers/login-security");
     } catch (error) {
       console.log(error);
       setError(error);
     }
   };
-  return [formData, handleChange, handleSubmit, error];
+
+  const setDefaultAdress = async () => {
+    try {
+      // api
+      const api = new ApiService("http://localhost:3000");
+
+      const updatedUser = await api.patch(endpoint);
+
+      setIsUser((prevUser) => ({
+        ...prevUser,
+        ...updatedUser.updatedAddress,
+      }));
+      // send them back
+      if (returnpoint) {
+        navigate(returnpoint);
+      }
+      // navigate("/customers/login-security");
+    } catch (error) {
+      console.log(error);
+      setError(error);
+    }
+  };
+  return { formData, handleChange, handleSubmit, error, setDefaultAdress };
 };
 export default usePatch;

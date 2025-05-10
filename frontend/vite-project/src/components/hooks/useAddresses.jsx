@@ -11,7 +11,7 @@ const useAddresses = (userId) => {
   const handleDelete = async (addressId) => {
     try {
       // api
-      const endpoint = `/customers/${userId}/remove-address/${addressId}`;
+      const endpoint = `/address/remove-address/${addressId}`;
 
       const updatedUser = await api.delete(endpoint);
 

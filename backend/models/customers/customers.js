@@ -1,7 +1,6 @@
 // models/customers.js
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const addressSchema = require("./address");
 const preferencesSchema = require("./preferences");
 const bcrypt = require("bcrypt");
 
@@ -37,16 +36,11 @@ const customerSchema = new Schema(
       type: String,
       required: false,
     },
-    address: {
-      type: addressSchema,
-      required: false,
+    defaultAddressId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Address",
+      default: null,
     },
-    shipping: {
-      type: addressSchema,
-      required: false,
-    },
-    addresses: { type: [addressSchema], default: [] },
-    default_address_id: { type: mongoose.Schema.Types.ObjectId, default: null },
     birthday: {
       type: String,
       required: false,
@@ -56,28 +50,6 @@ const customerSchema = new Schema(
       required: false,
     },
     stripeCustomerId: String,
-    orders: [
-      {
-        sessionId: String,
-        items: [
-          {
-            // itemId: {
-            //   type: mongoose.Schema.Types.ObjectId,
-            //   required: true,
-            //   ref: "Product",
-            // },
-            itemId: String,
-            name: String,
-            price: Number,
-            quantity: Number,
-          },
-        ],
-        totalAmount: Number,
-        status: { type: String, default: "pending" }, // pending, completed, failed
-        emailSent: { type: Boolean, default: false },
-        createdAt: { type: Date, default: Date.now },
-      },
-    ],
   },
   {
     strict: true,

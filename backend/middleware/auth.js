@@ -5,6 +5,7 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const { UnauthorizedError } = require("../expressError");
+const { updateSearchIndex } = require("../models/products/products");
 
 /** Middleware: Authenticate user.
  *
@@ -24,7 +25,6 @@ function ensureAuthenticated(req, res, next) {
     //     .json({ message: "Access denied. No token provided." });
     // }
     // const token = authHeader.replace(/^[Bb]earer /, "").trim();
-
     const token = req.cookies.token;
 
     if (!token)
@@ -34,6 +34,7 @@ function ensureAuthenticated(req, res, next) {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
+
     next();
   } catch (err) {
     console.error("Authentication error:", err);
@@ -107,10 +108,24 @@ function ensureCorrectUserOrStaff(req, res, next) {
   });
 }
 
+// All employee and user
+function ensureUser(req, res, next) {
+  ensureAuthenticated(req, res, function () {
+    if (!req.user) {
+      return res.status(403).json({
+        message:
+          "Access denied. You do not have permission to perform this action.",
+      });
+    }
+    next();
+  });
+}
+
 module.exports = {
   ensureAuthenticated,
   ensureAdmin,
   ensureStaff,
   ensureCorrectStaff,
   ensureCorrectUserOrStaff,
+  ensureUser,
 };

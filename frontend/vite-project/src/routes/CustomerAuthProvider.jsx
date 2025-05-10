@@ -12,7 +12,6 @@ const CustomerAuthProvider = ({ children }) => {
   const [isUser, setIsUser] = useState(null);
   // const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
-
   const navigate = useNavigate();
 
   // Function to check if the user is authenticated

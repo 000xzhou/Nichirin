@@ -1,12 +1,25 @@
 import { Link } from "react-router-dom";
 import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
-import useAddresses from "../hooks/useAddresses";
 import "./addresslist.css";
+import useGet from "../hooks/useGet";
+import Address from "./Address";
 
 function AddressList() {
   const { isUser } = useCustomerAuth();
 
-  const [handleDelete, setDefaultAdress] = useAddresses(isUser._id);
+  const {
+    apiData: addressData,
+    loading,
+    error,
+    refetch,
+  } = useGet(`/address/addresses/${isUser._id}`);
+
+  if (loading)
+    return (
+      <div>
+        ...loading...I should replace this with a spinning icon by now...
+      </div>
+    );
 
   return (
     <div className="container">
@@ -17,45 +30,19 @@ function AddressList() {
             Add Address
           </Link>
         </li>
-        {isUser.addresses.map((address) => (
-          <li
-            id={address._id}
+        {addressData.addresses.map((address) => (
+          <Address
             key={address._id}
-            className="user-address-container"
-          >
-            <div>
-              <p>{address.line1}</p>
-              <p>{address.line2 ? address.line2 : ""}</p>
-              <p>
-                {address.city} {address.state}
-              </p>
-              <p>{address.country}</p>
-            </div>
-            <div>
-              <Link to={`edit/${address._id}`}>Edit</Link> |{" "}
-              <Link
-                onClick={() => {
-                  handleDelete(address._id);
-                }}
-              >
-                Remove
-              </Link>
-              {isUser.default_address_id === address._id ? (
-                ""
-              ) : (
-                <>
-                  {" | "}{" "}
-                  <Link
-                    onClick={() => {
-                      setDefaultAdress(address._id);
-                    }}
-                  >
-                    Set as Default
-                  </Link>
-                </>
-              )}
-            </div>
-          </li>
+            id={address._id}
+            name={address.name}
+            line1={address.line1}
+            line2={address.line2}
+            city={address.city}
+            state={address.state}
+            country={address.country}
+            isDefault={isUser.defaultAddressId === address._id}
+            refetch={refetch}
+          />
         ))}
       </ul>
     </div>

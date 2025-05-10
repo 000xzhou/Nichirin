@@ -1,29 +1,59 @@
-import usePatch from "../hooks/usePatch";
+import usePost from "../hooks/usePost";
 import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
 import "./form.css";
 
 function AddAddressForm() {
   // USA shipping only. country should auto fill as usa
   const { isUser } = useCustomerAuth();
+  console.log(isUser);
 
   const initialState = {
+    userId: isUser._id,
+    name: "",
+    phone: "",
     line1: "",
     line2: "",
     city: "",
     state: "",
     postal_code: "",
-    country: "United States",
+    country: "USA",
   };
 
-  const [formData, handleChange, handleSubmit, error] = usePatch(
+  const [formData, handleChange, handleSubmit, error] = usePost(
     initialState,
-    `/customers/${isUser._id}/add-address`
+    "/address/add-address",
+    "/customers/addresses"
   );
+
   return (
     <div className="container">
       <h2>Add a new address</h2>
       <div>{error ? error.message : ""}</div>
       <form onSubmit={handleSubmit} className="form">
+        <div>
+          <div>
+            <label htmlFor="name">Full Name:</label>
+          </div>
+          <input
+            type="text"
+            id="name"
+            value={formData.name}
+            name="name"
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <div>
+            <label htmlFor="phone">Phone:</label>
+          </div>
+          <input
+            type="text"
+            id="phone"
+            value={formData.phone}
+            name="phone"
+            onChange={handleChange}
+          />
+        </div>
         <div>
           <div>
             <label htmlFor="line1">Country:</label>

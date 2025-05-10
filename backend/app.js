@@ -10,10 +10,7 @@ const employeeRouter = require("./routes/employee");
 const reviewRouter = require("./routes/reviews");
 const checkoutRouter = require("./routes/checkout");
 const orderRouter = require("./routes/order");
-
-const Customer = require("./models/customers/customers");
-
-const jwt = require("jsonwebtoken");
+const addressRouter = require("./routes/address");
 
 const app = express();
 
@@ -52,6 +49,7 @@ app.use("/employee", employeeRouter);
 app.use("/reviews", reviewRouter);
 app.use("/checkout", checkoutRouter);
 app.use("/order", orderRouter);
+app.use("/address", addressRouter);
 
 // logout for all
 app.get("/logout", (req, res) => {
