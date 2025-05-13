@@ -43,6 +43,6 @@ const usePostLogin = (initialState, endpoint) => {
     }
   };
 
-  return [formData, handleChange, handleSubmit, error];
+  return { formData, handleChange, handleSubmit, error };
 };
 export default usePostLogin;

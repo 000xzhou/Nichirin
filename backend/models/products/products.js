@@ -64,7 +64,7 @@ const productSchema = new Schema(
       required: false,
     },
 
-    overallRating: { type: Number, default: 0 },
+    overallRating: { type: Number },
   },
   {
     strict: true,

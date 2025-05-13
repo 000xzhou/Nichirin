@@ -19,17 +19,12 @@ const usePost = (initialState, endpoint, returnpoint = null) => {
   };
 
   const handleInitialChange = (data) => {
-    // setFormData((data) => ({
-    //   ...data,
-    //   [name]: value,
-    // }));
     setFormData(data);
   };
 
   //   fetching data from api
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(formData);
     try {
       // api
       const api = new ApiService("http://localhost:3000");
@@ -37,7 +32,7 @@ const usePost = (initialState, endpoint, returnpoint = null) => {
       api
         .post(endpoint, formData)
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           if (returnpoint) {
             navigate(returnpoint);
           } else {
@@ -52,6 +47,13 @@ const usePost = (initialState, endpoint, returnpoint = null) => {
       setError(error);
     }
   };
-  return [formData, handleChange, handleSubmit, error, handleInitialChange];
+  return {
+    formData,
+    handleChange,
+    handleSubmit,
+    error,
+    handleInitialChange,
+    setError,
+  };
 };
 export default usePost;

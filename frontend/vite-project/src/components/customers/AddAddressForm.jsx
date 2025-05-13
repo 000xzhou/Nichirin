@@ -19,7 +19,7 @@ function AddAddressForm() {
     country: "USA",
   };
 
-  const [formData, handleChange, handleSubmit, error] = usePost(
+  const { formData, handleChange, handleSubmit, error } = usePost(
     initialState,
     "/address/add-address",
     "/customers/addresses"

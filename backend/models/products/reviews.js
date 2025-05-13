@@ -15,9 +15,18 @@ const reviewSchema = new Schema(
       required: true,
       immutable: true,
     },
-    reviewText: {
+    customerName: {
       type: String,
       required: true,
+    },
+    title: {
+      type: String,
+      required: false,
+      trim: true, // Removes any unnecessary white space
+    },
+    post: {
+      type: String,
+      required: false,
       trim: true, // Removes any unnecessary white space
     },
     rating: {

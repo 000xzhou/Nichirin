@@ -22,7 +22,7 @@ function EditCustomer() {
     phone: "",
   };
 
-  const [formData, handleChange, handleSubmit, error, handleInitialChange] =
+  const { formData, handleChange, handleSubmit, error, handleInitialChange } =
     usePost(initialState, `/customers/${id}`);
 
   useEffect(() => {

@@ -2,6 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+const Product = require("../models/products/products");
 const Reviews = require("../models/products/reviews");
 const {
   ensureAdmin,
@@ -10,13 +11,20 @@ const {
   ensureAuthenticated,
 } = require("../middleware/auth");
 
-// Get all review for product
+/**
+ * GET /reviews/12345/all
+ * GET /reviews/12345/all?limit=4
+ */
 router.get("/:product_id/all", async (req, res) => {
   try {
     const product_id = req.params.product_id;
+    const limit = parseInt(req.query.limit) || 0;
 
-    const reviews = await Reviews.find({ productID: product_id });
-    res.status(200).send({ reviews: reviews });
+    const reviews = await Reviews.find({ productID: product_id })
+      .sort({ updatedAt: -1 })
+      .limit(limit);
+
+    res.status(200).send({ reviews });
   } catch (err) {
     console.error("Error occurred:", {
       name: err.name, // Type of the error
@@ -30,11 +38,52 @@ router.get("/:product_id/all", async (req, res) => {
 });
 
 // Create new review
+/** input: {
+ *  title,
+    post,
+    productID, 
+    customerID }
+ */
 router.post("/create", ensureAuthenticated, async (req, res) => {
   try {
     const newReview = new Reviews(req.body);
     await newReview.save();
-    res.status(201).send(newReview);
+
+    let productRatingUpdate = null;
+    // update overall rating
+    const product = await Product.findById(req.body.productID);
+    if (!product) {
+      return res.status(404).json({ error: "No product found" });
+    }
+
+    if (!product.overallRating) {
+      // add rating if no rating
+      productRatingUpdate = await Product.findByIdAndUpdate(
+        req.body.productID,
+        {
+          overallRating: req.body.rating,
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+    } else {
+      // update new medium rating
+      const newRating = (product.overallRating + req.body.rating) / 2;
+      productRatingUpdate = await Product.findByIdAndUpdate(
+        req.body.productID,
+        {
+          overallRating: newRating,
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+    }
+
+    res.status(201).json({ newReview, updatedProduct: productRatingUpdate });
   } catch (err) {
     console.error("Error occurred:", {
       name: err.name, // Type of the error

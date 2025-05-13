@@ -9,7 +9,7 @@ function LoginC() {
     password: "",
   };
 
-  const [formData, handleChange, handleSubmit, error] = usePostLogin(
+  const { formData, handleChange, handleSubmit, error } = usePostLogin(
     initialState,
     "/customers/login"
   );
