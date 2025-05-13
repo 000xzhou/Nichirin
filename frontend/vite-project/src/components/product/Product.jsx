@@ -15,6 +15,13 @@ function Product({ id, name, price, stock, rating, images }) {
       image: images[0],
     });
   };
+
+  const formatPrice = (price) =>
+    price.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
+
   return (
     <div className="product-card">
       {/* Product Image */}
@@ -34,7 +41,7 @@ function Product({ id, name, price, stock, rating, images }) {
         </div>
 
         {/* Product Price */}
-        <div className="product-price">${price}</div>
+        <div className="product-price">{formatPrice(price)}</div>
       </div>
 
       {/* Add to Cart Button */}

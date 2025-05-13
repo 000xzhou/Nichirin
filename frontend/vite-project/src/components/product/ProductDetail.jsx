@@ -30,6 +30,13 @@ function ProductDetail() {
   const handleImages = (index) => {
     setCurrentImage(index);
   };
+
+  const formatPrice = (price) =>
+    price.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
+
   // console.log(apiData);
   return (
     <div className="container">
@@ -74,7 +81,7 @@ function ProductDetail() {
               </div>
               <Link to={`reviews/add`}>leave a review</Link>
             </div>
-            <div className="detailPrice">${apiData.price}</div>
+            <div className="detailPrice">{formatPrice(apiData.price)}</div>
           </div>
 
           <div>

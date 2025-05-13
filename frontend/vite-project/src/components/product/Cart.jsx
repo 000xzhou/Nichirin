@@ -37,6 +37,12 @@ function Cart() {
     }
   };
 
+  const formatPrice = (price) =>
+    price.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
+
   return (
     <div className="container">
       <section>
@@ -54,7 +60,7 @@ function Cart() {
               <Link to={`/products/${item.id}`}>
                 <div className="cart-list-name">{item.name}</div>
               </Link>
-              <p className="cart-list-price">${item.price}</p>
+              <p className="cart-list-price">{formatPrice(item.price)}</p>
               <div className="listQytChanger">
                 <button
                   className="listLeftButton"
@@ -85,7 +91,7 @@ function Cart() {
       </section>
       <section className="checkoutSession">
         <div className="checkoutSessionSubtotal">
-          subtotal: ${total.toFixed(2)}
+          subtotal: {formatPrice(total)}
         </div>
         <button
           className="main-button padding-point-5"
