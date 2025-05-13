@@ -30,7 +30,7 @@ function Product({ id, name, price, stock, rating, images }) {
 
         {/* Star Rating */}
         <div className="product-rating">
-          <StarRating rating={4.5} />
+          <StarRating rating={rating} />
         </div>
 
         {/* Product Price */}

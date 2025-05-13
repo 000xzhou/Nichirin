@@ -56,7 +56,7 @@ function Landing() {
                 name={item.name}
                 price={item.price}
                 stock={item.stock}
-                rating="5"
+                rating={item.overallRating}
                 images={item.images}
               />
             ))}

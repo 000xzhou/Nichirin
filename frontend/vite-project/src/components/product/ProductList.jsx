@@ -20,8 +20,7 @@ function ProductsList() {
               name={data.name}
               price={data.price}
               stock={data.stock}
-              // rating={data.rating}
-              // rating={4.5}
+              rating={data.overallRating}
               images={data.images}
             />
           )
