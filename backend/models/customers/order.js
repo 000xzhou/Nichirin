@@ -11,10 +11,7 @@ const orderSchema = new Schema(
       ref: "Customer",
       required: true,
     },
-    sessionId: String,
-    image: String,
-    name: String,
-    quantity: Number,
+    sessionId: String, // from stripe
     shipping: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Address",
@@ -22,15 +19,31 @@ const orderSchema = new Schema(
     },
     items: [
       {
-        itemId: String,
+        itemId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Product",
+          required: true,
+        },
         name: String,
+        image: String,
         price: Number,
         quantity: Number,
       },
     ],
+    status: {
+      type: String,
+      enum: ["pending", "completed", "cancelled"],
+      default: "pending",
+    },
     totalAmount: Number,
-    status: { type: String, default: "pending" }, // pending, completed, failed
     emailSent: { type: Boolean, default: false },
+    refund: {
+      isRefunded: { type: Boolean, default: false },
+      refundedAt: Date,
+      amount: Number,
+      reason: String,
+      processedBy: { type: mongoose.Schema.Types.ObjectId, ref: "Employee" },
+    },
   },
   {
     strict: true,
