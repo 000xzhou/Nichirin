@@ -10,7 +10,7 @@ require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 router.post("/:id/create-checkout-session", async (req, res) => {
-  const { cart } = req.body;
+  const { cart, customerID, shipping, totalAmount } = req.body;
   const { id } = req.params;
 
   // Check if customer exist
@@ -18,7 +18,7 @@ router.post("/:id/create-checkout-session", async (req, res) => {
   if (!customer) {
     return res.status(404).json({ error: "Customer not found" });
   }
-  // check if they got stripe id, if not create one
+  // check if they got stripe id, if not create one and save to db
   if (!customer.stripeCustomerId) {
     const stripeCustomer = await stripe.customers.create({
       email: customer.email,
@@ -60,24 +60,25 @@ router.post("/:id/create-checkout-session", async (req, res) => {
     const formattedCart = cart.map((item) => ({
       itemId: item.id,
       name: item.name,
+      image: item.image,
       price: item.price,
       quantity: item.quantity,
     }));
 
-    // ! new mongoose.Types.ObjectId() does not work even though the log says it fits but it don't. Had to switch to string till I figure it out
-    customer.orders.push({
+    const newOrder = new Order({
+      customerId: customer._id,
       sessionId: session.id,
       items: formattedCart,
+      shipping:
+        "where to get this? or can I upload it ot stripe so it have their default address pre-added",
       totalAmount: cart.reduce(
         (acc, item) => acc + item.price * item.quantity,
         0
       ),
       status: "pending",
     });
-    await customer.save();
+    await newOrder.save();
 
-    // send back
-    // res.json({ id: session.id });
     res.json({ url: session.url });
   } catch (error) {
     console.error(error);

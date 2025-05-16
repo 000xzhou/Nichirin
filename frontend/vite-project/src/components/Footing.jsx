@@ -25,7 +25,7 @@ function Footing() {
               <div>
                 <h3>Help</h3>
                 {isUser ? (
-                  <Link to={`/customers/${isUser._id}`}>My Account</Link>
+                  <Link to={`/customers/user/${isUser._id}`}>My Account</Link>
                 ) : (
                   <Link to={`/login`}>My Account</Link>
                 )}

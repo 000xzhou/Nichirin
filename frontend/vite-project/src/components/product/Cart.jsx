@@ -26,12 +26,12 @@ function Cart() {
     } else {
       const api = new ApiService("http://localhost:3000");
 
-      const res = await api.post(
-        `/checkout/${isUser._id}/create-checkout-session`,
-        {
-          cart,
-        }
-      );
+      const res = await api.post(`/order/create`, {
+        cart, // items in cart
+        customerID: isUser._id,
+        shipping: isUser.defaultAddressId,
+        totalAmount: total,
+      });
       // Send to stripe checkout
       window.location.replace(res.url);
     }

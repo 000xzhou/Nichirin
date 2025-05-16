@@ -5,7 +5,7 @@ function CustomerDetail() {
     <div className="container">
       <h2>Your Account</h2>
       <div>
-        <Link to="/customers/order">
+        <Link to="/customers/orders">
           <span className="material-symbols-outlined">package_2</span>
           <div>
             <h3>Your Order</h3>

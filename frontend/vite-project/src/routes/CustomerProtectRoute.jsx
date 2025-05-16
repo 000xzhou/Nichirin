@@ -6,13 +6,14 @@ import EditCustomerPasswordForm from "../components/customers/EditCustomerPasswo
 import EditAddressForm from "../components/customers/EditAddressForm";
 import AddAddressForm from "../components/customers/AddAddressForm";
 import AddressList from "../components/customers/AddressList";
-import CustomerOrders from "../components/customers/CustomerOrders";
 import EditAddress from "../components/customers/EditAddress";
+import OrderConfirmation from "../components/customers/orders/OrderConfirmation";
+import OrderList from "../components/customers/orders/OrderList";
 
 function CustomerProtectRoute() {
   return (
     <Routes>
-      <Route path=":id" element={<CustomerDetail />} />
+      <Route path="user/:id" element={<CustomerDetail />} />
       <Route path="login-security">
         <Route index element={<EditCustomer2 />} />
         <Route path="email" element={<EditCustomerForm />} />
@@ -20,9 +21,7 @@ function CustomerProtectRoute() {
         <Route path="lname" element={<EditCustomerForm />} />
         <Route path="password" element={<EditCustomerPasswordForm />} />
       </Route>
-      {/* do I really need 2 seperate ones? we will see later */}
-      {/* <Route path="edit-address" element={<EditAddress />} /> */}
-      {/* <Route path="edit-shipping  " element={<EditAddress />} /> */}
+
       <Route path="addresses">
         <Route index element={<AddressList />} />
         <Route path="add" element={<AddAddressForm />} />
@@ -30,7 +29,9 @@ function CustomerProtectRoute() {
       </Route>
 
       <Route path="orders">
-        <Route index element={<CustomerOrders />} />
+        <Route index element={<OrderList />} />
+        <Route path="orders" element={<OrderList />} />
+        <Route path="order-confirmation" element={<OrderConfirmation />} />
       </Route>
       {/* <Route path="/add-shipping" element={<EditAddress type="shipping" />} /> */}
     </Routes>

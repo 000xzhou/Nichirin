@@ -11,7 +11,6 @@ import Checkout from "../components/product/Checkout";
 import CustomerAuthProvider from "./CustomerAuthProvider";
 import { CartProvider } from "./CartProvider";
 import Cart from "../components/product/Cart";
-import OrderConfirmation from "../components/product/OrderConfirmation";
 import About from "../components/help/About";
 import ContactUs from "../components/help/ContactUs";
 import Faq from "../components/help/Faq";
@@ -47,20 +46,10 @@ function CustomerRoutes() {
               {/* products */}
               <Route path="products" element={<ProductsList />} />
               <Route path="products/:id" element={<ProductDetail />} />
-              <Route
-                path="/products/:id/reviews/add"
-                element={<ReviewForm />}
-              />
-              <Route
-                path="/products/:id/reviews/all"
-                element={<AllReviews />}
-              />
-              <Route path="/cart" element={<Cart />} />
+              <Route path="products/:id/reviews/add" element={<ReviewForm />} />
+              <Route path="products/:id/reviews/all" element={<AllReviews />} />
+              <Route path="cart" element={<Cart />} />
               <Route path="checkout" element={<Checkout />} />
-              <Route
-                path="order-confirmation"
-                element={<OrderConfirmation />}
-              />
               {/* footing routes */}
               <Route path="about-us" element={<About />} />
               <Route path="contact-us" element={<ContactUs />} />

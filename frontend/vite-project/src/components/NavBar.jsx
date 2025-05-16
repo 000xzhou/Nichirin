@@ -14,7 +14,7 @@ const Navbar = () => {
       <Link to="/">Home</Link>
       <div className="nav-bar-right">
         {isUser ? (
-          <Link to={`/customers/${isUser._id}`}>{isUser.first_name}</Link>
+          <Link to={`/customers/user/${isUser._id}`}>{isUser.first_name}</Link>
         ) : (
           <Link to="/login" state={{ from: location }}>
             Login

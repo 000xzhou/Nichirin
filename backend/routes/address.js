@@ -28,6 +28,30 @@ router.get("/addresses/:userId/", ensureUser, async (req, res) => {
 });
 
 /** Get /[Address] => { Address }
+ * Get default Address by user id
+ **/
+router.get("/default/:userId/", ensureUser, async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const customer = await Customers.findById(userId).populate(
+      "defaultAddressId"
+    );
+
+    res.status(200).json({ address: customer.defaultAddressId });
+  } catch (err) {
+    console.error("Error occurred:", {
+      name: err.name, // Type of the error
+      message: err.message, // General message about the error
+      code: err.code, // MongoDB error code if available
+      path: err.path, // Path to the field that caused the error
+      value: err.value, // The value that caused the error
+    });
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/** Get /[Address] => { Address }
  * Get Address by Id
  **/
 router.get("/find/:id", ensureUser, async (req, res) => {
