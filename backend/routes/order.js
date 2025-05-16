@@ -65,7 +65,9 @@ router.get("/:id/allorders", ensureCorrectUserOrStaff, async (req, res) => {
 
     const customer = await Order.find({
       customerId: id,
-    }).limit(limit);
+    })
+      .limit(limit)
+      .populate("shipping");
 
     res.json(customer);
   } catch (err) {

@@ -99,27 +99,28 @@ function Checkout() {
         <section>
           <h2>Select a delivery address</h2>
           <ul>
-            {allAddress.addresses.map((address) => (
-              <li key={address._id}>
-                <label>
-                  <input
-                    type="radio"
-                    name="deliveryAddress"
-                    value={address._id}
-                    checked={selectedAddressId === address._id}
-                    onChange={handleSelectAddress}
-                  />
-                  <div>
-                    <h5>{address.name}</h5>
-                    <p>{address.line1}</p>
-                    {address.line2 && <p>{address.line2}</p>}
-                    <p>
-                      {address.city} {address.state}
-                    </p>
-                  </div>
-                </label>
-              </li>
-            ))}
+            {allAddress &&
+              allAddress.addresses.map((address) => (
+                <li key={address._id}>
+                  <label>
+                    <input
+                      type="radio"
+                      name="deliveryAddress"
+                      value={address._id}
+                      checked={selectedAddressId === address._id}
+                      onChange={handleSelectAddress}
+                    />
+                    <div>
+                      <h5>{address.name}</h5>
+                      <p>{address.line1}</p>
+                      {address.line2 && <p>{address.line2}</p>}
+                      <p>
+                        {address.city} {address.state}, {address.postal_code}
+                      </p>
+                    </div>
+                  </label>
+                </li>
+              ))}
           </ul>
           <button onClick={changleDeliverChange} disabled={!selectedAddressId}>
             Deliver to this address

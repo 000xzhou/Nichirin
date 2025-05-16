@@ -20,7 +20,7 @@ function Order({
       style: "currency",
       currency: "USD",
     });
-
+  console.log(shipping);
   return (
     <div>
       <h2>Your Orders</h2>
@@ -34,8 +34,14 @@ function Order({
           </div>
           <div>
             Ship to
-            <Dropdown label={"name in shipping"}>
-              <div className="dropdown-item">Address of dropdown here</div>
+            <Dropdown label={shipping.name}>
+              <div className="dropdown-item">
+                <p>{shipping.line1}</p>
+                {shipping.line2 && <p>{shipping.line2}</p>}
+                <p>
+                  {shipping.city} {shipping.state}, {shipping.postal_code}
+                </p>
+              </div>
             </Dropdown>
           </div>
         </div>

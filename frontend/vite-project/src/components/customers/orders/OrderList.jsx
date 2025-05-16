@@ -9,7 +9,7 @@ function OrderList() {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  console.log(apiData);
+
   return (
     <div className="container">
       {apiData && apiData.length > 0 ? (
