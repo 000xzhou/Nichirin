@@ -11,8 +11,11 @@ const { ensureUser } = require("../middleware/auth");
 router.get("/addresses/:userId/", ensureUser, async (req, res) => {
   try {
     const userId = req.params.userId;
+    const limit = parseInt(req.query.limit) || 0;
 
-    const addresses = await Address.find({ userId: userId });
+    const addresses = await Address.find({ userId: userId })
+      .sort({ created_at: -1 })
+      .limit(limit);
 
     res.status(200).json({ addresses });
   } catch (err) {

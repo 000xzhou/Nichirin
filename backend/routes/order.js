@@ -66,6 +66,7 @@ router.get("/:id/allorders", ensureCorrectUserOrStaff, async (req, res) => {
     const customer = await Order.find({
       customerId: id,
     })
+      .sort({ created_at: -1 })
       .limit(limit)
       .populate("shipping");
 
