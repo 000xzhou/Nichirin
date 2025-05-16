@@ -24,16 +24,16 @@ function Cart() {
     if (!isUser) {
       navigate("/login");
     } else {
-      const api = new ApiService("http://localhost:3000");
-
-      const res = await api.post(`/order/create`, {
-        cart, // items in cart
-        customerID: isUser._id,
-        shipping: isUser.defaultAddressId,
-        totalAmount: total,
-      });
-      // Send to stripe checkout
-      window.location.replace(res.url);
+      // const api = new ApiService("http://localhost:3000");
+      // const res = await api.post(`/order/create`, {
+      //   cart, // items in cart
+      //   customerID: isUser._id,
+      //   shipping: isUser.defaultAddressId,
+      //   totalAmount: total,
+      // });
+      // // Send to stripe checkout
+      // window.location.replace(res.url);
+      navigate("/checkout");
     }
   };
 

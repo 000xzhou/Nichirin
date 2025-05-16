@@ -66,7 +66,7 @@ router.get("/:id/allorders", ensureCorrectUserOrStaff, async (req, res) => {
     const customer = await Order.find({
       customerId: id,
     }).limit(limit);
-    console.log(customer);
+
     res.json(customer);
   } catch (err) {
     console.error("Error occurred:", {
