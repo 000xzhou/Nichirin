@@ -3,7 +3,7 @@ import CreateE from "../components/employee/CreateE";
 import EmployeeList from "../components/employee/EmployeeList";
 import EmployeeDetail from "../components/employee/EmployeeDetail";
 import EmployeeAuthProvider from "./EmployeeAuthProvider";
-import ProductsListE from "../components/employee/ProductListE";
+import ProductsListE from "../components/employee/product/ProductListE";
 import CreateP from "../components/employee/product/CreateP";
 import CustomerSearch from "../components/employee/customers/CustomerSearch";
 // import CustomerDetail from "../components/customers/CustomerDetail";

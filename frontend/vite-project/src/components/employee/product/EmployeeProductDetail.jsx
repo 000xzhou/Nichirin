@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 // import "./productDetail.css";
 import { Link, useNavigate } from "react-router-dom";
-import useGet from "../hooks/useGet";
-import ApiService from "../../api/api";
+import useGet from "../../hooks/useGet";
+import ApiService from "../../../api/api";
 import { useEffect, useState } from "react";
 import "./employeeproductdetail.css";
 

@@ -27,9 +27,9 @@ function CustomerRefund() {
     error: postError,
   } = usePost(initialState, `endpoint`, `return point`);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-
+  if (orderLoading) return <div>Loading...</div>;
+  if (orderError) return <div>Error: {orderError.message}</div>;
+  console.log(orderApi);
   return (
     <div className="container">
       <h2>Return Items from Order #{orderApi.id}</h2>

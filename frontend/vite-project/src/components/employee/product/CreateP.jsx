@@ -1,4 +1,4 @@
-import usePostProduct from "../hooks/usePostProduct";
+import usePostProduct from "../../hooks/usePostProduct";
 import { useState } from "react";
 import "./createp.css";
 

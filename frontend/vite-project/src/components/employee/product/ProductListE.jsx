@@ -1,7 +1,7 @@
 import ProductE from "./ProductE";
-import useGet from "../hooks/useGet";
-import ApiService from "../../api/api";
-import useGetSearch from "../hooks/useGetSearch";
+import useGet from "../../hooks/useGet";
+import ApiService from "../../../api/api";
+import useGetSearch from "../../hooks/useGetSearch";
 import { useState, useEffect } from "react";
 import "./productlist.css";
 
