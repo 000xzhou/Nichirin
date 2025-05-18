@@ -11,6 +11,7 @@ const reviewRouter = require("./routes/reviews");
 const checkoutRouter = require("./routes/checkout");
 const orderRouter = require("./routes/order");
 const addressRouter = require("./routes/address");
+const refundRouter = require("./routes/refund");
 
 const app = express();
 
@@ -50,6 +51,7 @@ app.use("/reviews", reviewRouter);
 app.use("/checkout", checkoutRouter);
 app.use("/order", orderRouter);
 app.use("/address", addressRouter);
+app.use("/refund", refundRouter);
 
 // logout for all
 app.get("/logout", (req, res) => {

@@ -8,12 +8,9 @@ function Refund() {
   const { orderId } = useParams();
 
   const initialState = {
-    isRefunded: true,
-    amount: 12,
-    refundedAt: new Date(),
-    reason: "",
-    processedBy: isUser._id,
-    refundEmail: true,
+    customerId: "customerId",
+    orderId: "orderId",
+    reason: "reason",
   };
 
   const { formData, handleChange, handleSubmit, error } = usePatch(

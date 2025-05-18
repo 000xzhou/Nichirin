@@ -37,14 +37,6 @@ const orderSchema = new Schema(
     },
     totalAmount: Number,
     emailSent: { type: Boolean, default: false },
-    refund: {
-      isRefunded: { type: Boolean, default: false },
-      refundedAt: Date,
-      amount: Number,
-      reason: String,
-      processedBy: { type: mongoose.Schema.Types.ObjectId, ref: "Employee" },
-      refundEmail: { type: Boolean, default: false },
-    },
   },
   {
     strict: true,

@@ -20,7 +20,7 @@ function Order({
       style: "currency",
       currency: "USD",
     });
-  console.log(shipping);
+  // console.log(shipping);
   return (
     <div>
       <h2>Your Orders</h2>
@@ -69,7 +69,9 @@ function Order({
           </div>
           <div className="button-group ">
             <Link className="main-button">Track package</Link>
-            <Link className="main-button">Return items</Link>
+            <Link className="main-button" to={`/refund/${sessionId}`}>
+              Return items
+            </Link>
           </div>
         </section>
       </div>

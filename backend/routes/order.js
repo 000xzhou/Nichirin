@@ -2,7 +2,6 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const { ensureAuthenticated } = require("../middleware/auth");
 const { BadRequestError } = require("../expressError");
 const Customer = require("../models/customers/customers");
 const Product = require("../models/products/products");
@@ -10,7 +9,6 @@ const Order = require("../models/customers/order");
 require("dotenv").config();
 const Nodemailer = require("nodemailer");
 const { MailtrapTransport } = require("mailtrap");
-require("dotenv").config();
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
@@ -211,53 +209,6 @@ router.post("/create", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to create checkout session" });
-  }
-});
-
-/**
- * patch refund order
- * res.body = {
-            isRefunded: Boolean,
-            amount: Number,
-            refundedAt: new Date(),
-            reason: String,
-            processedBy: employeeId,
-          },
- */
-router.patch("/refund/:orderId", ensureStaff, async (req, res) => {
-  try {
-    const { orderId } = req.params;
-
-    // update refund
-    const order = await Order.findByIdAndUpdate(
-      orderId,
-      {
-        refund: {
-          isRefunded: true,
-          amount: 12,
-          refundedAt: new Date(),
-          reason: "",
-          processedBy: employeeId,
-          refundEmail: true,
-        },
-      },
-      { new: true }
-    );
-
-    if (!order) {
-      return res.status(404).json({ error: "Order not found" });
-    }
-
-    res.json(order);
-  } catch (err) {
-    console.error("Error occurred:", {
-      name: err.name, // Type of the error
-      message: err.message, // General message about the error
-      code: err.code, // MongoDB error code if available
-      path: err.path, // Path to the field that caused the error
-      value: err.value, // The value that caused the error
-    });
-    res.status(500).json({ error: err.message });
   }
 });
 
