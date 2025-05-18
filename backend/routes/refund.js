@@ -30,9 +30,16 @@ const {
     ref: "Order",
     required: true,
   },
-  reason: {
-    type: String,
-    required: true,
+  items: [
+    {
+      productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+      quantity: { type: Number, required: true },
+      reason: String,
+    },
+  ],
+    amount: {
+    type: Number,
+    required: true, 
   },
  */
 router.post("/create", ensureStaff, async (req, res) => {
@@ -40,7 +47,8 @@ router.post("/create", ensureStaff, async (req, res) => {
     const tempBody = {
       customerId: "customerId",
       orderId: "orderId",
-      reason: "reason",
+      items: [],
+      amount: 1,
     };
     const refund = new Refund(tempBody);
     await refund.save();

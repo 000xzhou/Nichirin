@@ -9,6 +9,7 @@ import AddressList from "../components/customers/AddressList";
 import EditAddress from "../components/customers/EditAddress";
 import OrderConfirmation from "../components/customers/orders/OrderConfirmation";
 import OrderList from "../components/customers/orders/OrderList";
+import CustomerRefund from "../components/customers/orders/CustomerRefund";
 
 function CustomerProtectRoute() {
   return (
@@ -32,6 +33,7 @@ function CustomerProtectRoute() {
         <Route index element={<OrderList />} />
         <Route path="orders" element={<OrderList />} />
         <Route path="order-confirmation" element={<OrderConfirmation />} />
+        <Route path="refund/:orderId" element={<CustomerRefund />} />
       </Route>
       {/* <Route path="/add-shipping" element={<EditAddress type="shipping" />} /> */}
     </Routes>
