@@ -21,7 +21,7 @@ const {
 } = require("../middleware/auth");
 
 /**
- * Sends email after checkout successful
+ * Finds checkout session by id
  */
 router.get(
   "/:id/find/:sessionId",
@@ -54,7 +54,7 @@ router.get(
 );
 
 /**
- * Sends email after checkout successful
+ * get all orders
  * id = user id
  */
 router.get("/:id/allorders", ensureCorrectUserOrStaff, async (req, res) => {
@@ -84,7 +84,7 @@ router.get("/:id/allorders", ensureCorrectUserOrStaff, async (req, res) => {
 });
 
 /**
- * checkout
+ * create checkout session
  */
 router.post("/create", async (req, res) => {
   const { cart, customerID, shipping, totalAmount } = req.body;
@@ -211,6 +211,53 @@ router.post("/create", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to create checkout session" });
+  }
+});
+
+/**
+ * patch refund order
+ * res.body = {
+            isRefunded: Boolean,
+            amount: Number,
+            refundedAt: new Date(),
+            reason: String,
+            processedBy: employeeId,
+          },
+ */
+router.patch("/refund/:orderId", ensureStaff, async (req, res) => {
+  try {
+    const { orderId } = req.params;
+
+    // update refund
+    const order = await Order.findByIdAndUpdate(
+      orderId,
+      {
+        refund: {
+          isRefunded: true,
+          amount: 12,
+          refundedAt: new Date(),
+          reason: "",
+          processedBy: employeeId,
+          refundEmail: true,
+        },
+      },
+      { new: true }
+    );
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    res.json(order);
+  } catch (err) {
+    console.error("Error occurred:", {
+      name: err.name, // Type of the error
+      message: err.message, // General message about the error
+      code: err.code, // MongoDB error code if available
+      path: err.path, // Path to the field that caused the error
+      value: err.value, // The value that caused the error
+    });
+    res.status(500).json({ error: err.message });
   }
 });
 

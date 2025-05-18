@@ -1,4 +1,4 @@
-import useGetSearch from "../hooks/useGetSearch";
+import useGetSearch from "../../hooks/useGetSearch";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./customersearch.css";
@@ -116,8 +116,8 @@ function CustomerSearch() {
                 {/** need a function to covert the string into date object and display date only */}
               </div>
               <div className="cusotmer-search-result-button-group">
-                <Link to={`${customer._id}/edit`}>
-                  <div className="main-button">Edit</div>
+                <Link to={`${customer._id}`}>
+                  <div className="main-button">View</div>
                 </Link>
                 {/* leads to a page that tells you that you send a password reset to the email from backend */}
                 <Link to={`${customer._id}/passwordreset`}>

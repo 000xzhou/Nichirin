@@ -1,7 +1,5 @@
-import usePost from "../hooks/usePost";
-import { Link } from "react-router-dom";
-import useGet from "../hooks/useGet";
-import useGetSearch from "../hooks/useGetSearch";
+import usePost from "../../hooks/usePost";
+import useGet from "../../hooks/useGet";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 

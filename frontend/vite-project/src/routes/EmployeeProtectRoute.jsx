@@ -4,14 +4,16 @@ import EmployeeList from "../components/employee/EmployeeList";
 import EmployeeDetail from "../components/employee/EmployeeDetail";
 import EmployeeAuthProvider from "./EmployeeAuthProvider";
 import ProductsListE from "../components/employee/ProductListE";
-import CreateP from "../components/employee/CreateP";
-import CustomerSearch from "../components/employee/CustomerSearch";
+import CreateP from "../components/employee/product/CreateP";
+import CustomerSearch from "../components/employee/customers/CustomerSearch";
 // import CustomerDetail from "../components/customers/CustomerDetail";
 import EmployeeNavBar from "../components/EmployeeNavBar";
 import EmployeeDashboard from "../components/employee/EmployeeDashboard";
-import EmployeeProductDetail from "../components/employee/EmployeeProductDetail";
+import EmployeeProductDetail from "../components/employee/product/EmployeeProductDetail";
 import EditEmployee from "../components/employee/EditEmployee";
-import EditCustomer from "../components/employee/EditCustomer";
+import EditCustomer from "../components/employee/customers/EditCustomer";
+import EmployeeCustomerDetails from "../components/employee/customers/EmployeeCustomerDetails";
+import Refund from "../components/employee/customers/Refund";
 
 function EmployeeProtectRoute() {
   return (
@@ -31,7 +33,9 @@ function EmployeeProtectRoute() {
 
           {/* customers */}
           <Route path="customers" element={<CustomerSearch />} />
+          <Route path="customers/:id" element={<EmployeeCustomerDetails />} />
           <Route path="customers/:id/edit" element={<EditCustomer />} />
+          <Route path="refund/:orderid" element={<Refund />} />
           {/* <Route path="customers/:id" element={<CustomerDetail />} /> */}
 
           {/* products */}
