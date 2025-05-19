@@ -201,7 +201,6 @@ router.post("/create", async (req, res) => {
       shipping: shipping,
       status: "pending",
       totalAmount: totalAmount,
-      emailSent: true,
     });
     await newOrder.save();
 

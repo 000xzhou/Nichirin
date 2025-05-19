@@ -36,7 +36,6 @@ const orderSchema = new Schema(
       default: "pending",
     },
     totalAmount: Number,
-    emailSent: { type: Boolean, default: false },
   },
   {
     strict: true,
