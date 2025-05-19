@@ -2,7 +2,6 @@ import { useCart } from "../../routes/CartProvider";
 import ApiService from "../../api/api";
 import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
 import { useNavigate } from "react-router-dom";
-import "./cart.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useGet from "../hooks/useGet";
@@ -128,8 +127,8 @@ function Checkout() {
         </section>
       ) : (
         <section>
-          <button onClick={getAddressList}>Change</button>
           <h2>Delivering to </h2>
+          <button onClick={getAddressList}>Change</button>
           {selectAddress && (
             <div>
               <div>{selectAddress.address.name}</div>
