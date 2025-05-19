@@ -4,7 +4,7 @@ import Dropdown from "../../Dropdown";
 import OrderCard from "./OrderCard";
 
 function Order({
-  id,
+  id, // order id
   sessionId,
   customerId,
   shipping,
@@ -20,7 +20,15 @@ function Order({
       style: "currency",
       currency: "USD",
     });
-  // console.log(shipping);
+
+  const {
+    apiData: orderApi,
+    loading,
+    error,
+  } = useGet(`/refund/findByOrder/${id}`);
+
+  if (loading) return <div>loading...</div>;
+
   return (
     <div>
       <h2>Your Orders</h2>
@@ -47,7 +55,11 @@ function Order({
         </div>
         <section className="order-items">
           <div className="order-detail-group">
-            <h3>Arriving? Delivered?</h3>
+            {orderApi.length > 0 ? (
+              <h3>Return {orderApi[0].status}</h3>
+            ) : (
+              <h3>Arriving? Delivered? Shipping company api</h3>
+            )}
             {items.map((item) => (
               <div key={item.itemId}>
                 {/* <OrderCard key={item._id} itemId={item._id} image={item.image} name={item.name} quantity={item.quantity} price={item.price}/> */}
@@ -69,7 +81,7 @@ function Order({
           </div>
           <div className="button-group ">
             <Link className="main-button">Track package</Link>
-            <Link className="main-button" to={`refund/${sessionId}`}>
+            <Link className="main-button" to={`refund/${id}`}>
               Return items
             </Link>
           </div>

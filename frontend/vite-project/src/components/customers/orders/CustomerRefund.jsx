@@ -13,7 +13,7 @@ function CustomerRefund() {
     apiData: orderApi,
     loading: orderLoading,
     error: orderError,
-  } = useGet(`/order/${isUser._id}/find/${orderId}`);
+  } = useGet(`/order/${isUser._id}/findOrder/${orderId}`);
 
   const initialState = {
     customerId: isUser._id,
@@ -27,7 +27,7 @@ function CustomerRefund() {
     handleItemChange,
     handleSubmit,
     error: postError,
-  } = usePost(initialState, `endpoint`, `return point`);
+  } = usePost(initialState, `/refund/create`, `/customers/orders`);
 
   const formatPrice = (price) =>
     price.toLocaleString("en-US", {
@@ -37,7 +37,7 @@ function CustomerRefund() {
 
   if (orderLoading) return <div>Loading...</div>;
   if (orderError) return <div>Error: {orderError.message}</div>;
-  console.log(formData);
+  console.log(orderApi);
   return (
     <div className="container">
       <h2>Choose items to return</h2>

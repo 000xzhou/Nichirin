@@ -52,6 +52,36 @@ router.get(
 );
 
 /**
+ * Finds checkout order by id
+ */
+router.get(
+  "/:id/findOrder/:orderId",
+  ensureCorrectUserOrStaff,
+  async (req, res) => {
+    try {
+      const { orderId } = req.params;
+
+      const order = await Order.findById(orderId);
+
+      if (!order) {
+        return res.status(404).json({ error: "Order not found" });
+      }
+
+      res.json(order);
+    } catch (err) {
+      console.error("Error occurred:", {
+        name: err.name, // Type of the error
+        message: err.message, // General message about the error
+        code: err.code, // MongoDB error code if available
+        path: err.path, // Path to the field that caused the error
+        value: err.value, // The value that caused the error
+      });
+      res.status(500).json({ error: err.message });
+    }
+  }
+);
+
+/**
  * get all orders
  * id = user id
  */
