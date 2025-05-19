@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import ApiService from "../../api/api";
 import { useNavigate } from "react-router-dom";
 
-const usePatchEmployee = (initialState, endpoint, returnpoint = null) => {
+const usePatchEmployee = (initialState, returnpoint = null) => {
   const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState(null);
 
@@ -16,12 +16,28 @@ const usePatchEmployee = (initialState, endpoint, returnpoint = null) => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const api = new ApiService("http://localhost:3000");
+
+  const handleStatusChange = async (e, endpoint, newStatus) => {
+    e.preventDefault();
+    try {
+      const patchData = {
+        ...formData,
+        status: newStatus,
+      };
+
+      const update = await api.patch(endpoint, patchData);
+      console.log(update);
+      // maybe refetch or update UI
+    } catch (err) {
+      console.error("Failed to update refund:", err);
+    }
+  };
+
+  const handleSubmit = async (e, endpoint) => {
     e.preventDefault();
     try {
       // api
-      const api = new ApiService("http://localhost:3000");
-
       const update = await api.patch(endpoint, formData);
       console.log(update);
 
@@ -35,6 +51,6 @@ const usePatchEmployee = (initialState, endpoint, returnpoint = null) => {
     }
   };
 
-  return { formData, handleChange, handleSubmit, error };
+  return { formData, handleChange, handleSubmit, error, handleStatusChange };
 };
 export default usePatchEmployee;

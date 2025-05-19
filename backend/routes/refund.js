@@ -115,23 +115,19 @@ router.post("/create", ensureUser, async (req, res) => {
      type: mongoose.Schema.Types.ObjectId,
      ref: "Employee",
    },
-   notes: String,
+   note: String,
  */
 router.patch("/:refundId", ensureStaff, async (req, res) => {
   try {
     const { refundId } = req.params;
-
-    const tempBody = {
-      status: "approved",
-      reviewedAt: Date.now,
-      processedBy: "empoloyeeId",
-      notes: "optional",
+    const updateBody = {
+      status: req.body.status,
+      note: req.body.note,
+      processedBy: req.body.processedBy,
+      reviewedAt: new Date(),
     };
 
-    const refund = await Refund.findByIdAndUpdate({
-      refundId,
-      tempBody,
-    });
+    const refund = await Refund.findByIdAndUpdate(refundId, updateBody);
 
     res.json(refund);
   } catch (err) {

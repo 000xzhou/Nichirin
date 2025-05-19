@@ -9,27 +9,24 @@ function Refund() {
   const { orderId } = useParams();
 
   const initialState = {
-    customerId: "customerId",
-    orderId: "orderId",
-    reason: "reason",
+    status: "status",
+    processedBy: isUser._id,
+    note: "",
   };
 
   const {
     apiData: refundApi,
     loading,
     error,
+    refetch,
   } = useGet("/refund/getAll?status=pending");
 
   const {
     formData,
     handleChange,
-    handleSubmit,
+    handleStatusChange,
     error: patchError,
-  } = usePatchEmployee(
-    initialState,
-    `/orders/refund/${orderId}`,
-    "/customers/:customerId/orders???"
-  );
+  } = usePatchEmployee(initialState);
 
   const formatPrice = (price) =>
     price.toLocaleString("en-US", {
@@ -65,9 +62,46 @@ function Refund() {
                   </div>
                 </div>
               ))}
+              <div>
+                <p>Note:</p>
+                <textarea
+                  name="note"
+                  id="note"
+                  rows={4}
+                  value={formData.note}
+                  onChange={handleChange}
+                  placeholder="e.g. Customer provided clear evidence"
+                ></textarea>
+              </div>
             </div>
-            <button>Approve</button>
-            <button>Reject</button>
+            <button
+              type="button"
+              className="confirm-button padding-point-5"
+              onClick={async (e) => {
+                await handleStatusChange(
+                  e,
+                  `/refund/${refund._id}`,
+                  "approved"
+                );
+                await refetch();
+              }}
+            >
+              Approve
+            </button>
+            <button
+              type="button"
+              className="reject-button padding-point-5"
+              onClick={async (e) => {
+                await handleStatusChange(
+                  e,
+                  `/refund/${refund._id}`,
+                  "rejected"
+                );
+                await refetch();
+              }}
+            >
+              Reject
+            </button>
           </div>
         ))
       ) : (

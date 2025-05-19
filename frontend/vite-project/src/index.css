@@ -12,6 +12,7 @@
   --hover-state: #f6afa9;
   --active-state: #e89a94;
   --confirm-button: #b4d7a8;
+  --reject-button: #e62315;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -82,16 +83,24 @@ button {
   border-color: transparent;
   color: var(--primary-text);
 }
+.reject-button {
+  background-color: var(--reject-button);
+  color: var(--background-color);
+  border-radius: 10px;
+  border-color: transparent;
+}
 
 .main-button,
 .secondary-button,
-.confirm-button {
+.confirm-button,
+.reject-button {
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
 .main-button:active,
 .secondary-button:active,
-.confirm-button:active {
+.confirm-button:active,
+.reject-button:active {
   background-color: var(--active-state);
   box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
   color: var(--primary-text);
@@ -99,7 +108,8 @@ button {
 
 .main-button:hover,
 .secondary-button:hover,
-.confirm-button:hover {
+.confirm-button:hover,
+.reject-button:hover {
   background-color: var(--hover-state);
   color: var(--primary-text);
   cursor: pointer;
@@ -114,7 +124,10 @@ button {
 .secondary-button:focus,
 .confirm-button:active:hover,
 .confirm-button:focus:hover,
-.confirm-button:focus {
+.confirm-button:focus,
+.reject-button:active:hover,
+.reject-button:focus:hover,
+.reject-button:focus {
   background-color: var(--hover-state);
   box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
   color: var(--primary-text);

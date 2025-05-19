@@ -37,7 +37,7 @@ const refundSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Employee",
   },
-  notes: String,
+  note: String,
 });
 
 const Refund = mongoose.model("RefundRequest", refundSchema);
