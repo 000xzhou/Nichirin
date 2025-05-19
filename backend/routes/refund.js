@@ -62,7 +62,6 @@ router.post("/create", ensureUser, async (req, res) => {
       let matchingItem = null;
 
       for (const orderItem of order.items) {
-        console.log("Comparing:", orderItem.itemId, selectedItem.productId);
         if (orderItem.itemId.toString() === selectedItem.productId.toString()) {
           matchingItem = orderItem;
           break;
@@ -186,6 +185,31 @@ router.get("/getAll", ensureUser, async (req, res) => {
 
     // do I need all those items? Don't know but it don't hurt to have them all for now
     const refunds = await Refund.find(query)
+      .populate("customerId")
+      .populate("orderId")
+      .populate("items.productId")
+      .populate("processedBy");
+
+    res.json(refunds);
+  } catch (err) {
+    console.error("Error occurred:", {
+      name: err.name, // Type of the error
+      message: err.message, // General message about the error
+      code: err.code, // MongoDB error code if available
+      path: err.path, // Path to the field that caused the error
+      value: err.value, // The value that caused the error
+    });
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/**
+ * GET all refund by customer
+ */
+router.get("/findByCustomer/:customerId", ensureUser, async (req, res) => {
+  try {
+    const refunds = await Refund.find({ customerId: req.params.customerId })
+      .sort({ requestedAt: -1 })
       .populate("customerId")
       .populate("orderId")
       .populate("items.productId")
