@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const refundRequestSchema = new Schema({
+const refundSchema = new Schema({
   customerId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Customer",
@@ -19,10 +19,6 @@ const refundRequestSchema = new Schema({
       reason: String,
     },
   ],
-  // reason: {
-  //   type: String,
-  //   required: true,
-  // },
   amount: {
     type: Number,
     required: true, // total refund amount for the request
@@ -44,5 +40,5 @@ const refundRequestSchema = new Schema({
   notes: String,
 });
 
-const RefundRequest = mongoose.model("RefundRequest", refundRequestSchema);
-module.exports = RefundRequest;
+const Refund = mongoose.model("RefundRequest", refundSchema);
+module.exports = Refund;

@@ -20,9 +20,17 @@ const usePost = (initialState, endpoint, returnpoint = null) => {
 
   const handleItemChange = (itemId, field, value) => {
     setFormData((prev) => {
+      const existing = prev.items[itemId] || {};
+
+      const shouldSetDefaultQty =
+        field === "selected" &&
+        value === true &&
+        existing.quantity === undefined;
+
       const updatedItem = {
-        ...prev.items[itemId],
+        ...existing,
         [field]: value,
+        ...(shouldSetDefaultQty ? { quantity: 1 } : {}),
       };
 
       return {

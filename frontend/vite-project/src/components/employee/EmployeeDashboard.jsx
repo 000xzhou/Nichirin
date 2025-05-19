@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useEmployeeAuth } from "../../routes/EmployeeAuthProvider";
 import { useState } from "react";
 import "./employeedashboard.css";
+import Refund from "./customers/Refund";
 
 const EmployeeDashboard = () => {
   const { isUser } = useEmployeeAuth();
@@ -30,6 +31,7 @@ const EmployeeDashboard = () => {
           </Link>
         </div>
       )}
+      <Refund />
     </>
   );
 };

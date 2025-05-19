@@ -19,7 +19,6 @@ function CustomerRefund() {
     customerId: isUser._id,
     orderId: orderId,
     items: {}, //{ itemId: { qty: 0, reason: "" } }
-    amount: 0,
   };
 
   const {
@@ -37,7 +36,7 @@ function CustomerRefund() {
 
   if (orderLoading) return <div>Loading...</div>;
   if (orderError) return <div>Error: {orderError.message}</div>;
-  console.log(orderApi);
+  // console.log(orderApi);
   return (
     <div className="container">
       <h2>Choose items to return</h2>

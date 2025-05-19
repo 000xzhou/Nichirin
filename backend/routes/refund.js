@@ -42,7 +42,7 @@ router.post("/create", ensureUser, async (req, res) => {
   try {
     // filter out the selected items
     const selectedItems = Object.entries(req.body.items)
-      .filter(([_, item]) => item.selected && item.qty > 0 && item.reason)
+      .filter(([_, item]) => item.selected && item.quantity > 0 && item.reason)
       .map(([productId, item]) => ({
         productId,
         quantity: item.quantity,
@@ -57,11 +57,17 @@ router.post("/create", ensureUser, async (req, res) => {
 
     // Calculate total refund amount
     let totalRefund = 0;
+
     for (const selectedItem of selectedItems) {
-      const matchingItem = order.items.find(
-        (orderItem) =>
-          orderItem.productId.toString() === selectedItem.productId.toString()
-      );
+      let matchingItem = null;
+
+      for (const orderItem of order.items) {
+        console.log("Comparing:", orderItem.itemId, selectedItem.productId);
+        if (orderItem.itemId.toString() === selectedItem.productId.toString()) {
+          matchingItem = orderItem;
+          break;
+        }
+      }
 
       if (matchingItem) {
         totalRefund += matchingItem.price * selectedItem.quantity;
@@ -79,6 +85,7 @@ router.post("/create", ensureUser, async (req, res) => {
       amount: totalRefund,
     };
     const refund = new Refund(body);
+
     await refund.save();
 
     // todo: send email of refund details
@@ -97,6 +104,7 @@ router.post("/create", ensureUser, async (req, res) => {
 });
 
 /**
+ * find refund by id then edit it
    status: {
      type: String,
      enum: ["pending", "approved", "rejected"],
@@ -138,6 +146,7 @@ router.patch("/:refundId", ensureStaff, async (req, res) => {
   }
 });
 
+// find refund by order id
 router.get("/findByOrder/:orderId", ensureUser, async (req, res) => {
   try {
     const { orderId } = req.params;
@@ -148,6 +157,43 @@ router.get("/findByOrder/:orderId", ensureUser, async (req, res) => {
 
     // const refunds = await Refund.find({ orderId }).populate("items.productId");
     const refunds = await Refund.find({ orderId });
+
+    res.json(refunds);
+  } catch (err) {
+    console.error("Error occurred:", {
+      name: err.name, // Type of the error
+      message: err.message, // General message about the error
+      code: err.code, // MongoDB error code if available
+      path: err.path, // Path to the field that caused the error
+      value: err.value, // The value that caused the error
+    });
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/**
+ * GET /refund/getAll → all refunds
+ * GET /refund/getAll?status=pending → only pending refunds
+ */
+router.get("/getAll", ensureUser, async (req, res) => {
+  try {
+    const { status } = req.query;
+    const query = {};
+
+    if (status) {
+      // if status isn't one of those 3 options
+      if (!["pending", "approved", "rejected"].includes(status)) {
+        return res.status(400).json({ error: "Invalid status filter" });
+      }
+      query.status = status;
+    }
+
+    // do I need all those items? Don't know but it don't hurt to have them all for now
+    const refunds = await Refund.find(query)
+      .populate("customerId")
+      .populate("orderId")
+      .populate("items.productId")
+      .populate("processedBy");
 
     res.json(refunds);
   } catch (err) {
