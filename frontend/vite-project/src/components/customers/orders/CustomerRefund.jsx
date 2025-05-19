@@ -37,7 +37,7 @@ function CustomerRefund() {
 
   if (orderLoading) return <div>Loading...</div>;
   if (orderError) return <div>Error: {orderError.message}</div>;
-
+  console.log(formData);
   return (
     <div className="container">
       <h2>Choose items to return</h2>
@@ -55,7 +55,7 @@ function CustomerRefund() {
             error={postError}
           />
         ))}
-        <button>Return</button>
+        <button className="main-button padding-point-5">Continue</button>
       </form>
     </div>
   );

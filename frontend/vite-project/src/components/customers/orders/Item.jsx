@@ -29,7 +29,7 @@ function Item({
             <label htmlFor="quantity">Quantity to return:</label>
             <select
               id="quantity"
-              value={quantity}
+              value={itemData.quantity || 1}
               onChange={(e) =>
                 handleItemChange(itemId, "quantity", Number(e.target.value))
               }
