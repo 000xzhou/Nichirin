@@ -99,6 +99,8 @@ function Checkout() {
           <h2>Select a delivery address</h2>
           <ul>
             {allAddress &&
+            allAddress.addresses &&
+            allAddress.addresses.length > 0 ? (
               allAddress.addresses.map((address) => (
                 <li key={address._id}>
                   <label>
@@ -119,7 +121,19 @@ function Checkout() {
                     </div>
                   </label>
                 </li>
-              ))}
+              ))
+            ) : (
+              <div>
+                No address found
+                <Link to={"/customers/addresses"}>
+                  <div>
+                    <button className="secondary-button padding-point-5">
+                      Add address
+                    </button>
+                  </div>
+                </Link>
+              </div>
+            )}
           </ul>
           <button onClick={changleDeliverChange} disabled={!selectedAddressId}>
             Deliver to this address
@@ -129,7 +143,7 @@ function Checkout() {
         <section>
           <h2>Delivering to </h2>
           <button onClick={getAddressList}>Change</button>
-          {selectAddress && (
+          {selectAddress.address ? (
             <div>
               <div>{selectAddress.address.name}</div>
               <div>{selectAddress.address.line1}</div>
@@ -142,6 +156,8 @@ function Checkout() {
                 {selectAddress.address.postal_code}
               </div>
             </div>
+          ) : (
+            <div>No default address</div>
           )}
         </section>
       )}
