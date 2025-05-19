@@ -208,8 +208,13 @@ router.get("/getAll", ensureUser, async (req, res) => {
  */
 router.get("/findByCustomer/:customerId", ensureUser, async (req, res) => {
   try {
-    const refunds = await Refund.find({ customerId: req.params.customerId })
+    const limit = parseInt(req.query.limit) || 0;
+
+    const refunds = await Refund.find({
+      customerId: req.params.customerId,
+    })
       .sort({ requestedAt: -1 })
+      .limit(limit)
       .populate("customerId")
       .populate("orderId")
       .populate("items.productId")

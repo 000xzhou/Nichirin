@@ -105,15 +105,9 @@ function CustomerSearch() {
                 <span>Phone:</span> {customer.phone}
               </div>
               <div>
-                <span>Default Address:</span>
-                {/** find the address base on id by looking tho the addresses array */}
-              </div>
-              <div>
-                <span>Orders:</span> {customer.orders.map((order) => order)}
-              </div>
-              <div>
-                <span>created at:</span>
-                {/** need a function to covert the string into date object and display date only */}
+                {/* <span>created at:</span> {customer.created_at} */}
+                <span>Created at:</span>{" "}
+                {new Date(customer.created_at).toLocaleDateString()}
               </div>
               <div className="cusotmer-search-result-button-group">
                 <Link to={`${customer._id}`}>
