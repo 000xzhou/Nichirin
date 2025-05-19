@@ -69,7 +69,7 @@ function Order({
           </div>
           <div className="button-group ">
             <Link className="main-button">Track package</Link>
-            <Link className="main-button" to={`/refund/${sessionId}`}>
+            <Link className="main-button" to={`refund/${sessionId}`}>
               Return items
             </Link>
           </div>

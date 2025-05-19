@@ -2,81 +2,60 @@ import useGet from "../../hooks/useGet";
 import { useCustomerAuth } from "../../../routes/CustomerAuthProvider";
 import usePost from "../../hooks/usePost";
 import { useParams } from "react-router-dom";
-import Dropdown from "../../Dropdown";
+import Item from "./Item";
+import { useState } from "react";
 
 function CustomerRefund() {
   const { isUser, setIsUser } = useCustomerAuth();
   const { orderId } = useParams();
+
   const {
     apiData: orderApi,
     loading: orderLoading,
     error: orderError,
-  } = useGet(`/order/${orderId}`);
+  } = useGet(`/order/${isUser._id}/find/${orderId}`);
 
   const initialState = {
     customerId: isUser._id,
     orderId: orderId,
-    items: "",
+    items: {}, //{ itemId: { qty: 0, reason: "" } }
     amount: 0,
   };
 
   const {
     formData,
-    handleChange,
+    handleItemChange,
     handleSubmit,
     error: postError,
   } = usePost(initialState, `endpoint`, `return point`);
 
+  const formatPrice = (price) =>
+    price.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
+
   if (orderLoading) return <div>Loading...</div>;
   if (orderError) return <div>Error: {orderError.message}</div>;
-  console.log(orderApi);
+
   return (
     <div className="container">
-      <h2>Return Items from Order #{orderApi.id}</h2>
+      <h2>Choose items to return</h2>
       <form onSubmit={handleSubmit}>
-        {orderApi.orders.map((order) => (
-          <div key={order.id}>
-            {/* <input type="checkbox" id="item1" name="item1" value="item1" />
-            <label htmlFor="item1">item1</label> */}
-            <Dropdown
-              label={
-                <div>
-                  <input
-                    type="checkbox"
-                    id="item1"
-                    name="item1"
-                    value="item1"
-                  />
-                  <label htmlFor="item1">item1</label>
-                </div>
-              }
-            >
-              <div>
-                <label htmlFor="returns">Reason for return:</label>
-                <select name="returns" id="returns">
-                  <option value="reason1">reason1</option>
-                  <option value="reason2">reason2</option>
-                  <option value="reason3">reason3</option>
-                  <option value="reason4">reason4</option>
-                </select>
-              </div>
-            </Dropdown>
-            {/* {yesReturn && (
-              <div>
-                <label htmlFor="returns">Reason for return:</label>
-                <select name="returns" id="returns">
-                  <option value="reason1">reason1</option>
-                  <option value="reason2">reason2</option>
-                  <option value="reason3">reason3</option>
-                  <option value="reason4">reason4</option>
-                </select>
-              </div>
-            )} */}
-          </div>
+        {orderApi.items.map((item) => (
+          <Item
+            key={item.itemId}
+            itemId={item.itemId}
+            name={item.name}
+            price={formatPrice(item.price)}
+            image={item.image}
+            quantity={item.quantity}
+            itemData={formData.items[item.itemId] || {}}
+            handleItemChange={handleItemChange}
+            error={postError}
+          />
         ))}
-        <div>
-          <button>Refund</button>
-        </div>
+        <button>Return</button>
       </form>
     </div>
   );

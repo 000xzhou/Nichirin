@@ -31,7 +31,6 @@ function CustomerProtectRoute() {
 
       <Route path="orders">
         <Route index element={<OrderList />} />
-        <Route path="orders" element={<OrderList />} />
         <Route path="order-confirmation" element={<OrderConfirmation />} />
         <Route path="refund/:orderId" element={<CustomerRefund />} />
       </Route>

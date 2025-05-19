@@ -18,6 +18,23 @@ const usePost = (initialState, endpoint, returnpoint = null) => {
     }));
   };
 
+  const handleItemChange = (itemId, field, value) => {
+    setFormData((prev) => {
+      const updatedItem = {
+        ...prev.items[itemId],
+        [field]: value,
+      };
+
+      return {
+        ...prev,
+        items: {
+          ...prev.items,
+          [itemId]: updatedItem,
+        },
+      };
+    });
+  };
+
   const handleInitialChange = (data) => {
     setFormData(data);
   };
@@ -50,6 +67,7 @@ const usePost = (initialState, endpoint, returnpoint = null) => {
   return {
     formData,
     handleChange,
+    handleItemChange,
     handleSubmit,
     error,
     handleInitialChange,
