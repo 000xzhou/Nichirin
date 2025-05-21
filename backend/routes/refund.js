@@ -247,12 +247,15 @@ router.get("/findByQuery", ensureStaff, async (req, res) => {
   try {
     const { searchType, searchValue } = req.query;
 
+    const queryField = searchType === "refundId" ? "_id" : searchType;
+
     // making sure no field that's not allow enter
     const allowedFields = ["refundId", "orderId", "customerId"];
     if (!allowedFields.includes(searchType)) {
       return res.status(400).json({ error: "Invalid search type" });
     }
-    const refund = await Refund.find({ [searchType]: searchValue })
+
+    const refund = await Refund.find({ [queryField]: searchValue })
       .populate("customerId")
       .populate("orderId")
       .populate("items.productId")

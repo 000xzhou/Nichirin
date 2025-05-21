@@ -14,11 +14,14 @@ const EmployeeDashboard = () => {
         <Link to={`/employee/customers`}>
           <div className="secondary-button">Lookup Customer</div>
         </Link>
-        <Link to={`/employee/products`}>
-          <div className="secondary-button"> All Products</div>
+        <Link to={`/employee/search/refund`}>
+          <div className="secondary-button">Lookup Refunds</div>
         </Link>
         <Link to={`/employee/products/create`}>
           <div className="secondary-button">Add Product</div>
+        </Link>
+        <Link to={`/employee/products`}>
+          <div className="secondary-button"> All Products</div>
         </Link>
       </div>
       {isUser.role === "admin" && (

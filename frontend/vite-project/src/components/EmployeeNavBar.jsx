@@ -62,8 +62,8 @@ const EmployeeNavBar = () => {
         <Link to={`/employee/customers`}>
           <div onClick={handleOpenMenu}>Lookup Customer</div>
         </Link>
-        <Link to={`/employee/products/create`}>
-          <div onClick={handleOpenMenu}>Add Product</div>
+        <Link to={`/employee/search/refund`}>
+          <div onClick={handleOpenMenu}>Lookup Refunds</div>
         </Link>
         <Link to={`/employee/products`}>
           <div onClick={handleOpenMenu}>All Products</div>

@@ -216,3 +216,19 @@ textarea {
 .cursor-pointer {
   cursor: pointer;
 }
+
+.text-yellow {
+  color: #92400e;
+}
+
+.text-green {
+  color: var(--confirm-button);
+}
+
+.text-red {
+  color: #7f1d1d;
+}
+
+.text-blue {
+  color: #60a5fa;
+}

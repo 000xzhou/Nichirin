@@ -1,0 +1,23 @@
+.searchResult-container {
+  background-color: var(--background-accent);
+  border-radius: var(--border-radius);
+  margin-block: 1rem;
+  padding: 1rem;
+}
+
+.refundsearchDropdown {
+  background-color: var(--background-color);
+  color: var(--primary-text);
+  border-radius: var(--border-radius);
+  margin-block: 1rem;
+}
+
+.refundsearchDropdown div {
+  padding: 0.5rem;
+}
+
+.refund-form input,
+.refund-form select {
+  padding: 0.5rem;
+  margin-right: 0.25rem;
+}

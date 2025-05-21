@@ -2,14 +2,10 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import ApiService from "../../../api/api";
 import DropDown from "../../Dropdown";
+import "./refundsearch.css";
+import Refund from "../../employee/customers/Refund";
 
 function RefundSearch({ itemId, image, name, quantity, price }) {
-  const formatPrice = (price) =>
-    price.toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    });
-
   const [searchType, setSearchType] = useState("refundId");
   const [searchValue, setSearchValue] = useState("");
   const [searchResult, setSearchResult] = useState();
@@ -33,16 +29,28 @@ function RefundSearch({ itemId, image, name, quantity, price }) {
       });
       const data = await api.get(`/refund/findByQuery?${params.toString()}`);
 
-      console.log("Hereeee", data[0].items);
+      console.log("Hereeee", data);
       setSearchResult(data);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const statusColorMap = {
+    approved: "text-green",
+    pending: "text-yellow",
+    rejected: "text-red",
+  };
+
+  const formatPrice = (price) =>
+    price.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="container">
+      <form onSubmit={handleSubmit} className="refund-form">
         <label htmlFor="searchId">Search </label>
         <select
           name="searchId"
@@ -61,30 +69,48 @@ function RefundSearch({ itemId, image, name, quantity, price }) {
           value={searchValue}
           onChange={updateInputValue}
         />
-        <button type="submit">Search</button>
+        <button
+          type="submit"
+          className="main-button padding-point-5 border-radius-button"
+        >
+          Search
+        </button>
       </form>
       {searchResult && searchResult.length > 0 && (
         <section>
           {searchResult.map((result) => (
-            <div key={result._id}>
-              <div>
+            <div key={result._id} className="searchResult-container">
+              <h3>Refund ID: {result._id}</h3>
+              <div className="refundsearchDropdown">
                 <DropDown label={"Refund Info"}>
-                  <div>Refund ID: {result._id}</div>
-                  <div>Status: {result.status}</div>
+                  <div>
+                    Status:{" "}
+                    <span className={statusColorMap[result.status]}>
+                      {result.status}
+                    </span>
+                  </div>
                   <div>Requested At date: {result.requestedAt}</div>
                   <div>
                     Processed At date:{" "}
-                    {result.reviewedAt ? result.reviewedAt : "Pending"}
+                    {result.reviewedAt ? (
+                      result.reviewedAt
+                    ) : (
+                      <span className="text-yellow">Pending</span>
+                    )}
                   </div>
                   <div>
                     Processed By:{" "}
-                    {result.processedBy ? result.processedBy : "Pending"}
+                    {result.processedBy ? (
+                      result.processedBy._id
+                    ) : (
+                      <span className="text-yellow">Pending</span>
+                    )}
                   </div>
-                  <div>Refund Amount: {result.status}</div>
-                  <div>Note: {result.note}</div>
+                  <div>Refund Amount: {formatPrice(result.amount)}</div>
+                  <div>Note: {result.note ? result.note : "None"}</div>
                 </DropDown>
               </div>
-              <div>
+              <div className="refundsearchDropdown">
                 <DropDown label={"Customer Info"}>
                   <div>Customer ID: {result.customerId._id}</div>
                   <div>Customer Email: {result.customerId.email}</div>
@@ -98,7 +124,7 @@ function RefundSearch({ itemId, image, name, quantity, price }) {
                   </div>
                 </DropDown>
               </div>
-              <div>
+              <div className="refundsearchDropdown">
                 <DropDown label={"Order Info"}>
                   <div>Order ID: {result.orderId._id}</div>
                   <div>Order Date: {result.orderId.created_at}</div>
@@ -107,7 +133,7 @@ function RefundSearch({ itemId, image, name, quantity, price }) {
                   <div>Shipping Address ID: {result.orderId.shipping}</div>
                 </DropDown>
               </div>
-              <div>
+              <div className="refundsearchDropdown">
                 <DropDown label={"Items in the Refund"}>
                   {result.items.map((item) => (
                     <div key={item._id}>

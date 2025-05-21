@@ -42,8 +42,9 @@ function Refund() {
       {refundApi?.length > 0 ? (
         refundApi.map((refund) => (
           <div key={refund._id}>
-            <h3>Order #{refund.orderId._id}</h3>
+            <h3>Refund #{refund._id}</h3>
             <div>
+              <p>Order #{refund.orderId._id}</p>
               <p>Customer ID: {refund.customerId._id}</p>
               <p>
                 Requested: {new Date(refund.requestedAt).toLocaleDateString()}

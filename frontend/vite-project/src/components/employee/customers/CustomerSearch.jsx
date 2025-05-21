@@ -93,6 +93,9 @@ function CustomerSearch() {
           {apiData.customers.map((customer) => (
             <div key={customer._id} className="customer-search-result">
               <div>
+                <span>ID:</span> {customer._id}
+              </div>
+              <div>
                 <span>First Name:</span> {customer.first_name}
               </div>
               <div>
