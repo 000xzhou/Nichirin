@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useGet from "../hooks/useGet";
+import "./checkout.css";
 
 function Checkout() {
   const { isUser } = useCustomerAuth();
@@ -95,9 +96,9 @@ function Checkout() {
   return (
     <div className="container">
       {changeAddress ? (
-        <section>
+        <section className="checkout-all-address">
           <h2>Select a delivery address</h2>
-          <ul>
+          <ul className="checkout-all-address-ul">
             {allAddress &&
             allAddress.addresses &&
             allAddress.addresses.length > 0 ? (
@@ -111,7 +112,7 @@ function Checkout() {
                       checked={selectedAddressId === address._id}
                       onChange={handleSelectAddress}
                     />
-                    <div>
+                    <div className="checkout-address">
                       <h5>{address.name}</h5>
                       <p>{address.line1}</p>
                       {address.line2 && <p>{address.line2}</p>}
@@ -127,7 +128,7 @@ function Checkout() {
                 No address found
                 <Link to={"/customers/addresses"}>
                   <div>
-                    <button className="secondary-button padding-point-5">
+                    <button className="secondary-button padding-point-5 border-radius-button">
                       Add address
                     </button>
                   </div>
@@ -135,42 +136,55 @@ function Checkout() {
               </div>
             )}
           </ul>
-          <button onClick={changleDeliverChange} disabled={!selectedAddressId}>
+          <button
+            className="secondary-button padding-point-5 border-radius-button"
+            onClick={changleDeliverChange}
+            disabled={!selectedAddressId}
+          >
             Deliver to this address
           </button>
         </section>
       ) : (
-        <section>
+        <section className="checkout-default-address">
           <h2>Delivering to </h2>
-          <button onClick={getAddressList}>Change</button>
+          <button
+            onClick={getAddressList}
+            className="secondary-button padding-point-5 border-radius-button"
+          >
+            Change
+          </button>
           {selectAddress.address ? (
-            <div>
-              <div>{selectAddress.address.name}</div>
-              <div>{selectAddress.address.line1}</div>
-              <div>
+            <div className="checkout-address">
+              <h5>{selectAddress.address.name}</h5>
+              <p>{selectAddress.address.line1}</p>
+              <p>
                 {selectAddress.address.line2 && selectAddress.address.line2}
-              </div>
-              <div>
+              </p>
+              <p>
                 {selectAddress.address.city} {selectAddress.address.state}
                 {", "}
                 {selectAddress.address.postal_code}
-              </div>
+              </p>
             </div>
           ) : (
             <div>No default address</div>
           )}
         </section>
       )}
-      <section>
+      <section className="checkout-item-list-wrapper">
         {cart.map((item) => (
-          <div className="cart-list-img-container" key={item.id}>
-            <img
-              src={item.image}
-              alt={`Image of ${item.name}`}
-              className="cart-list-img"
-            />
-            <div className="cart-list-name">{item.name}</div>
-            <div className="cart-list-price">{formatPrice(item.price)}</div>
+          <div key={item.id} className="cart-item-list ">
+            <div className="cart-list-img-container">
+              <img
+                src={item.image}
+                alt={`Image of ${item.name}`}
+                className="cart-list-img"
+              />
+            </div>
+            <div className="cart-list-text-container">
+              <div className="cart-list-name">{item.name}</div>
+              <div className="cart-list-price">{formatPrice(item.price)}</div>
+            </div>
           </div>
         ))}
       </section>

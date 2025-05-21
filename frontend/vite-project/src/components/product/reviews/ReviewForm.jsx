@@ -54,7 +54,7 @@ const ReviewForm = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <Link to={`/products/${id}`} className="flex-gap-0-25">
         <span className="material-symbols-outlined">arrow_back_ios_new</span>
         Back

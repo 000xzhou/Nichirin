@@ -1,0 +1,22 @@
+.checkout-default-address,
+.checkout-all-address {
+  border: 1px solid var(--active-state);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.checkout-address {
+  padding-block: 1rem;
+}
+.checkout-address > * {
+  margin: 0;
+}
+
+.checkout-all-address-ul li {
+  list-style: none;
+}
+.checkout-all-address-ul li label {
+  display: flex;
+  gap: 1rem;
+}
