@@ -14,6 +14,7 @@ import EditEmployee from "../components/employee/EditEmployee";
 import EditCustomer from "../components/employee/customers/EditCustomer";
 import EmployeeCustomerDetails from "../components/employee/customers/EmployeeCustomerDetails";
 import Refund from "../components/employee/customers/Refund";
+import RefundSearch from "../components/customers/orders/RefundSearch";
 
 function EmployeeProtectRoute() {
   return (
@@ -36,6 +37,7 @@ function EmployeeProtectRoute() {
           <Route path="customers/:id" element={<EmployeeCustomerDetails />} />
           <Route path="customers/:id/edit" element={<EditCustomer />} />
           <Route path="refund/:orderid" element={<Refund />} />
+          <Route path="search/refund" element={<RefundSearch />} />
           {/* <Route path="customers/:id" element={<CustomerDetail />} /> */}
 
           {/* products */}

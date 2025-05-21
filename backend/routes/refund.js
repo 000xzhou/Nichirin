@@ -40,6 +40,16 @@ const { ensureAdmin, ensureStaff, ensureUser } = require("../middleware/auth");
  */
 router.post("/create", ensureUser, async (req, res) => {
   try {
+    // Fetch the original order
+    const order = await Order.findById(req.body.orderId);
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+    // check order if it's not pending/ aka complete
+    if (order.status === "pending") {
+      return res.status(409).json({ error: "Order is still pending" });
+    }
+
     // filter out the selected items
     const selectedItems = Object.entries(req.body.items)
       .filter(([_, item]) => item.selected && item.quantity > 0 && item.reason)
@@ -48,12 +58,6 @@ router.post("/create", ensureUser, async (req, res) => {
         quantity: item.quantity,
         reason: item.reason,
       }));
-
-    // Fetch the original order
-    const order = await Order.findById(req.body.orderId);
-    if (!order) {
-      return res.status(404).json({ error: "Order not found" });
-    }
 
     // Calculate total refund amount
     let totalRefund = 0;
@@ -127,6 +131,9 @@ router.patch("/:refundId", ensureStaff, async (req, res) => {
     };
 
     const refund = await Refund.findByIdAndUpdate(refundId, updateBody);
+
+    // added stripe to refund if approved
+    // edit order.status to refunded if approved
 
     res.json(refund);
   } catch (err) {
@@ -221,6 +228,37 @@ router.get("/findByCustomer/:customerId", ensureUser, async (req, res) => {
       .populate("processedBy");
 
     res.json(refunds);
+  } catch (err) {
+    console.error("Error occurred:", {
+      name: err.name, // Type of the error
+      message: err.message, // General message about the error
+      code: err.code, // MongoDB error code if available
+      path: err.path, // Path to the field that caused the error
+      value: err.value, // The value that caused the error
+    });
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/**
+ * GET search result base on query
+ */
+router.get("/findByQuery", ensureStaff, async (req, res) => {
+  try {
+    const { searchType, searchValue } = req.query;
+
+    // making sure no field that's not allow enter
+    const allowedFields = ["refundId", "orderId", "customerId"];
+    if (!allowedFields.includes(searchType)) {
+      return res.status(400).json({ error: "Invalid search type" });
+    }
+    const refund = await Refund.find({ [searchType]: searchValue })
+      .populate("customerId")
+      .populate("orderId")
+      .populate("items.productId")
+      .populate("processedBy");
+
+    res.json(refund);
   } catch (err) {
     console.error("Error occurred:", {
       name: err.name, // Type of the error
