@@ -1,6 +1,6 @@
 function Careers() {
   return (
-    <>
+    <div className="container">
       <h1>Job Application</h1>
       <form className="careers form">
         <div className="full-name">
@@ -95,7 +95,7 @@ function Careers() {
           Apply
         </button>
       </form>
-    </>
+    </div>
   );
 }
 

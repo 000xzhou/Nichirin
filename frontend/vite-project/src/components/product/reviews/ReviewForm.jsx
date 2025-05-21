@@ -1,15 +1,28 @@
 import usePost from "../../hooks/usePost";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useCustomerAuth } from "../../../routes/CustomerAuthProvider";
+import { useEffect } from "react";
 
 const ReviewForm = () => {
   const { id } = useParams();
   const { isUser } = useCustomerAuth();
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isUser) {
+      navigate("/login");
+    }
+  }, [isUser, navigate]);
+
+  if (!isUser) {
+    return null; // or loading spinner
+  }
+
   const initialState = {
     productID: id,
-    customerID: isUser._id,
-    customerName: isUser.first_name + " " + isUser.last_name,
+    customerID: isUser._id || "",
+    customerName: isUser.first_name + " " + isUser.last_name || "",
     rating: 0,
     title: "",
     post: "",
