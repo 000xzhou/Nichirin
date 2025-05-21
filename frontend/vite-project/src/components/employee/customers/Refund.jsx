@@ -41,7 +41,7 @@ function Refund() {
       <h2>Pending Refunds</h2>
       {refundApi?.length > 0 ? (
         refundApi.map((refund) => (
-          <div key={refund._id}>
+          <div key={refund._id} className="refund-page-wrapper">
             <h3>Refund #{refund._id}</h3>
             <div>
               <p>Order #{refund.orderId._id}</p>
@@ -54,7 +54,7 @@ function Refund() {
             <div>
               {refund.items.map((item) => (
                 <div key={item.itemId}>
-                  <img src={item.productImage} alt="Product image" />
+                  {/* <img src={item.productImage} alt="Product image" /> */}
                   <div>
                     <p>Product ID: {item._id}</p>
                     <p>Product: {item.productId.name}</p>

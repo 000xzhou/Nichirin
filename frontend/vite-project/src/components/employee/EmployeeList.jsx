@@ -57,7 +57,7 @@ function EmployeeList() {
   };
 
   return (
-    <>
+    <div className="container">
       <div>
         <label htmlFor="search">Email: </label>
         <input
@@ -66,8 +66,13 @@ function EmployeeList() {
           id="employee"
           value={search}
           onChange={handleChange}
+          className="padding-point-5"
         />
-        <button type="submit" onClick={handleSubmit}>
+        <button
+          type="submit"
+          onClick={handleSubmit}
+          className="confirm-button border-radius-button padding-point-5"
+        >
           Search
         </button>
       </div>
@@ -80,7 +85,12 @@ function EmployeeList() {
             </p>
             <p className="employee-list-phone">Phone: {data.phone}</p>
             <p className="employee-list-role">
-              Status: <span>{data.status}</span>
+              Status:{" "}
+              <span
+                className={data.status === "active" ? "text-green" : "text-red"}
+              >
+                {data.status}
+              </span>
             </p>
             <p className="employee-list-status">
               Role: <span>{data.role}</span>
@@ -93,7 +103,7 @@ function EmployeeList() {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 }
 

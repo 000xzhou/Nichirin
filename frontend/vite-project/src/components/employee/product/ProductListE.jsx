@@ -53,7 +53,7 @@ function ProductsListE() {
   };
 
   return (
-    <>
+    <div className="container">
       <button onClick={resetList} className="secondary-button padding-point-5">
         Reset search
       </button>
@@ -125,7 +125,7 @@ function ProductsListE() {
           />
         ))}
       </table>
-    </>
+    </div>
   );
 }
 

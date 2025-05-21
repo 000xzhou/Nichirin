@@ -8,7 +8,7 @@ const EmployeeDashboard = () => {
   const { isUser } = useEmployeeAuth();
 
   return (
-    <>
+    <div className="container">
       <h1>How can I help?</h1>
       <div className="employee-dashboard">
         <Link to={`/employee/customers`}>
@@ -35,7 +35,7 @@ const EmployeeDashboard = () => {
         </div>
       )}
       <Refund />
-    </>
+    </div>
   );
 };
 

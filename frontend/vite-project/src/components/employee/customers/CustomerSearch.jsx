@@ -14,7 +14,7 @@ function CustomerSearch() {
   };
 
   return (
-    <>
+    <div className="container">
       {error && <div>{error.message}</div>}
       <form onSubmit={handleSubmit} className="customer-search-form">
         <div className="customer-search-non-advance">
@@ -125,7 +125,7 @@ function CustomerSearch() {
           ))}
         </>
       )}
-    </>
+    </div>
   );
 }
 

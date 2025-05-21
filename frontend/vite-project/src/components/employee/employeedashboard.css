@@ -10,3 +10,10 @@
 .admin-dashboard div {
   padding: 1rem;
 }
+
+.refund-page-wrapper {
+  background-color: var(--background-accent);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 1rem;
+}
