@@ -11,7 +11,6 @@ function Order({
   items,
   status,
   totalAmount,
-  refund,
   createdAt,
   updatedAt,
 }) {
@@ -22,7 +21,7 @@ function Order({
     });
 
   const {
-    apiData: orderApi,
+    apiData: returnApi,
     loading,
     error,
   } = useGet(`/refund/findByOrder/${id}`);
@@ -55,8 +54,8 @@ function Order({
         </div>
         <section className="order-items">
           <div className="order-detail-group">
-            {orderApi.length > 0 ? (
-              <h3>Return {orderApi[0].status}</h3>
+            {returnApi.length > 0 ? (
+              <h3>Return {returnApi[0].status}</h3>
             ) : (
               <h3>Arriving? Delivered? Shipping company api</h3>
             )}
