@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 const { createToken } = require("../middleware/tokens");
 const { ensureAdmin, ensureCorrectStaff } = require("../middleware/auth");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 
 // auth login employee
 router.get("/employee-auth", async (req, res) => {
@@ -306,6 +307,86 @@ router.delete("/:id", ensureAdmin, async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
+/** POST /[Employee]
+ * User submits email to receive reset link
+ **/
+router.post("/forget-password", async (req, res) => {
+  try {
+    // 	Sends email, creates token
+    const { email } = req.body;
+    const user = await Employee.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "No Employee with that email" });
+    }
+
+    const rawToken = crypto.randomBytes(32).toString("hex");
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(rawToken)
+      .digest("hex");
+    const tokenExpires = Date.now() + 3600000; // 1 hour
+
+    user.passwordResetToken = hashedToken;
+    user.passwordResetExpires = tokenExpires;
+    await user.save();
+
+    const resetUrl = `http://localhost:5173/employee/reset-password?token=${rawToken}`;
+
+    // todo: send email with reseturl
+    console.log(resetUrl);
+
+    res
+      .status(200)
+      .send({ message: "Please check your email for a reset link." });
+  } catch (err) {
+    console.error("Error occurred:", {
+      name: err.name, // Type of the error
+      message: err.message, // General message about the error
+      code: err.code, // MongoDB error code if available
+      path: err.path, // Path to the field that caused the error
+      value: err.value, // The value that caused the error
+    });
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/** POST /[Employee]
+ * Finalizes password update with token
+ **/
+router.post("/reset-password", async (req, res) => {
+  try {
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(req.body.token)
+      .digest("hex");
+
+    const user = await Employee.findOne({
+      passwordResetToken: hashedToken,
+      passwordResetExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: "Invalid or expired token" });
+    }
+    // update new password
+    user.password = req.body.newPassword;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save();
+    res.status(200).send({ message: "Password reset successfully" });
+  } catch (err) {
+    console.error("Error occurred:", {
+      name: err.name, // Type of the error
+      message: err.message, // General message about the error
+      code: err.code, // MongoDB error code if available
+      path: err.path, // Path to the field that caused the error
+      value: err.value, // The value that caused the error
+    });
+    res.status(500).json({ error: err.message });
   }
 });
 

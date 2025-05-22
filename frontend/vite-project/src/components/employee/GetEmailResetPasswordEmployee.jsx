@@ -1,9 +1,9 @@
 import usePost from "../hooks/usePost";
 
-function GetEmailResetPassword() {
+function GetEmailResetPasswordEmployee() {
   const { formData, handleChange, handleSubmit, error, apiData } = usePost(
     { email: "" },
-    "/customers/forget-password",
+    "/employee/forget-password",
     "/check-email"
   );
   // console.log(formData);
@@ -24,4 +24,4 @@ function GetEmailResetPassword() {
   );
 }
 
-export default GetEmailResetPassword;
+export default GetEmailResetPasswordEmployee;

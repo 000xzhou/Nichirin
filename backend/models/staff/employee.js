@@ -49,6 +49,12 @@ const employeeSchema = new Schema(
         return this.isNew;
       },
     },
+    passwordResetToken: {
+      type: String,
+    },
+    passwordResetExpires: {
+      type: Date,
+    },
   },
   {
     strict: true,

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import ApiService from "../../api/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./logine.css";
 // import { useEmployeeAuth } from "../../routes/EmployeeAuthProvider";
 
@@ -71,6 +71,12 @@ function LoginE() {
           Login
         </button>
       </form>
+      <Link
+        to="/employee/forget-password"
+        className="forgetpassword text-color-secondary"
+      >
+        Forget password?
+      </Link>
     </div>
   );
 }
