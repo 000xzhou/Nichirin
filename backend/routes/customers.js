@@ -5,10 +5,12 @@ const mongoose = require("mongoose");
 const Customer = require("../models/customers/customers");
 const { createToken } = require("../middleware/tokens");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 const {
   ensureAdmin,
   ensureStaff,
   ensureCorrectUserOrStaff,
+  ensureUser,
 } = require("../middleware/auth");
 const { BadRequestError } = require("../expressError");
 const jwt = require("jsonwebtoken");
@@ -277,7 +279,7 @@ router.patch("/:id", ensureCorrectUserOrStaff, async (req, res) => {
  *
  * Authorization required: staff or same user-as-:id
  **/
-router.patch("/:id/password", ensureCorrectUserOrStaff, async (req, res) => {
+router.patch("/:id/password", ensureUser, async (req, res) => {
   try {
     const id = req.params.id;
     const { oldPassword, newPassword } = req.body;
@@ -333,6 +335,86 @@ router.delete("/:id", ensureAdmin, async (req, res) => {
     }
 
     res.status(204).send(); // No content to send back
+  } catch (err) {
+    console.error("Error occurred:", {
+      name: err.name, // Type of the error
+      message: err.message, // General message about the error
+      code: err.code, // MongoDB error code if available
+      path: err.path, // Path to the field that caused the error
+      value: err.value, // The value that caused the error
+    });
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/** POST /[customers]
+ * User submits email to receive reset link
+ **/
+router.post("/forget-password", async (req, res) => {
+  try {
+    // 	Sends email, creates token
+    const { email } = req.body;
+    const user = await Customer.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "No customer with that email" });
+    }
+
+    const rawToken = crypto.randomBytes(32).toString("hex");
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(rawToken)
+      .digest("hex");
+    const tokenExpires = Date.now() + 3600000; // 1 hour
+
+    user.passwordResetToken = hashedToken;
+    user.passwordResetExpires = tokenExpires;
+    await user.save();
+
+    const resetUrl = `http://localhost:5173/reset-password?token=${rawToken}`;
+
+    // todo: send email with reseturl
+    console.log(resetUrl);
+
+    res
+      .status(200)
+      .send({ message: "Please check your email for a reset link." });
+  } catch (err) {
+    console.error("Error occurred:", {
+      name: err.name, // Type of the error
+      message: err.message, // General message about the error
+      code: err.code, // MongoDB error code if available
+      path: err.path, // Path to the field that caused the error
+      value: err.value, // The value that caused the error
+    });
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/** POST /[customers]
+ * Finalizes password update with token
+ **/
+router.post("/reset-password", async (req, res) => {
+  try {
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(req.body.token)
+      .digest("hex");
+
+    const user = await Customer.findOne({
+      passwordResetToken: hashedToken,
+      passwordResetExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: "Invalid or expired token" });
+    }
+    // update new password
+    user.password = req.body.newPassword;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save();
+    res.status(200).send({ message: "Password reset successfully" });
   } catch (err) {
     console.error("Error occurred:", {
       name: err.name, // Type of the error

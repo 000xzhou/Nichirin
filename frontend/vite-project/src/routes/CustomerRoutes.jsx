@@ -19,7 +19,9 @@ import Terms from "../components/help/Terms";
 import RefundPolicy from "../components/help/RefundPolicy";
 import ReviewForm from "../components/product/reviews/ReviewForm";
 import AllReviews from "../components/product/reviews/AllReviews";
-
+import CheckEmail from "../components/customers/CheckEmail";
+import ResetPassword from "../components/customers/ResetPassword";
+import GetEmailResetPassword from "../components/customers/GetEmailResetPassword";
 // import { useCustomerAuth } from "./CustomerAuthProvider";
 
 function CustomerRoutes() {
@@ -40,6 +42,9 @@ function CustomerRoutes() {
               {/* login and register  */}
               <Route path="login" element={<LoginC />} />
               <Route path="register" element={<Register />} />
+              <Route path="get-email" element={<GetEmailResetPassword />} />
+              <Route path="check-email" element={<CheckEmail />} />
+              <Route path="reset-password" element={<ResetPassword />} />
               {/* customers details */}
               <Route path="customers/*" element={<CustomerProtectRoute />} />
 

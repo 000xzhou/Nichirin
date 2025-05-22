@@ -13,6 +13,8 @@ const customerSchema = new Schema(
         return this.isNew;
       },
       unique: true,
+      lowercase: true,
+      trim: true,
     },
     first_name: {
       type: String,
@@ -49,7 +51,16 @@ const customerSchema = new Schema(
       type: preferencesSchema,
       required: false,
     },
-    stripeCustomerId: String,
+    stripeCustomerId: {
+      type: String,
+    },
+    passwordResetToken: {
+      type: String,
+    },
+
+    passwordResetExpires: {
+      type: Date,
+    },
   },
   {
     strict: true,

@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 const usePost = (initialState, endpoint, returnpoint = null) => {
   const [formData, setFormData] = useState(initialState);
-  // const [apiData, setApiData] = useState(null);
+  const [apiData, setApiData] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -57,6 +57,7 @@ const usePost = (initialState, endpoint, returnpoint = null) => {
       api
         .post(endpoint, formData)
         .then((data) => {
+          setApiData(data);
           // console.log(data);
           if (returnpoint) {
             navigate(returnpoint);
@@ -80,6 +81,7 @@ const usePost = (initialState, endpoint, returnpoint = null) => {
     error,
     handleInitialChange,
     setError,
+    apiData,
   };
 };
 export default usePost;

@@ -48,10 +48,7 @@ function LoginC() {
           Login
         </button>
       </form>
-      <Link
-        className="forgetpassword text-color-secondary"
-        to="/forgetpassword"
-      >
+      <Link to="/get-email" className="forgetpassword text-color-secondary">
         Forget password?
       </Link>
       <div className="margin-top-1 flex-gap-0-25">
