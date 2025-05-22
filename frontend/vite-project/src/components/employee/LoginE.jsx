@@ -47,7 +47,7 @@ function LoginE() {
   };
 
   return (
-    <div className="employee-login-wrapper">
+    <div className="container employee-login-wrapper">
       <h1>Employee Login</h1>
       {error && <div>{error}</div>}
       <form className="form employee-login-form" onSubmit={handleSubmit}>

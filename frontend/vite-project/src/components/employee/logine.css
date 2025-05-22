@@ -1,4 +1,13 @@
-.employee-login-form {
+/* .employee-login-form {
+  min-width: 300px;
+  max-width: 700px;
+  margin: 0 auto;
+} */
+
+.employee-login-wrapper .forgetpassword {
+  float: right;
+}
+.employee-login-wrapper {
   min-width: 300px;
   max-width: 700px;
   margin: 0 auto;
