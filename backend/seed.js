@@ -80,23 +80,16 @@ const seedDatabase = async () => {
     // Seed products
     const products = [
       {
-        name: "Tanjiro’s Black Sword",
+        name: "Cream Cheese",
         price: 14,
         currency: "USD",
         stock: 10,
         active: false,
         description: {
           basic: "basic",
-          details: "details",
-          features: ["1", "2", "3"],
-          measurements: ["4", "5"],
         },
-        variations: [
-          { color: "round", stock: 5, price: 11 },
-          { color: "square", stock: 3, price: 16 },
-        ],
         images: ["one.jpg", "two.jpg"],
-        tags: ["black", "sword"],
+        tags: ["black", "chesse"],
       },
       {
         name: "Zenitsu’s Yellow Sword",
