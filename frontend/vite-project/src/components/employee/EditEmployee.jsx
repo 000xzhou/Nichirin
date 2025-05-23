@@ -77,7 +77,9 @@ function EditEmployee() {
     try {
       console.log(formData);
       // api
-      const api = new ApiService("http://localhost:3000");
+      const API_URL = import.meta.env.VITE_BACKEND_URL;
+
+      const api = new ApiService(API_URL);
       const data = await api.patch(`/employee/${id}`, formData);
       // navigate to profile
       navigate(`/employee/profile/${id}`);

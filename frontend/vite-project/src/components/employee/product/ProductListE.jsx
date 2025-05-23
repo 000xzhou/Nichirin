@@ -30,7 +30,9 @@ function ProductsListE() {
 
   const deleteProduct = async (id) => {
     try {
-      const api = new ApiService("http://localhost:3000");
+      const API_URL = import.meta.env.VITE_BACKEND_URL;
+
+      const api = new ApiService(API_URL);
       const data = await api.delete(`/products/${id}`);
       if (refetch) refetch();
       setDataInfo(data);

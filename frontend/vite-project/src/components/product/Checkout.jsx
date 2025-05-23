@@ -56,7 +56,9 @@ function Checkout() {
     if (!isUser) {
       navigate("/login");
     } else {
-      const api = new ApiService("http://localhost:3000");
+      const API_URL = import.meta.env.VITE_BACKEND_URL;
+
+      const api = new ApiService(API_URL);
 
       const res = await api.post(`/order/create`, {
         cart, // items in cart

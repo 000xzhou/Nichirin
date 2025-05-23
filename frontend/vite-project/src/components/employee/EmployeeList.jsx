@@ -21,8 +21,9 @@ function EmployeeList() {
   const [error, setError] = useState(null);
   // const [refetch, setRefetch] = useState(false);
   const [search, setSearch] = useState("");
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
 
-  const api = new ApiService("http://localhost:3000");
+  const api = new ApiService(API_URL);
   //   fetching data from api
   useEffect(() => {
     api
@@ -45,7 +46,7 @@ function EmployeeList() {
     e.preventDefault();
     try {
       // api
-      const api = new ApiService("http://localhost:3000");
+      const api = new ApiService(API_URL);
       // search only work on emails
       const data = await api.get(`/employee/search?email=${search}`);
 

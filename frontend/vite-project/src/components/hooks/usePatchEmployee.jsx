@@ -15,8 +15,9 @@ const usePatchEmployee = (initialState, returnpoint = null) => {
       [name]: value,
     }));
   };
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
 
-  const api = new ApiService("http://localhost:3000");
+  const api = new ApiService(API_URL);
 
   const handleStatusChange = async (e, endpoint, newStatus) => {
     e.preventDefault();

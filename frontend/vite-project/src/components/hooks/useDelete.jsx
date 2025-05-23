@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 const useDelete = (endpoint, returnpoint = null) => {
   const [error, setError] = useState(null);
-  const api = new ApiService("http://localhost:3000");
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
+
+  const api = new ApiService(API_URL);
   const navigate = useNavigate();
   const [returnData, setReturnData] = useState(null);
 

@@ -9,6 +9,7 @@ function RefundSearch({ itemId, image, name, quantity, price }) {
   const [searchType, setSearchType] = useState("refundId");
   const [searchValue, setSearchValue] = useState("");
   const [searchResult, setSearchResult] = useState();
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
 
   const updateInputName = (e) => {
     setSearchType(e.target.value);
@@ -21,7 +22,7 @@ function RefundSearch({ itemId, image, name, quantity, price }) {
     e.preventDefault();
     // console.log({ [searchType]: searchValue });
     try {
-      const api = new ApiService("http://localhost:3000");
+      const api = new ApiService(API_URL);
 
       const params = new URLSearchParams({
         searchType,

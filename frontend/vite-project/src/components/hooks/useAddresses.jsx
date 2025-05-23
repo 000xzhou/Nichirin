@@ -6,7 +6,9 @@ import { useCustomerAuth } from "../../routes/CustomerAuthProvider";
 const useAddresses = (userId) => {
   const [error, setError] = useState(null);
   const { setIsUser } = useCustomerAuth();
-  const api = new ApiService("http://localhost:3000");
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
+
+  const api = new ApiService(API_URL);
 
   const handleDelete = async (addressId) => {
     try {

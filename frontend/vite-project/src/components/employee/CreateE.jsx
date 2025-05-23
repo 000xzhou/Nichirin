@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "./createe.css";
 
 function CreateE() {
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
   const { isUser } = useEmployeeAuth();
   const navigate = useNavigate();
 
@@ -39,7 +40,7 @@ function CreateE() {
     try {
       // console.log(formData);
       // api
-      const api = new ApiService("http://localhost:3000");
+      const api = new ApiService(API_URL);
       const data = await api.post("/employee/create", formData);
       // console.log(data);
       // navigate to dashboard

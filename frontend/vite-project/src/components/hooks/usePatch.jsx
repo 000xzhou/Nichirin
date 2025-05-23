@@ -12,6 +12,7 @@ const usePatch = (
   const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState(null);
   const { setIsUser } = useCustomerAuth();
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
 
   const navigate = useNavigate();
 
@@ -27,7 +28,7 @@ const usePatch = (
     e.preventDefault();
     try {
       // api
-      const api = new ApiService("http://localhost:3000");
+      const api = new ApiService(API_URL);
 
       const updatedUser = await api.patch(endpoint, formData);
       console.log("PATCH success:");
@@ -54,7 +55,7 @@ const usePatch = (
   const setDefaultAdress = async () => {
     try {
       // api
-      const api = new ApiService("http://localhost:3000");
+      const api = new ApiService(API_URL);
 
       const updatedUser = await api.patch(endpoint);
 

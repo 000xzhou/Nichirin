@@ -6,8 +6,9 @@ const useGet = (endpoint, initialState = null) => {
   // const [formData, setFormData] = useState(initialState);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
 
-  const api = new ApiService("http://localhost:3000");
+  const api = new ApiService(API_URL);
 
   // const handleChange = (e) => {
   //   const { name, value } = e.target;

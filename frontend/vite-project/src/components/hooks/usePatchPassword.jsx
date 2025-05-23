@@ -27,8 +27,9 @@ const usePatchPassword = (initialState, endpoint) => {
     if (formData.newPassword === formData.reenterNewPassword) {
       // send to api
       try {
+        const API_URL = import.meta.env.VITE_BACKEND_URL;
         // api
-        const api = new ApiService("http://localhost:3000");
+        const api = new ApiService(API_URL);
 
         const updatedUser = await api.patch(endpoint, formData);
         console.log("PATCH success:", updatedUser);

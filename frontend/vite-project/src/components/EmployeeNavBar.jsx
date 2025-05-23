@@ -8,12 +8,13 @@ import { useState } from "react";
 const EmployeeNavBar = () => {
   const { setIsAuthenticated, isUser, setIsUser } = useEmployeeAuth();
   const [openMenu, setOpenMenu] = useState(false);
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
 
   const handleLogout = (e) => {
     e.preventDefault();
     try {
       // api
-      const api = new ApiService("http://localhost:3000");
+      const api = new ApiService(API_URL);
 
       api
         .get("/logout")
