@@ -11,7 +11,7 @@ const db = {
   content:
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. oriosam nobis, dolorem voluptas eveniet itaque nisi saepe quas Voluptate cupiditate ad voluptatibus vel sapie",
   "product-tag": "mincraft", // the current product display in frontpage
-  displayTag: "black", // the current product tag in frontpage
+  displayTag: "minecraft", // the current product tag in frontpage
 };
 
 function Landing() {
