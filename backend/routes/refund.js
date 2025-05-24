@@ -174,6 +174,39 @@ router.patch("/:refundId", ensureStaff, async (req, res) => {
 
     // added stripe to refund if approved
     // edit order.status to refunded if approved
+    // todo: stripe refund $$$ to user if approved
+
+    // send email of refund if refund been approved or not
+    const transport = Nodemailer.createTransport(
+      MailtrapTransport({
+        token: process.env.MAILTRAP_API_TOKEN,
+        testInboxId: 3449602,
+      })
+    );
+
+    const sender = {
+      address: "BusinessName@example.com",
+      name: "Business Name",
+    };
+    const recipients = [email];
+
+    transport.sendMail({
+      from: sender,
+      to: recipients,
+      subject: `Your refund have been ${req.body.status}`,
+      html: `
+     <div>
+      <h2>Your refund have been ${req.body.status}</h2>
+      <p><strong>Order ID:</strong> ${body.orderId}</p>
+      <h3>Refunded Items:</h3>
+      <ul>
+     list items here
+      </ul>
+    </div>
+          `,
+      category: "Integration Test",
+      sandbox: true,
+    });
 
     res.json(refund);
   } catch (err) {
