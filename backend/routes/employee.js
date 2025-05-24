@@ -7,6 +7,8 @@ const { createToken } = require("../middleware/tokens");
 const { ensureAdmin, ensureCorrectStaff } = require("../middleware/auth");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+const Nodemailer = require("nodemailer");
+const { MailtrapTransport } = require("mailtrap");
 
 // auth login employee
 router.get("/employee-auth", async (req, res) => {
@@ -336,8 +338,30 @@ router.post("/forget-password", async (req, res) => {
 
     const resetUrl = `http://localhost:5173/employee/reset-password?token=${rawToken}`;
 
-    // todo: send email with reseturl
-    console.log(resetUrl);
+    const transport = Nodemailer.createTransport(
+      MailtrapTransport({
+        token: process.env.MAILTRAP_API_TOKEN,
+        testInboxId: 3449602,
+      })
+    );
+
+    const sender = {
+      address: "BusinessName@example.com",
+      name: "Business Name",
+    };
+    const recipients = [email];
+
+    // send email
+    transport.sendMail({
+      from: sender,
+      to: recipients,
+      subject: "Your Receipt - Thank You for Your Order!",
+      html: `Reset your password. click on the link below.
+      <div>${resetUrl}<div>
+      `,
+      category: "Integration Test",
+      sandbox: true,
+    });
 
     res
       .status(200)
