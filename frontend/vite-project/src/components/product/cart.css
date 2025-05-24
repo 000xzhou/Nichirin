@@ -43,6 +43,24 @@
   padding: 1rem;
 }
 
+.listQytChanger span,
+.listRightButton span {
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.listQytChanger span,
+.listRightButton span {
+  margin-right: 0.25rem;
+  margin-left: 0.25rem;
+}
+
+.listQytChanger span:hover,
+.listRightButton span:hover {
+  color: var(--hover-state);
+  border: 1px solid var(--hover-state);
+  border-radius: 5px;
+}
+
 @media screen and (max-width: 768px) {
   .cart-item-list {
     grid-template-columns: 40% 60%;

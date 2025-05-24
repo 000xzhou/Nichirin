@@ -64,12 +64,12 @@ function Cart() {
                   </Link>
                   <p className="cart-list-price">{formatPrice(item.price)}</p>
                   <div className="listQytChanger">
-                    <button
-                      className="listLeftButton"
+                    <span
+                      className="listLeftButton material-symbols-outlined"
                       onClick={() => handleRemoveFromCart(item.id)}
                     >
-                      -
-                    </button>
+                      {item.quantity === 1 ? "delete" : "remove"}
+                    </span>
                     <input
                       type="number"
                       min="1"
@@ -79,18 +79,18 @@ function Cart() {
                       // onBlur={(e) => handleChangeQty(item.id, e.target.value)}
                       readOnly
                     />
-                    <button
-                      className="listRightButton"
+                    <span
+                      className="listRightButton material-symbols-outlined"
                       onClick={() => handleAddtoCart({ id: item.id })}
                     >
-                      +
-                    </button>
-                    <span
+                      add
+                    </span>
+                    <div
                       className="cart-delete-span"
                       onClick={() => handleDeleteFromCart(item.id)}
                     >
                       delete
-                    </span>
+                    </div>
                   </div>
                 </li>
               ))
