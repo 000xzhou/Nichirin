@@ -43,15 +43,20 @@
   padding: 1rem;
 }
 
-.listQytChanger span,
+.listLeftButton span,
 .listRightButton span {
   cursor: pointer;
   border: 1px solid transparent;
 }
-.listQytChanger span,
-.listRightButton span {
+.listLeftButton span {
   margin-right: 0.25rem;
+}
+.listRightButton span {
   margin-left: 0.25rem;
+}
+.listQytChanger {
+  display: flex;
+  align-items: center;
 }
 
 .listQytChanger span:hover,
