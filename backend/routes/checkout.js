@@ -51,9 +51,8 @@ router.post("/:id/create-checkout-session", async (req, res) => {
       mode: "payment",
       line_items: lineItems,
       // customer_email: customer.email,
-      success_url:
-        "http://localhost:5173/order-confirmation?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: "http://localhost:5173/cart",
+      success_url: `${process.env.FRONTEND}/order-confirmation?session_id=${CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.FRONTEND}/cart`,
     });
 
     //save to user db

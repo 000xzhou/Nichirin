@@ -20,28 +20,17 @@
   --border-radius: 16px;
   --employee-navbar-small-height: 68px;
   --employee-navbar-large-height: 108px;
+  --red-color: #931919;
+  --green-color: #a6e092;
+  --yellow-color: #92400e;
 }
 
 /* @media (prefers-color-scheme: dark) {
   :root {
-    line-height: 1.5;
-    font-weight: 400;
     --background-color: black;
-    --background-accent: black;
-    --background-accent-transparent: hsla(29, 87%, 91%, 0.5);
+    --background-accent: rgb(105, 86, 86);
     --primary-text: white;
-    --secondary-text: white;
-    --button: #feebcb;
-    --hover-state: #f6afa9;
-    --active-state: #e89a94;
-    --confirm-button: #b4d7a8;
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    --border-radius: 16px;
-    --employee-navbar-small-height: 68px;
-    --employee-navbar-large-height: 108px;
+    --secondary-text: rgb(199, 171, 171);
   }
 } */
 
@@ -71,7 +60,7 @@ button {
 }
 
 .secondary-button {
-  background-color: var(--button);
+  background-color: var(--background-accent);
   border-radius: var(--border-radius);
   border-color: transparent;
   color: var(--primary-text);
@@ -218,17 +207,25 @@ textarea {
 }
 
 .text-yellow {
-  color: #92400e;
+  color: var(--yellow-color);
 }
 
 .text-green {
-  color: var(--confirm-button);
+  color: var(--green-color);
 }
 
 .text-red {
-  color: #931919;
+  color: var(--red-color);
 }
 
 .text-blue {
   color: #60a5fa;
+}
+
+.errorBox {
+  background-color: var(--red-color);
+  color: var(--background-color);
+  padding-inline: 1rem;
+  border-radius: 5px;
+  margin: 0.5rem;
 }

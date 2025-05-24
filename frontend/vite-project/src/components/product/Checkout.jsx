@@ -21,7 +21,7 @@ function Checkout() {
   const {
     apiData: addresses,
     loading: addressLoading,
-    error,
+    error: addressError,
   } = useGet(`/address/addresses/${isUser._id}`);
 
   const [loading, setLoading] = useState(true);
@@ -31,6 +31,8 @@ function Checkout() {
   const [selectedAddressId, setSelectedAddressId] = useState(
     selectAddress?._id || null
   );
+  const [error, setError] = useState("");
+
   // Set default address when it's ready
   useEffect(() => {
     if (defaultAddress && !defaultAdressLoading) {
@@ -55,20 +57,26 @@ function Checkout() {
   const handleCheckout = async () => {
     if (!isUser) {
       navigate("/login");
-    } else {
-      const API_URL = import.meta.env.VITE_BACKEND_URL;
-
-      const api = new ApiService(API_URL);
-
-      const res = await api.post(`/order/create`, {
-        cart, // items in cart
-        customerID: isUser._id,
-        shipping: selectAddress.address,
-        totalAmount: total,
-      });
-      // Send to stripe checkout
-      window.location.replace(res.url);
+      return;
     }
+    if (!selectAddress || !selectAddress.address) {
+      setError("No address selected");
+      return;
+    }
+
+    setError("");
+    const API_URL = import.meta.env.VITE_BACKEND_URL;
+
+    const api = new ApiService(API_URL);
+
+    const res = await api.post(`/order/create`, {
+      cart, // items in cart
+      customerID: isUser._id,
+      shipping: selectAddress.address,
+      totalAmount: total,
+    });
+    // Send to stripe checkout
+    window.location.replace(res.url);
   };
 
   const getAddressList = () => {
@@ -97,6 +105,7 @@ function Checkout() {
 
   return (
     <div className="container">
+      <div className="errorBox">{error}</div>
       {changeAddress ? (
         <section className="checkout-all-address">
           <h2>Select a delivery address</h2>
