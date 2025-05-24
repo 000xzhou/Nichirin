@@ -91,7 +91,47 @@ router.post("/create", ensureUser, async (req, res) => {
 
     await refund.save();
 
-    // todo: send email of refund details
+    // send email of refund details
+    const transport = Nodemailer.createTransport(
+      MailtrapTransport({
+        token: process.env.MAILTRAP_API_TOKEN,
+        testInboxId: 3449602,
+      })
+    );
+
+    const sender = {
+      address: "BusinessName@example.com",
+      name: "Business Name",
+    };
+    const recipients = [email];
+
+    // send email
+    transport.sendMail({
+      from: sender,
+      to: recipients,
+      subject: "Your refund",
+      html: `
+     <div>
+      <h2>Your Refund Details</h2>
+      <p><strong>Order ID:</strong> ${body.orderId}</p>
+      <h3>Refunded Items:</h3>
+      <ul>
+        ${body.items
+          .map(
+            (item) => `
+          <li>
+            <strong>Name:</strong> ${item.name || "Unnamed Product"}<br/>
+            <strong>Quantity:</strong> ${item.quantity || 1}
+          </li>
+        `
+          )
+          .join("")}
+      </ul>
+    </div>
+          `,
+      category: "Integration Test",
+      sandbox: true,
+    });
 
     res.json(refund);
   } catch (err) {

@@ -115,7 +115,6 @@ router.post("/create", ensureAdmin, async (req, res) => {
   try {
     // default password that should be in env and change every month.
     // the employee have to login and change it themselve after account creation. Email will be send for reminder
-    // todo: add sending email to remind them to change pw
     req.body.password = "password123";
     const newEmployee = new Employee(req.body);
     await newEmployee.save();
@@ -127,6 +126,30 @@ router.post("/create", ensureAdmin, async (req, res) => {
       sameSite: "strict", // Mitigate CSRF attacks
       maxAge: 3600000, // Align with the JWT's expiration time (1 hour)
       path: "/", // Make cookie available site-wide
+    });
+
+    // sending email to remind them to change pw
+    const transport = Nodemailer.createTransport(
+      MailtrapTransport({
+        token: process.env.MAILTRAP_API_TOKEN,
+        testInboxId: 3449602,
+      })
+    );
+
+    const sender = {
+      address: "BusinessName@example.com",
+      name: "Business Name",
+    };
+    const recipients = [newEmployee.email];
+
+    // send email
+    transport.sendMail({
+      from: sender,
+      to: recipients,
+      subject: "Reminder to reset your password",
+      html: ``,
+      category: "Integration Test",
+      sandbox: true,
     });
 
     res.status(201).json({ token, employee: newEmployee });
@@ -355,7 +378,7 @@ router.post("/forget-password", async (req, res) => {
     transport.sendMail({
       from: sender,
       to: recipients,
-      subject: "Your Receipt - Thank You for Your Order!",
+      subject: "Reset Your Password",
       html: `Reset your password. click on the link below.
       <div>${resetUrl}<div>
       `,

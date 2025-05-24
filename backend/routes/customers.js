@@ -392,7 +392,7 @@ router.post("/forget-password", async (req, res) => {
     transport.sendMail({
       from: sender,
       to: recipients,
-      subject: "Your Receipt - Thank You for Your Order!",
+      subject: "Reset Your Password",
       html: `Reset your password. click on the link below.
       <div>${resetUrl}<div>
       `,
