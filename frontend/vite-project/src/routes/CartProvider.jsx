@@ -80,6 +80,17 @@ export const CartProvider = ({ children }) => {
     setCartNum(calculateTotalQuantity(updatedCart));
   };
 
+  /**
+   * @param {String} id
+   */
+  const handleDeleteFromCart = (id) => {
+    const updatedCart = cart.filter((item) => item.id !== id);
+
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    setCartNum(calculateTotalQuantity(updatedCart));
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -89,6 +100,7 @@ export const CartProvider = ({ children }) => {
         handleAddtoCart,
         handleClearCart,
         handleRemoveFromCart,
+        handleDeleteFromCart,
       }}
     >
       {children}

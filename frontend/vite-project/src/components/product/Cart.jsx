@@ -15,6 +15,7 @@ function Cart() {
     handleRemoveFromCart,
     loading,
     handleClearCart,
+    handleDeleteFromCart,
   } = useCart();
 
   if (loading) return <div>Loading...</div>;
@@ -84,7 +85,12 @@ function Cart() {
                     >
                       +
                     </button>
-                    <span className="cart-delete-span">delete</span>
+                    <span
+                      className="cart-delete-span"
+                      onClick={() => handleDeleteFromCart(item.id)}
+                    >
+                      delete
+                    </span>
                   </div>
                 </li>
               ))
