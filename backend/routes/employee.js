@@ -115,7 +115,7 @@ router.post("/create", ensureAdmin, async (req, res) => {
   try {
     // default password that should be in env and change every month.
     // the employee have to login and change it themselve after account creation. Email will be send for reminder
-    req.body.password = "password123";
+    req.body.password = process.env.NEW_EMPLOYEE_PASSOWRD;
     const newEmployee = new Employee(req.body);
     await newEmployee.save();
     const token = createToken(newEmployee, "employee");
@@ -146,8 +146,12 @@ router.post("/create", ensureAdmin, async (req, res) => {
     transport.sendMail({
       from: sender,
       to: recipients,
-      subject: "Reminder to reset your password",
-      html: `Reminder to reset your password"`,
+      subject: "Welcome to the team",
+      html: `<div>
+      <h2>We welcome you to the world of pandas</h2>
+      <p>Your current password is ${NEW_EMPLOYEE_PASSOWRD}</p>
+      <p>Please reset your password asap</p>
+      </div>`,
       category: "Integration Test",
       sandbox: true,
     });
