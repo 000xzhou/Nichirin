@@ -32,7 +32,6 @@ app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
 // MongoDB connection
 if (process.env.NODE_ENV !== "test") {
-  // Prevent connecting to the DB when running tests
   mongoose
     .connect(process.env.DB)
     .then(() => {
@@ -42,6 +41,17 @@ if (process.env.NODE_ENV !== "test") {
       console.error("Error connecting to MongoDB:", error);
     });
 }
+// const dbUri =
+//   process.env.NODE_ENV === "test" ? process.env.TEST_DB : process.env.DB;
+
+// mongoose
+//   .connect(dbUri)
+//   .then(() => {
+//     console.log(`Connected to MongoDB (${process.env.NODE_ENV})`);
+//   })
+//   .catch((error) => {
+//     console.error("Error connecting to MongoDB:", error);
+//   });
 
 // Use routers
 app.use("/customers", customerRouter);

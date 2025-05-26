@@ -147,7 +147,7 @@ router.post("/create", ensureAdmin, async (req, res) => {
       from: sender,
       to: recipients,
       subject: "Reminder to reset your password",
-      html: ``,
+      html: `Reminder to reset your password"`,
       category: "Integration Test",
       sandbox: true,
     });

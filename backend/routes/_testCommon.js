@@ -4,8 +4,11 @@ const { createToken } = require("../middleware/tokens");
 const Customer = require("../models/customers/customers");
 const Employee = require("../models/staff/employee");
 const Product = require("../models/products/products");
+const Address = require("../models/customers/address");
+const Order = require("../models/customers/order");
 
 let testCustomer, testCustomer2, testCustomerToken;
+let savedAddress;
 let testemployee,
   testAdmin,
   testAdminToken,
@@ -14,6 +17,7 @@ let testemployee,
   testInEmployee,
   testemployee2;
 let testproduct, testproduct2, testproduct3;
+let savedOrder, savedNewOrder;
 
 const setupDatabase = async () => {
   await connect();
@@ -34,6 +38,18 @@ const createTestData = async () => {
     phone: 987123,
   });
   testCustomer = await customer.save();
+
+  const address = new Address({
+    userId: testCustomer._id,
+    name: testCustomer.first_name + testCustomer.last_name,
+    phone: testCustomer.phone,
+    line1: "123 Test St",
+    city: "Testville",
+    state: "TS",
+    postal_code: "12345",
+    country: "USA",
+  });
+  savedAddress = await address.save();
 
   const customer2 = new Customer({
     email: "email2@email.com",
@@ -102,9 +118,10 @@ const createTestData = async () => {
     currency: "USD",
     stock: 10,
     active: true,
-    description: "description",
-    variations: [{ color: "blue", stock: 5, price: 11 }],
+    description: { basic: "description" },
     images: ["one.jpg", "two.jpg"],
+    tags: ["tag"],
+    overallRating: 5,
   });
   testproduct = await product.save();
 
@@ -114,7 +131,9 @@ const createTestData = async () => {
     currency: "USD",
     stock: 0,
     active: true,
-    description: "description",
+    description: { basic: "description" },
+    tags: ["tag", "tag2"],
+    overallRating: 3,
   });
   testproduct2 = await product2.save();
 
@@ -124,13 +143,30 @@ const createTestData = async () => {
     currency: "USD",
     stock: 10,
     active: false,
-    description: "description",
-    variations: [
-      { color: "round", stock: 5, price: 11 },
-      { color: "square", stock: 3, price: 16 },
-    ],
+    description: { basic: "description" },
+    tags: ["tag", "tag3"],
   });
   testproduct3 = await product3.save();
+
+  const oldOrder = new Order({
+    customerId: testCustomer._id,
+    sessionId: "12345",
+    shipping: savedAddress._id,
+    items: [{ itemId: testproduct._id, quantity: 1 }],
+    status: "completed",
+    totalAmount: testproduct.price * 1,
+  });
+  savedOrder = await oldOrder.save();
+
+  const newOrder = new Order({
+    customerId: testCustomer._id,
+    sessionId: "12345",
+    shipping: savedAddress._id,
+    items: [{ itemId: testproduct2._id, quantity: 2 }],
+    status: "pending",
+    totalAmount: testproduct2.price * 2,
+  });
+  savedNewOrder = await newOrder.save();
 };
 
 const clearTestData = async () => {
@@ -145,6 +181,7 @@ module.exports = {
   getTestData: () => ({
     testCustomer,
     testCustomer2,
+    savedAddress,
     testCustomerToken,
     testemployee,
     testemployee2,
@@ -156,5 +193,7 @@ module.exports = {
     testproduct,
     testproduct2,
     testproduct3,
+    savedOrder,
+    savedNewOrder,
   }),
 };
