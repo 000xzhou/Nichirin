@@ -440,7 +440,6 @@ router.delete("/:id/deleteImage", ensureStaff, async (req, res) => {
       { $pull: { images: imageToDelete } },
       { new: true, runValidators: true }
     );
-
     if (!updatedProduct) {
       return res.status(404).json({ message: `Product id ${id} not found` });
     }
