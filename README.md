@@ -1,8 +1,15 @@
 # Puffy Pals
 
-To run this:
+## Table of contents
 
-    npm run dev
+[About](#About)
+[Features](#Features)
+[Screenshots/Demo](#Screenshots)
+[Installation guide](#Installation)
+[Tech stack](#)
+[Testing](#Testing)
+
+---
 
 ## About this project:
 
@@ -30,19 +37,20 @@ This is an e-commerce platform built with React and Node.js, featuring cart func
 
 ---
 
-## Project Structure
+## Screenshots/Demo
 
-src/
-├── api/
-├── components
-│ └── customers
-│ └── employee
-│ └── product
-│ └── footing / help
-│ └── hooks
-│ └── everything else
-├── routes
-│ └── customer routes
-│ └── employee routes
-├── App.jsx
-└── main.jsx
+---
+
+## Installation
+
+To run this:
+
+    npm run dev
+
+---
+
+## Tech stack
+
+---
+
+## Testing
