@@ -17,7 +17,7 @@ let testemployee,
   testInEmployee,
   testemployee2;
 let testproduct, testproduct2, testproduct3;
-let savedOrder, savedNewOrder;
+let savedOrder, savedNewOrder, savedOrder2;
 
 const setupDatabase = async () => {
   await connect();
@@ -36,6 +36,7 @@ const createTestData = async () => {
     last_name: "lname",
     password: "123",
     phone: 987123,
+    stripeCustomerId: "!23",
   });
   testCustomer = await customer.save();
 
@@ -160,13 +161,23 @@ const createTestData = async () => {
 
   const newOrder = new Order({
     customerId: testCustomer._id,
-    sessionId: "12345",
+    sessionId: "12346",
     shipping: savedAddress._id,
     items: [{ itemId: testproduct2._id, quantity: 2 }],
     status: "pending",
     totalAmount: testproduct2.price * 2,
   });
   savedNewOrder = await newOrder.save();
+
+  const order2 = new Order({
+    customerId: testCustomer2._id,
+    sessionId: "12347",
+    shipping: savedAddress._id,
+    items: [{ itemId: testproduct2._id, quantity: 2 }],
+    status: "completed",
+    totalAmount: testproduct2.price * 2,
+  });
+  savedOrder2 = await order2.save();
 };
 
 const clearTestData = async () => {
@@ -195,5 +206,6 @@ module.exports = {
     testproduct3,
     savedOrder,
     savedNewOrder,
+    savedOrder2,
   }),
 };

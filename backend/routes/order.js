@@ -10,8 +10,6 @@ require("dotenv").config();
 const Nodemailer = require("nodemailer");
 const { MailtrapTransport } = require("mailtrap");
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-
 const {
   ensureAdmin,
   ensureStaff,
@@ -115,6 +113,8 @@ router.get("/:id/allorders", ensureCorrectUserOrStaff, async (req, res) => {
  * create checkout session
  */
 router.post("/create", async (req, res) => {
+  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
   const { cart, customerID, shipping, totalAmount } = req.body;
   const formatPrice = (price) =>
     price.toLocaleString("en-US", {
