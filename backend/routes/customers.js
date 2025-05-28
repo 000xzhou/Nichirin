@@ -74,7 +74,7 @@ router.post("/login", async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true, // Secure the cookie against XSS
       secure: true, // Ensure the cookie is only sent over HTTPS (use only in production)
-      sameSite: "strict", // Mitigate CSRF attacks
+      sameSite: "None", // Mitigate CSRF attacks
       maxAge: 3600000, // Align with the JWT's expiration time (1 hour)
       path: "/", // Make cookie available site-wide
     });
