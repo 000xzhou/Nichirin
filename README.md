@@ -2,12 +2,11 @@
 
 ## Table of contents
 
-[About](#About)
-[Features](#Features)
-[Screenshots/Demo](#Screenshots)
-[Installation guide](#Installation)
-[Tech stack](#)
-[Testing](#Testing)
+- [Features](#features)
+- [Tech stack](#tech-stack)
+- [Screenshots/Demo](#screenshotsdemo)
+- [Installation guide](#installation-guide)
+- [Testing](#testing)
 
 ---
 
@@ -18,7 +17,7 @@ This is an e-commerce platform built with React and Node.js, featuring cart func
 
 ---
 
-## 🚀 Features
+## Features
 
 - Add, remove, and delete items from cart
 - Address selection with error handling
@@ -26,8 +25,9 @@ This is an e-commerce platform built with React and Node.js, featuring cart func
 - Email notifications using Nodemailer
 - Persistent cart using `localStorage`
 - Context API for global cart management
+- Cookies to manage authentication tokens
 
-## 📦 Tech Stack
+## Tech Stack
 
 - React
 - Node.js / Express
@@ -39,18 +39,30 @@ This is an e-commerce platform built with React and Node.js, featuring cart func
 
 ## Screenshots/Demo
 
+The cart. Here you can checkout. Add extra or remove the product.
+The checkout. Here you can checkout. Can change your shipping address.
+The order. Here you can see your order starting from recent. Can return and review the product.
+The product. Here you can add items to cart or click to view more details about the item.
+The product detail. Here you see the detail page of the product. Can add reviews.
+
 ---
 
-## Installation
+## Installation Guide
 
-To run this:
+npm install
+
+To run frontend:
 
     npm run dev
 
----
+To run backend:
 
-## Tech stack
+    node server.js
 
 ---
 
 ## Testing
+
+To run backend:
+
+    node server.js
