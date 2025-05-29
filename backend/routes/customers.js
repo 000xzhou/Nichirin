@@ -16,6 +16,7 @@ const { BadRequestError } = require("../expressError");
 const jwt = require("jsonwebtoken");
 const Nodemailer = require("nodemailer");
 const { MailtrapTransport } = require("mailtrap");
+require("dotenv").config();
 
 /** GET /
  *
@@ -373,7 +374,7 @@ router.post("/forget-password", async (req, res) => {
     user.passwordResetExpires = tokenExpires;
     await user.save();
 
-    const resetUrl = `http://localhost:5173/reset-password?token=${rawToken}`;
+    const resetUrl = `${process.env.FRONTEND}/reset-password?token=${rawToken}`;
 
     const transport = Nodemailer.createTransport(
       MailtrapTransport({

@@ -9,6 +9,7 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const Nodemailer = require("nodemailer");
 const { MailtrapTransport } = require("mailtrap");
+require("dotenv").config();
 
 // auth login employee
 router.get("/employee-auth", async (req, res) => {
@@ -363,7 +364,7 @@ router.post("/forget-password", async (req, res) => {
     user.passwordResetExpires = tokenExpires;
     await user.save();
 
-    const resetUrl = `http://localhost:5173/employee/reset-password?token=${rawToken}`;
+    const resetUrl = `${process.env.FRONTEND}/employee/reset-password?token=${rawToken}`;
 
     const transport = Nodemailer.createTransport(
       MailtrapTransport({

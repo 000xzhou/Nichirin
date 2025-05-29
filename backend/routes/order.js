@@ -9,6 +9,7 @@ const Order = require("../models/customers/order");
 require("dotenv").config();
 const Nodemailer = require("nodemailer");
 const { MailtrapTransport } = require("mailtrap");
+require("dotenv").config();
 
 const {
   ensureAdmin,
@@ -161,9 +162,8 @@ router.post("/create", async (req, res) => {
       mode: "payment",
       line_items: lineItems,
       // customer_email: customer.email,
-      success_url:
-        "http://localhost:5173/customers/orders/order-confirmation?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: "http://localhost:5173/cart",
+      success_url: `${process.env.FRONTEND}/customers/orders/order-confirmation?session_id=${CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.FRONTEND}/cart`,
     });
 
     // send email and save to user db
