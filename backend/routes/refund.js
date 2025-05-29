@@ -46,9 +46,9 @@ router.post("/create", ensureUser, async (req, res) => {
       return res.status(404).json({ error: "Order not found" });
     }
     // check order if it's not pending/ aka complete
-    if (order.status === "pending") {
-      return res.status(409).json({ error: "Order is still pending" });
-    }
+    // if (order.status === "pending") {
+    //   return res.status(409).json({ error: "Order is still pending" });
+    // }
 
     // filter out the selected items
     const selectedItems = Object.entries(req.body.items)
