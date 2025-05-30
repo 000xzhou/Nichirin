@@ -41,7 +41,7 @@ const { ensureAdmin, ensureStaff, ensureUser } = require("../middleware/auth");
 router.post("/create", ensureUser, async (req, res) => {
   try {
     // Fetch the original order
-    const order = await Order.findById(req.body.orderId);
+    const order = await Order.findById(req.body.orderId).populate("customerId");
     if (!order) {
       return res.status(404).json({ error: "Order not found" });
     }
@@ -103,7 +103,7 @@ router.post("/create", ensureUser, async (req, res) => {
       address: "BusinessName@example.com",
       name: "Business Name",
     };
-    const recipients = [email];
+    const recipients = [order.customerId.email];
 
     // send email
     transport.sendMail({
@@ -119,9 +119,7 @@ router.post("/create", ensureUser, async (req, res) => {
         ${body.items
           .map(
             (item) =>
-              `<li><a href="${process.env.FRONTEND}/product/${item.itemId}">${
-                item.name
-              } - ${formatPrice(item.price)} x ${item.quantity}</a></li>`
+              `<li><a href="${process.env.FRONTEND}/product/${item.itemId}">${item.name} - ${item.quantity}</a></li>`
           )
           .join("")}
       </ul>
