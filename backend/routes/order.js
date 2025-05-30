@@ -162,7 +162,7 @@ router.post("/create", async (req, res) => {
       mode: "payment",
       line_items: lineItems,
       // customer_email: customer.email,
-      success_url: `${process.env.FRONTEND}/customers/orders/order-confirmation?session_id=${CHECKOUT_SESSION_ID}`,
+      success_url: `${process.env.FRONTEND}/customers/orders/order-confirmation?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.FRONTEND}/cart`,
     });
 
