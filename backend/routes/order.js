@@ -179,8 +179,7 @@ router.post("/create", async (req, res) => {
         address: "BusinessName@example.com",
         name: "Business Name",
       };
-      // const recipients = [customer.email];
-      const recipients = ["xzhou92@gmail.com"]; // testing out email
+      const recipients = [customer.email];
 
       transport.sendMail({
         from: sender,
@@ -192,7 +191,7 @@ router.post("/create", async (req, res) => {
            <ul>${cart
              .map(
                (item) =>
-                 `<li a href="https://yourstore.com/product/${item.itemId}">${
+                 `<li a href="${process.env.FRONTEND}/product/${item.itemId}">${
                    item.name
                  } - ${formatPrice(item.price)} x ${item.quantity}</li>`
              )
