@@ -95,7 +95,7 @@ router.post("/create", ensureUser, async (req, res) => {
     const transport = Nodemailer.createTransport(
       MailtrapTransport({
         token: process.env.MAILTRAP_API_TOKEN,
-        testInboxId: 3449602,
+        testInboxId: process.env.MAILTRAP_TEST_INBOX_ID,
       })
     );
 
@@ -118,12 +118,10 @@ router.post("/create", ensureUser, async (req, res) => {
       <ul>
         ${body.items
           .map(
-            (item) => `
-          <li>
-            <strong>Name:</strong> ${item.name || "Unnamed Product"}<br/>
-            <strong>Quantity:</strong> ${item.quantity || 1}
-          </li>
-        `
+            (item) =>
+              `<li><a href="${process.env.FRONTEND}/product/${item.itemId}">${
+                item.name
+              } - ${formatPrice(item.price)} x ${item.quantity}</a></li>`
           )
           .join("")}
       </ul>
