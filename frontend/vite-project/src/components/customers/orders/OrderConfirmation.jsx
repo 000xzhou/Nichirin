@@ -10,7 +10,7 @@ function OrderConfirmation() {
   const navigate = useNavigate();
   const { isUser } = useCustomerAuth();
   const [searchParams] = useSearchParams();
-  const sessionId = searchParams.get("session_id");
+  const sessionId = searchParams.get("sessionId");
   const { handleClearCart } = useCart();
 
   const {
